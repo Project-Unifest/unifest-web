@@ -27,6 +27,9 @@ const preview: Preview = {
         hello: [...helloHandler],
       },
     },
+    nextjs: {
+      appDirectory: true,
+    },
   },
   // Provide the MSW addon loader globally
   loaders: [mswLoader],
