@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kr" className={`${pretendard.className}`}>
+    <html lang="kr" className={pretendard.className}>
       <body>
         <div className="mx-auto flex w-full flex-col justify-center align-top md:w-[768px]">
           <Header />
