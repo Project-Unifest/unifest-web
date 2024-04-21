@@ -1,13 +1,28 @@
+"use client";
+
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 export function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  console.log(router);
+  console.log(pathname);
+
   return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
-      <div className="shrink-0">Chitchat logogo</div>
-      <div>
-        <div className="text-xl font-medium text-black">ChitChat</div>
-        <p className="text-slate-500">You have a new message!</p>
+    <header>
+      <div className="relative flex items-center justify-center rounded-b-3xl pb-6 pt-5 shadow-lg">
+        <div className="relative">
+          {pathname !== "/" && (
+            <button type="button" onClick={() => router.back()}>
+              <ChevronLeftIcon />
+            </button>
+          )}
+        </div>
+        <div className="shrink-0 font-black">운영자모드</div>
       </div>
-    </div>
+    </header>
   );
 }
