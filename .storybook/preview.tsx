@@ -1,16 +1,19 @@
-import { helloHandler } from "../mocks/api/hello";
+import React from "react";
 import type { Preview } from "@storybook/react";
 import { initialize, mswLoader } from "msw-storybook-addon";
+import { helloHandler } from "../mocks/api/hello";
 import "../app/globals.css";
 import "./preview.css";
-import React from "react";
 
 initialize();
+
+// TODO use next/font/local instead of global style
+// see here: https://storybook.js.org/docs/get-started/nextjs#nextfontlocal
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <div style={{ fontFamily: "Pretendard, sans-serief" }}>
+      <div style={{ fontFamily: "Pretendard, sans-serif" }}>
         <Story />
       </div>
     ),
