@@ -8,9 +8,6 @@ export function Header() {
   const router = useRouter();
   const pathname = usePathname();
 
-  console.log(router);
-  console.log(pathname);
-
   return (
     <header>
       <div className="relative flex items-center justify-center rounded-b-3xl pb-6 pt-5 shadow-lg">
