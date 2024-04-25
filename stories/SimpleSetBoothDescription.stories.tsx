@@ -1,9 +1,9 @@
-import { SimpleSetBoothDescription } from "@/src/widgets/add-booth";
+import { OverviewSetBoothDescription } from "@/src/widgets/add-booth";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
   title: "Widgets/AddBooth/SimpleSetBoothDescription",
-  component: SimpleSetBoothDescription,
+  component: OverviewSetBoothDescription,
   tags: ["autodocs"],
 } satisfies Meta;
 
