@@ -38,14 +38,6 @@ export default function AddBoothLayout({
     ]) ||
     [];
 
-  // const colorIdsRef = useRef(colorIds);
-  // colorIdsRef.current = colorIds;
-  // const change = () => {
-  //   const juggled = [...colorIds];
-  //   juggled.unshift(juggled.pop()!);
-  //   setColorIds(juggled);
-  // };
-
   return (
     <>
       <div className="mx-auto mb-[46px] w-[80px]">

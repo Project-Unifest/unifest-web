@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/src/widgets/header";
 import { pretendard } from "@/src/shared/lib/fonts";
+import { BoothStoreProvider } from "@/src/shared/model/provider/booth-store-provider";
 
 export const metadata: Metadata = {
   title: "Unifest",
@@ -16,12 +17,14 @@ export default function RootLayout({
   return (
     <html lang="kr" className={pretendard.className}>
       <body>
-        <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
-          <Header />
-          <div className="flex flex-auto flex-col items-stretch justify-start px-5">
-            {children}
+        <BoothStoreProvider>
+          <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
+            <Header />
+            <div className="flex flex-auto flex-col items-stretch justify-start px-5">
+              {children}
+            </div>
           </div>
-        </div>
+        </BoothStoreProvider>
       </body>
     </html>
   );
