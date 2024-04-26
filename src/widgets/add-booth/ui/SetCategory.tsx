@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TextNoneIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-label";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export function SetCategory() {
@@ -84,8 +85,11 @@ export function SetCategory() {
         ref={parent}
       >
         {isCategorySelected && (
-          <Button className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink">
-            입력완료
+          <Button
+            className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
+            asChild
+          >
+            <Link href="/add-booth/set-description">입력완료</Link>
           </Button>
         )}
       </div>

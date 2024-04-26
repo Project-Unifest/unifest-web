@@ -3,6 +3,7 @@
 import { Button } from "@/src/shared/ui/Button";
 import { Label } from "@/src/shared/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export function SelectMode() {
@@ -64,8 +65,14 @@ export function SelectMode() {
         </RadioGroup>
       </div>
       <div className="sticky bottom-0 mt-auto flex  w-full bg-white pb-4 pt-4">
-        <Button className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink">
-          선택완료
+        <Button
+          className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
+          asChild
+        >
+          {selectedOption === "overview" && (
+            <Link href="/add-booth/set-name">선택완료</Link>
+          )}
+          {/* TODO navigate to detailed add-booth route */}
         </Button>
       </div>
     </>

@@ -1,12 +1,48 @@
 "use client";
 
+import { AnimatedPathSegment } from "@/app/add-booth/layout";
+import { Button } from "@/src/shared/ui/Button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
+enum HeaderlessPathSegment {
+  SET_MAP = "set-map",
+}
+
+enum TextlessPathSegment {
+  SET_NAME = "set-name",
+  SET_CATEGORY = "set-category",
+  SET_DESCRIPTION = "set-description",
+}
+
 export function Header() {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname()!;
+
+  const isHeaderless = Object.values(HeaderlessPathSegment).some((segment) =>
+    pathname.includes(segment),
+  );
+  console.log(isHeaderless);
+  const isTextless = Object.values(TextlessPathSegment).some((segment) =>
+    pathname.includes(segment),
+  );
+  console.log(Object.keys(TextlessPathSegment));
+  console.log(isTextless);
+
+  if (isHeaderless) {
+    return <div />;
+  }
+
+  if (isTextless) {
+    return (
+      <div className="px-5">
+        <button type="button" aria-label="back" className="p-4">
+          <ChevronLeftIcon />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <header>

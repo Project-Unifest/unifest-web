@@ -16,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="kr" className={pretendard.className}>
       <body>
-        <div className="mx-auto flex w-full flex-col justify-center align-top md:w-[768px]">
+        <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
           <Header />
-          {children}
+          <div className="flex flex-auto flex-col items-stretch justify-start px-5">
+            {children}
+          </div>
         </div>
       </body>
     </html>
