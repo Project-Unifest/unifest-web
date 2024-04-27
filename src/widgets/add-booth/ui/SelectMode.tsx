@@ -70,7 +70,7 @@ export function SelectMode() {
           asChild
         >
           {selectedOption === "overview" && (
-            <Link href="/add-booth/set-name">선택완료</Link>
+            <Link href="/add-booth/set-position">선택완료</Link>
           )}
           {/* TODO navigate to detailed add-booth route */}
         </Button>
