@@ -16,6 +16,12 @@ enum TextlessPathSegment {
   SET_DESCRIPTION = "set-description",
 }
 
+enum SignInPathSegment {
+  SIGN_IN = "sign-in",
+}
+
+// TODO change Header on sign-in and sign-on page
+
 export function Header() {
   const router = useRouter();
   const pathname = usePathname()!;
@@ -27,6 +33,12 @@ export function Header() {
   const isTextless = Object.values(TextlessPathSegment).some((segment) =>
     pathname.includes(segment),
   );
+
+  const headerText = Object.values(SignInPathSegment).some((segment) =>
+    pathname.includes(segment),
+  )
+    ? "운영자/학생회 로그인"
+    : "운영자모드";
 
   if (isHeaderless) {
     return <div />;
@@ -53,11 +65,12 @@ export function Header() {
         <div className="relative">
           {pathname !== "/" && (
             <button type="button" onClick={() => router.back()}>
+              {/* TODO place icon on the left side */}
               <ChevronLeftIcon />
             </button>
           )}
         </div>
-        <div className="shrink-0 font-black">운영자모드</div>
+        <div className="shrink-0 font-black">{headerText}</div>
       </div>
     </header>
   );
