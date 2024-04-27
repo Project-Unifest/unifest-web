@@ -38,12 +38,22 @@ export default function AddBoothLayout({
     ]) ||
     [];
 
+  // if (
+  //   !Object.values(AnimatedPathSegment).some((segment) =>
+  //     pathname.includes(segment),
+  //   )
+  // ) {
+  // }
+
+  // TODO Wrap children with <Form /> element and send data through server action.
+  // FIXME remove padding when there is no progress component
+
   return (
     <>
-      <div className="mx-auto mb-[46px] w-[80px]">
+      <div className={`mx-auto w-[80px] ${colorIds.length && `mb-[46px]`}`}>
         <div
           ref={parent}
-          className="flex h-[15px] w-[70px] items-center justify-between"
+          className={`flex  w-[70px] items-center justify-between ${colorIds.length && `h-[15px]`}`}
         >
           {colorIds.map((colorId) =>
             colorId.includes("red") ? (

@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 enum HeaderlessPathSegment {
-  SET_MAP = "set-map",
+  SET_POSITION = "set-position",
 }
 
 enum TextlessPathSegment {
@@ -23,12 +23,10 @@ export function Header() {
   const isHeaderless = Object.values(HeaderlessPathSegment).some((segment) =>
     pathname.includes(segment),
   );
-  console.log(isHeaderless);
+
   const isTextless = Object.values(TextlessPathSegment).some((segment) =>
     pathname.includes(segment),
   );
-  console.log(Object.keys(TextlessPathSegment));
-  console.log(isTextless);
 
   if (isHeaderless) {
     return <div />;
@@ -37,7 +35,12 @@ export function Header() {
   if (isTextless) {
     return (
       <div className="px-5">
-        <button type="button" aria-label="back" className="p-4">
+        <button
+          type="button"
+          aria-label="back"
+          className="p-4"
+          onClick={() => router.back()}
+        >
           <ChevronLeftIcon />
         </button>
       </div>
