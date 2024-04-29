@@ -27,7 +27,6 @@ export function SignUpForm() {
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      university: "",
       email: "",
       password: "",
       passwordCheck: "",
@@ -39,8 +38,6 @@ export function SignUpForm() {
   const onSubmit = (data: any) => {
     console.log(data);
   };
-
-  console.log(form.formState.isValid);
 
   return (
     <Form {...form}>
