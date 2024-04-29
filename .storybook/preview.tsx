@@ -1,10 +1,10 @@
 import React from "react";
 import type { Preview } from "@storybook/react";
 import { initialize, mswLoader } from "msw-storybook-addon";
-import { helloHandler } from "../mocks/api/hello";
 import "../app/globals.css";
 import "./preview.css";
 import { BoothStoreProvider } from "../src/shared/model/provider/booth-store-provider";
+import handlers from "../mocks/api/handlers";
 
 initialize();
 
@@ -31,9 +31,7 @@ const preview: Preview = {
       },
     },
     msw: {
-      handlers: {
-        hello: [...helloHandler],
-      },
+      handlers: [...handlers],
     },
     nextjs: {
       appDirectory: true,
