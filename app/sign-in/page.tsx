@@ -1,4 +1,4 @@
-import SignIn from "@/src/widgets/sign-in/ui/SignIn";
+import { SignIn } from "@/src/widgets/sign-in";
 import React from "react";
 
 export default function SingInPage() {
