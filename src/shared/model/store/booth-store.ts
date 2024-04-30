@@ -18,6 +18,7 @@ export type BoothActions = {
   editCategory: (newCategory: string) => void;
   editDescription: (newDescription: string) => void;
   editPosition: (newPosition: Position) => void;
+  reset: () => void;
 };
 
 export type BoothStore = BoothState & BoothActions;
@@ -50,6 +51,7 @@ export const createBoothStore = (initState: BoothState = defaultInitState) => {
             set((state) => ({ ...state, description: newDescription })),
           editPosition: (newPosition) =>
             set((state) => ({ ...state, position: { ...newPosition } })),
+          reset: () => set((state) => ({ ...state, ...defaultInitState })),
         }),
         {
           name: "booth-storage",
