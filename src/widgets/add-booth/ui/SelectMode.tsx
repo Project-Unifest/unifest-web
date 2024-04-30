@@ -3,11 +3,13 @@
 import { Button } from "@/src/shared/ui/Button";
 import { Label } from "@/src/shared/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import React, { useState } from "react";
 
 export function SelectMode() {
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const [parent] = useAutoAnimate();
 
   return (
     <>
@@ -64,16 +66,21 @@ export function SelectMode() {
           </Label>
         </RadioGroup>
       </div>
-      <div className="sticky bottom-0 mt-auto flex  w-full bg-white pb-4 pt-4">
-        <Button
-          className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
-          asChild
-        >
-          {selectedOption === "overview" && (
-            <Link href="/add-booth/set-position">선택완료</Link>
-          )}
-          {/* TODO navigate to detailed add-booth route */}
-        </Button>
+      <div
+        className="sticky bottom-0 mt-auto flex w-full bg-white pb-4 pt-4"
+        ref={parent}
+      >
+        {selectedOption !== null && (
+          <Button
+            className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
+            asChild
+          >
+            {selectedOption === "overview" && (
+              <Link href="/add-booth/set-position">선택완료</Link>
+            )}
+            {/* TODO navigate to detailed add-booth route */}
+          </Button>
+        )}
       </div>
     </>
   );
