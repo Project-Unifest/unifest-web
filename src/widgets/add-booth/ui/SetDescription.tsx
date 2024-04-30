@@ -8,8 +8,6 @@ import Link from "next/link";
 import React, { ChangeEvent, useState } from "react";
 
 export function SetDescription() {
-  const [descriptionInput, setDescriptionInput] = useState<string>("");
-
   const [parent] = useAutoAnimate();
 
   const { editDescription, name, category, description } = useBoothStore(
