@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/src/shared/ui/select";
 
-export function SignUpForm() {
+export function SignUp() {
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
