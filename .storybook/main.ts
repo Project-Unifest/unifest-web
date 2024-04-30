@@ -20,7 +20,13 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
-  staticDirs: ["..\\public"],
+  staticDirs: [
+    "..\\public",
+    {
+      from: "../static/fonts",
+      to: "static/fonts",
+    },
+  ],
   features: {
     experimentalRSC: true,
   },

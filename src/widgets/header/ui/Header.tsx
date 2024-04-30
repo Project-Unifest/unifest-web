@@ -1,13 +1,77 @@
+"use client";
+
+import { AnimatedPathSegment } from "@/app/add-booth/layout";
+import { Button } from "@/src/shared/ui/Button";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
+enum HeaderlessPathSegment {
+  SET_POSITION = "set-position",
+}
+
+enum TextlessPathSegment {
+  SET_NAME = "set-name",
+  SET_CATEGORY = "set-category",
+  SET_DESCRIPTION = "set-description",
+}
+
+enum SignInPathSegment {
+  SIGN_IN = "sign-in",
+}
+
+// TODO change Header on sign-in and sign-on page
+
 export function Header() {
-  return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
-      <div className="shrink-0">Chitchat logogo</div>
-      <div>
-        <div className="text-xl font-medium text-black">ChitChat</div>
-        <p className="text-slate-500">You have a new message!</p>
+  const router = useRouter();
+  const pathname = usePathname()!;
+
+  const isHeaderless = Object.values(HeaderlessPathSegment).some((segment) =>
+    pathname.includes(segment),
+  );
+
+  const isTextless = Object.values(TextlessPathSegment).some((segment) =>
+    pathname.includes(segment),
+  );
+
+  const headerText = Object.values(SignInPathSegment).some((segment) =>
+    pathname.includes(segment),
+  )
+    ? "운영자/학생회 로그인"
+    : "운영자모드";
+
+  if (isHeaderless) {
+    return <div />;
+  }
+
+  if (isTextless) {
+    return (
+      <div className="px-5">
+        <button
+          type="button"
+          aria-label="back"
+          className="p-4"
+          onClick={() => router.back()}
+        >
+          <ChevronLeftIcon />
+        </button>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <header>
+      <div className="relative flex items-center justify-center rounded-b-3xl pb-6 pt-5 shadow-lg">
+        <div className="relative">
+          {pathname !== "/" && (
+            <button type="button" onClick={() => router.back()}>
+              {/* TODO place icon on the left side */}
+              <ChevronLeftIcon />
+            </button>
+          )}
+        </div>
+        <div className="shrink-0 font-black">{headerText}</div>
+      </div>
+    </header>
   );
 }

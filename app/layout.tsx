@@ -1,18 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import localFont from "next/font/local";
-
 import { Header } from "@/src/widgets/header";
-
-const inter = Inter({ subsets: ["latin"] });
-
-const pretendard = localFont({
-  src: "../static/fonts/PretendardVariable.woff2",
-  display: "swap",
-  weight: "45 920",
-  variable: "--font-pretendard",
-});
+import { pretendard } from "@/src/shared/lib/fonts";
+import { BoothStoreProvider } from "@/src/shared/model/provider/booth-store-provider";
+import { MSWProvider } from "@/src/app/ui/MSWProvider";
 
 export const metadata: Metadata = {
   title: "Unifest",
@@ -25,12 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kr" className={`${pretendard.className}`}>
+    <html lang="kr" className={pretendard.className}>
       <body>
-        <div className="mx-auto flex w-full flex-col justify-center align-top md:w-[768px]">
-          <Header />
-          {children}
-        </div>
+        <MSWProvider>
+          <BoothStoreProvider>
+            <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
+              <Header />
+              <div className="flex flex-auto flex-col items-stretch justify-start px-5">
+                {children}
+              </div>
+            </div>
+          </BoothStoreProvider>
+        </MSWProvider>
       </body>
     </html>
   );
