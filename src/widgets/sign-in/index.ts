@@ -1,1 +1,1 @@
-export { SignIn } from "./ui/SignIn";
+export { SignIn as SignInForm } from "./ui/SignIn";
