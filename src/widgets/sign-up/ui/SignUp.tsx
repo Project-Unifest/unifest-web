@@ -22,6 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/shared/ui/select";
+import { signUp } from "@/src/features/auth/model/auth";
+import { useRouter } from "next/navigation";
 
 export function SignUp() {
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -35,8 +37,11 @@ export function SignUp() {
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const router = useRouter();
+
+  const onSubmit = async (data: any) => {
+    await signUp(data);
+    router.push("/sign-in");
   };
 
   // TODO style form based on Figma
