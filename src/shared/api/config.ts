@@ -36,7 +36,7 @@ export const handleResponse = async (response: Response): Promise<any> => {
 };
 
 export const BASE_URL = process.env["BASE_URL"];
-export const API_URL = process.env["API_URL"];
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const GET = "GET";
 export const POST = "POST";
@@ -50,4 +50,14 @@ export enum HTTPMethod {
   PUT = "PUT",
   DELETE = "DELETE",
   PATCH = "PATCH",
+}
+
+export enum HTTPHeaderKey {
+  CONTENT_TYPE = "content-type",
+  AUTHORIZATION = "authorization",
+  REFRESH_TOKEN = "Refreshtoken",
+}
+
+export enum HTTPHeaderValue {
+  APPLICATION_JSON = "application/json",
 }
