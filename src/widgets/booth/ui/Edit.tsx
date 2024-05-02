@@ -1,8 +1,6 @@
 "use client";
 
-import { Menu } from "@/src/entities/menu/ui/Menu";
 import { EditImageBox } from "@/src/features/booth/ui/EditImageBox";
-import { EditTextBox } from "@/src/features/booth/ui/EditTextBox";
 import { CampusPosition } from "@/src/shared/model/store/booth-store";
 import {
   Form,
@@ -12,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/shared/ui/form";
-import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { boothEditSchema } from "../model/booth-edit";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,7 +20,6 @@ import { Button } from "@/src/shared/ui/Button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -32,7 +28,6 @@ import { Label } from "@/src/shared/ui/label";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
-import { ToggleGroup, ToggleGroupItem } from "@/src/shared/ui/toggle-group";
 
 export function Edit() {
   const form = useForm<z.infer<typeof boothEditSchema>>({
@@ -48,10 +43,6 @@ export function Edit() {
       menu: [],
     },
   });
-
-  console.log(form.formState.errors);
-  console.log(form.formState.isValid);
-  console.log(form.getValues("category"));
 
   // TODO fetch booth from the backend
 
