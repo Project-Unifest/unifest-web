@@ -1,8 +1,5 @@
+import { getMessage } from "@/src/shared/model/zod";
 import { z } from "zod";
-
-const getMessage = (text: string) => {
-  return { message: text };
-};
 
 export const signUpSchema = z
   .object({
