@@ -1,4 +1,4 @@
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import PencilIcon from "@/src/shared/ui/PencilIcon";
 import Link from "next/link";
 import React from "react";

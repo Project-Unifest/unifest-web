@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import { Input } from "@/src/shared/ui/input";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";

@@ -1,4 +1,4 @@
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import { Input } from "@/src/shared/ui/input";
 import React from "react";
 
