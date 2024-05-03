@@ -2,7 +2,7 @@
 
 import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
 import AlcoholIcon from "@/src/shared/ui/AlcoholIcon";
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import CircleEllipsisIcon from "@/src/shared/ui/CircleEllipsisIcon";
 import EventIcon from "@/src/shared/ui/EventIcon";
 import FoodIcon from "@/src/shared/ui/FoodIcon";

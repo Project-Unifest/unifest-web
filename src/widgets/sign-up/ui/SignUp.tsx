@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signUpSchema } from "../lib/sign-up-schema";
 import { Input } from "@/src/shared/ui/input";
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import { z } from "zod";
 import { Checkbox } from "@/src/shared/ui/checkbox";
 import {

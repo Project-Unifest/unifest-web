@@ -1,4 +1,4 @@
-import { Button as BaseButton } from "@/src/shared/ui/Button";
+import { Button as BaseButton } from "@/src/shared/ui/button";
 import Link from "next/link";
 import React from "react";
 
