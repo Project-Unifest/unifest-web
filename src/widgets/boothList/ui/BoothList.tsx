@@ -4,7 +4,7 @@ import { AddBoothButton } from "@/src/features/booth";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { SwitchButton } from "@/src/features/booth/ui/SwitchButton";
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import React from "react";
 
 export async function BoothList() {

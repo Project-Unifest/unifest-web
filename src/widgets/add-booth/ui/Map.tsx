@@ -2,7 +2,7 @@
 
 import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
 import { CampusPosition } from "@/src/shared/model/store/booth-store";
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import {
   APIProvider,

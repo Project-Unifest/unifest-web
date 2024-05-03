@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import { Label } from "@/src/shared/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
 import { useAutoAnimate } from "@formkit/auto-animate/react";

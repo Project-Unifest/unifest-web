@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/src/shared/ui/input";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { z } from "zod";
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import {
   Card,
   CardContent,
