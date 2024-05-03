@@ -1,7 +1,7 @@
 "use client";
 
 import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";

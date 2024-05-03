@@ -1,7 +1,7 @@
 "use client";
 
 import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
-import { Button } from "@/src/shared/ui/Button";
+import { Button } from "@/src/shared/ui/button";
 import DotIcon from "@/src/shared/ui/DotIcon";
 import RedDotIcon from "@/src/shared/ui/RedDotIcon";
 import { Input } from "@/src/shared/ui/input";
