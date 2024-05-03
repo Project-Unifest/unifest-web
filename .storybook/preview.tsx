@@ -4,6 +4,7 @@ import { initialize, mswLoader } from "msw-storybook-addon";
 import "../app/globals.css";
 import "./preview.css";
 import { BoothStoreProvider } from "../src/shared/model/provider/booth-store-provider";
+import { AuthStoreProvider } from "../src/shared/model/provider/auth-store-provider";
 import handlers from "../mocks/api/handlers";
 
 initialize();
@@ -15,11 +16,13 @@ const preview: Preview = {
   decorators: [
     (Story) => {
       return (
-        <BoothStoreProvider>
-          <div style={{ fontFamily: "Pretendard, sans-serif" }}>
-            <Story />
-          </div>
-        </BoothStoreProvider>
+        <AuthStoreProvider>
+          <BoothStoreProvider>
+            <div style={{ fontFamily: "Pretendard, sans-serif" }}>
+              <Story />
+            </div>
+          </BoothStoreProvider>
+        </AuthStoreProvider>
       );
     },
   ],

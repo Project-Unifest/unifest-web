@@ -5,40 +5,91 @@ import { Input } from "@/src/shared/ui/input";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { signInSchema } from "../model/sign-in-schema";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/src/shared/ui/form";
+import { useRouter } from "next/navigation";
+import { signIn } from "../api/sign-in";
+import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 
 export function SignIn() {
   const [parent] = useAutoAnimate();
+  const setCredentials = useAuthStore((state) => state.setCredentials);
 
-  const [id, setId] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const router = useRouter();
 
-  console.log(id);
-  console.log(password);
+  const onSubmit = async (data: any) => {
+    const credentials = await signIn(data);
+    setCredentials(credentials);
+    router.push("/");
+  };
 
   return (
     <div ref={parent} className="mt-10">
-      <div className="space-y-2">
-        {/* TODO remove black outline around input */}
-        <Input
-          placeholder="아이디를 입력해주세요"
-          type="email"
-          value={id}
-          onChange={(event) => setId(event.target.value)}
-          className="outline-none focus:border-pink"
-        />
-        <Input
-          placeholder="비밀번호를 입력해주세요"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="focus:border-pink"
-        />
-      </div>
-      {id && password && (
-        <Button className="mt-4 w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink">
-          로그인
-        </Button>
-      )}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          {/* TODO remove black outline around input */}
+          <div className="space-y-2">
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="아이디를 입력해주세요"
+                      type="email"
+                      {...field}
+                      className="outline-none focus:border-pink"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="비밀번호를 입력해주세요"
+                      type="password"
+                      {...field}
+                      className="outline-none focus:border-pink"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          {form.formState.isValid && (
+            <Button
+              className="mt-4 w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
+              type="submit"
+            >
+              로그인
+            </Button>
+          )}
+        </form>
+      </Form>
 
       <div className="mt-3">
         <Link href="./sign-up">가입하기</Link>
