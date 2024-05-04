@@ -19,26 +19,50 @@ export const defaultInitState = {
   refreshToken: "",
 } satisfies AuthState;
 
-export const createAuthStore = (initState: AuthState = defaultInitState) => {
-  return createStore<AuthStore>()(
-    devtools(
-      persist(
-        (set) => ({
-          ...initState,
-          setCredentials: (credentials) =>
-            set((state) => ({
-              ...state,
-              accessToken: credentials.accessToken,
-              refreshToken: credentials.refreshToken,
-            })),
-          refresh: (newAccessToken) =>
-            set((state) => ({ ...state, accessToken: newAccessToken })),
-          reset: () => set((state) => ({ ...state, ...defaultInitState })),
-        }),
-        {
-          name: "auth-storage",
-        },
-      ),
-    ),
-  );
-};
+export const createAuthStore =
+  process.env.NODE_ENV === "development"
+    ? (initState: AuthState = defaultInitState) => {
+        return createStore<AuthStore>()(
+          devtools(
+            persist(
+              (set) => ({
+                ...initState,
+                setCredentials: (credentials) =>
+                  set((state) => ({
+                    ...state,
+                    accessToken: credentials.accessToken,
+                    refreshToken: credentials.refreshToken,
+                  })),
+                refresh: (newAccessToken) =>
+                  set((state) => ({ ...state, accessToken: newAccessToken })),
+                reset: () =>
+                  set((state) => ({ ...state, ...defaultInitState })),
+              }),
+              {
+                name: "auth-storage",
+              },
+            ),
+          ),
+        );
+      }
+    : (initState: AuthState = defaultInitState) => {
+        return createStore<AuthStore>()(
+          persist(
+            (set) => ({
+              ...initState,
+              setCredentials: (credentials) =>
+                set((state) => ({
+                  ...state,
+                  accessToken: credentials.accessToken,
+                  refreshToken: credentials.refreshToken,
+                })),
+              refresh: (newAccessToken) =>
+                set((state) => ({ ...state, accessToken: newAccessToken })),
+              reset: () => set((state) => ({ ...state, ...defaultInitState })),
+            }),
+            {
+              name: "auth-storage",
+            },
+          ),
+        );
+      };
