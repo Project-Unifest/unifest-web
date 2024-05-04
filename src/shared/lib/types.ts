@@ -20,4 +20,20 @@ export interface Booth {
   enabled: boolean;
 }
 
+export interface Member {
+  email: string;
+  phoneNum: string;
+  booths: Booth[];
+  schoolId: number;
+}
+
+export enum BoothCategory {
+  BAR = "BAR",
+  FOOD = "FOOD",
+  EVENT = "EVENT",
+  NORMAL = "NORMAL",
+  MEDICAL = "MEDICAL",
+  TOILET = "TOILET",
+}
+
 export type BoothList = Booth[];
