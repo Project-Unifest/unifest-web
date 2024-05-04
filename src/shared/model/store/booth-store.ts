@@ -38,25 +38,50 @@ export const defaultInitState = {
   },
 } satisfies BoothState;
 
-export const createBoothStore = (initState: BoothState = defaultInitState) => {
-  return createStore<BoothStore>()(
-    devtools(
-      persist(
-        (set) => ({
-          ...initState,
-          editName: (newName) => set((state) => ({ ...state, name: newName })),
-          editCategory: (newCategory) =>
-            set((state) => ({ ...state, category: newCategory })),
-          editDescription: (newDescription) =>
-            set((state) => ({ ...state, description: newDescription })),
-          editPosition: (newPosition) =>
-            set((state) => ({ ...state, position: { ...newPosition } })),
-          reset: () => set((state) => ({ ...state, ...defaultInitState })),
-        }),
-        {
-          name: "booth-storage",
-        },
-      ),
-    ),
-  );
-};
+export const createBoothStore =
+  process.env.NODE_ENV === "development"
+    ? (initState: BoothState = defaultInitState) => {
+        return createStore<BoothStore>()(
+          devtools(
+            persist(
+              (set) => ({
+                ...initState,
+                editName: (newName) =>
+                  set((state) => ({ ...state, name: newName })),
+                editCategory: (newCategory) =>
+                  set((state) => ({ ...state, category: newCategory })),
+                editDescription: (newDescription) =>
+                  set((state) => ({ ...state, description: newDescription })),
+                editPosition: (newPosition) =>
+                  set((state) => ({ ...state, position: { ...newPosition } })),
+                reset: () =>
+                  set((state) => ({ ...state, ...defaultInitState })),
+              }),
+              {
+                name: "booth-storage",
+              },
+            ),
+          ),
+        );
+      }
+    : (initState: BoothState = defaultInitState) => {
+        return createStore<BoothStore>()(
+          persist(
+            (set) => ({
+              ...initState,
+              editName: (newName) =>
+                set((state) => ({ ...state, name: newName })),
+              editCategory: (newCategory) =>
+                set((state) => ({ ...state, category: newCategory })),
+              editDescription: (newDescription) =>
+                set((state) => ({ ...state, description: newDescription })),
+              editPosition: (newPosition) =>
+                set((state) => ({ ...state, position: { ...newPosition } })),
+              reset: () => set((state) => ({ ...state, ...defaultInitState })),
+            }),
+            {
+              name: "booth-storage",
+            },
+          ),
+        );
+      };
