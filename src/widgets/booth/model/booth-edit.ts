@@ -1,10 +1,16 @@
+import { BoothCategory } from "@/src/shared/lib/types";
 import { getMessage } from "@/src/shared/model/zod";
 import { z } from "zod";
 
 export const boothEditSchema = z.object({
   thumbnail: z.string().url(getMessage("올바른 URL이 아닙니다")),
   category: z.enum(
-    ["bar", "food", "event", "more"],
+    [
+      BoothCategory.BAR,
+      BoothCategory.FOOD,
+      BoothCategory.EVENT,
+      BoothCategory.NORMAL,
+    ],
     getMessage("올바른 선택지가 아닙니다"),
   ),
   name: z.string().min(1, getMessage("제목을 입력해주세요")),
