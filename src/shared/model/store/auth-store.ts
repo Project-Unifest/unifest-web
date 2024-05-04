@@ -4,12 +4,14 @@ import { createStore } from "zustand/vanilla";
 export type AuthState = {
   accessToken: string;
   refreshToken: string;
+  isHydrated: boolean;
 };
 
 export type AuthActions = {
   setCredentials: (credentials: AuthState) => void;
   refresh: (newAccessToken: string) => void;
   reset: () => void;
+  setHydrated: () => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -17,6 +19,7 @@ export type AuthStore = AuthState & AuthActions;
 export const defaultInitState = {
   accessToken: "",
   refreshToken: "",
+  isHydrated: false,
 } satisfies AuthState;
 
 export const createAuthStore =
@@ -37,6 +40,8 @@ export const createAuthStore =
                   set((state) => ({ ...state, accessToken: newAccessToken })),
                 reset: () =>
                   set((state) => ({ ...state, ...defaultInitState })),
+                setHydrated: () =>
+                  set((state) => ({ ...state, isHydrated: true })),
               }),
               {
                 name: "auth-storage",
@@ -59,9 +64,14 @@ export const createAuthStore =
               refresh: (newAccessToken) =>
                 set((state) => ({ ...state, accessToken: newAccessToken })),
               reset: () => set((state) => ({ ...state, ...defaultInitState })),
+              setHydrated: () =>
+                set((state) => ({ ...state, isHydrated: true })),
             }),
             {
               name: "auth-storage",
+              onRehydrateStorage: () => (state, error) => {
+                state?.setHydrated();
+              },
             },
           ),
         );
