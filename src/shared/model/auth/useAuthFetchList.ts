@@ -40,7 +40,7 @@ export default function useAuthFetch(fetchFunc: FetchFunc) {
         const { code: restoredCode } = await restoredResponse.json();
         if (restoredCode === 2003) {
           reset();
-          router.push("/");
+          router.push("/sign-in");
         }
       }
 

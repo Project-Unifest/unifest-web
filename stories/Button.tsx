@@ -46,7 +46,6 @@ export const Button = ({
     const fetchEffect = async () => {
       const response = await fetch("http://localhost:3000/hello");
       const data = await response.json();
-      console.log(data);
       setText(data.firstName);
     };
 

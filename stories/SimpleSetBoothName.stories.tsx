@@ -16,10 +16,7 @@ const meta = {
       const reset = useBoothStore((state) => state.reset);
       const name = useBoothStore((state) => state.name);
 
-      console.log(name);
-
       useEffect(() => {
-        console.log("reset invoked");
         reset();
       }, [reset]);
 

@@ -4,20 +4,25 @@ import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider"
 import { Button } from "@/src/shared/ui/button";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent } from "react";
+import { addBooth } from "../model/add-booth";
+import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
+import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 
 export function SetDescription() {
   const [parent] = useAutoAnimate();
+  const router = useRouter();
+  const addAuthBooth = useAuthFetch(addBooth);
 
-  const { editDescription, name, category, description } = useBoothStore(
-    (state) => ({
+  const { editDescription, name, category, description, position } =
+    useBoothStore((state) => ({
       editDescription: state.editDescription,
       name: state.name,
       category: state.category,
       description: state.description,
-    }),
-  );
+      position: state.position,
+    }));
 
   const isFormValid = name && category && description;
 
@@ -26,6 +31,42 @@ export function SetDescription() {
   ) => {
     // TODO filter description input
     editDescription(event.target.value);
+  };
+
+  const handleSubmitButtonClick = async () => {
+    const data = await addAuthBooth({
+      name,
+      category,
+      description,
+      longitude: position.longitude,
+      latitude: position.latitude,
+    });
+
+    if (!data) {
+      alert("에러가 발생했습니다.");
+      router.push("/");
+      return;
+    }
+
+    router.push("/");
+  };
+
+  const handleSkipButtonClick = async () => {
+    const data = await addAuthBooth({
+      name,
+      category,
+      description,
+      longitude: position.longitude,
+      latitude: position.latitude,
+    });
+
+    if (!data) {
+      alert("에러가 발생했습니다.");
+      router.push("/");
+      return;
+    }
+
+    router.push("/");
   };
 
   return (
@@ -51,16 +92,16 @@ export function SetDescription() {
       >
         <Button
           className="border-[#b7b7b7 flex-1 rounded-[10px] bg-white py-3 text-[#b7b7b7] hover:bg-white"
-          asChild
+          onClick={handleSkipButtonClick}
         >
-          <Link href="/">건너뛰기</Link>
+          건너뛰기
         </Button>
         {isFormValid && (
           <Button
             className="w-full flex-[2] rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
-            asChild
+            onClick={handleSubmitButtonClick}
           >
-            <Link href="/">입력완료</Link>
+            입력완료
           </Button>
         )}
       </div>
