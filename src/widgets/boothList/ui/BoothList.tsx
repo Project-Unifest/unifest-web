@@ -1,14 +1,40 @@
+"use client";
+
 import { BoothItem } from "@/src/entities/booth";
 import { getBoothList } from "@/src/entities/booth/api/boothList";
 import { AddBoothButton } from "@/src/features/booth";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { SwitchButton } from "@/src/features/booth/ui/SwitchButton";
-import { Button } from "@/src/shared/ui/button";
-import React from "react";
+import { Booth, Member } from "@/src/shared/lib/types";
+import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
+import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
+import { useEffect, useState } from "react";
 
-export async function BoothList() {
-  const { data: boothList } = await getBoothList();
+export function BoothList() {
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const [boothList, setBoothList] = useState<Booth[] | null>(null);
+  const getAuthBooth = useAuthFetch(getBoothList);
+
+  useEffect(() => {
+    const getBoothListEffect = async () => {
+      const data = await getAuthBooth();
+
+      if (data) {
+        const { booths } = data as Member;
+        setBoothList(booths);
+      }
+    };
+    if (accessToken) {
+      getBoothListEffect();
+    }
+  }, [getAuthBooth, setBoothList, accessToken]);
+
+  if (boothList === null) {
+    return (
+      <div className="justify-content flex items-center"> 로딩중입니다.</div>
+    );
+  }
 
   if (!boothList?.length) {
     return (

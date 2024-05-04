@@ -61,3 +61,10 @@ export enum HTTPHeaderKey {
 export enum HTTPHeaderValue {
   APPLICATION_JSON = "application/json",
 }
+
+export const getAuthorziationValue = (accessToken: string) =>
+  `Bearer ${accessToken}`;
+
+export const getAccessToken = (authorization: string) => {
+  return authorization.split(" ")[1];
+};

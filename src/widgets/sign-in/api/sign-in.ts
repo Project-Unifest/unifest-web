@@ -18,7 +18,6 @@ export const signIn = async (credentials: Credentials) => {
 
   const accessToken = authorization.split(" ")[1];
   const refreshToken = response.headers.get(HTTPHeaderKey.REFRESH_TOKEN)!;
-  console.log(refreshToken);
 
   return { accessToken, refreshToken };
 };
