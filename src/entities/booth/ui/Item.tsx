@@ -25,7 +25,7 @@ export function Item({
   switchButton,
 }: ItemPropsType) {
   return (
-    <Card>
+    <Card data-testid={`booth-item-${name}`}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>{name}</CardTitle>

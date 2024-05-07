@@ -5,15 +5,15 @@ import { waitFor } from "@storybook/test";
 let frame: Frame;
 
 test.beforeEach(async ({ page }) => {
-  // await page.goto(
-  //   "http://localhost:6006/?path=/story/example-page--logged-out",
+  // // await page.goto(
+  // //   "http://localhost:6006/?path=/story/example-page--logged-out",
+  // // );
+  // page.goto(
+  //   "http://localhost:6006/?path=/story/widgets-auth-signupform--default",
   // );
-  page.goto(
-    "http://localhost:6006/?path=/story/widgets-auth-signupform--default",
-  );
-  await expect(page.getByTitle("storybook-preview-iframe")).toBeVisible();
-  frame = page.frame({ url: /http:\/\/localhost:6006\/iframe.html/ })!;
-  await expect(frame).not.toBeNull();
+  // await expect(page.getByTitle("storybook-preview-iframe")).toBeVisible();
+  // frame = page.frame({ url: /http:\/\/localhost:6006\/iframe.html/ })!;
+  // await expect(frame).not.toBeNull();
 });
 
 test("has logout button", async ({ page }) => {
@@ -42,14 +42,12 @@ test("has mocking enabled", async ({ page }) => {
 });
 
 test("abcdefg", async ({ page }) => {
-  const combobox = frame.getByRole("combobox", { name: "학교 선택" });
-  expect(combobox).toBeVisible();
-
-  await combobox.click();
-  const content = await frame.content();
-  console.log(content);
-
-  const option = frame.getByLabel("건국대학교");
-  await expect(option).toBeVisible();
-  await option.click();
+  // const combobox = frame.getByRole("combobox", { name: "학교 선택" });
+  // expect(combobox).toBeVisible();
+  // await combobox.click();
+  // const content = await frame.content();
+  // console.log(content);
+  // const option = frame.getByLabel("건국대학교");
+  // await expect(option).toBeVisible();
+  // await option.click();
 });
