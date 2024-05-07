@@ -34,32 +34,17 @@ export function SetDescription() {
     editDescription(event.target.value);
   };
 
+  // FIXME remove thumbnail and location from the field when the backend has been fixed
   const handleSubmitButtonClick = async () => {
-    // const data = await addAuthBooth({
-    //   name,
-    //   category,
-    //   description,
-    //   longitude: position.longitude,
-    //   latitude: position.latitude,
-    //   festivalId: 1,
-    //   detail: "1213",
-    //   warning: "124124124",
-    //   location: "124214",
-    //   thumbnail: "1241242",
-    // });
-
     const data = await addAuthBooth({
-      name: "대학원생 부스2",
-      category: "BAR",
-      description: "대학원생도 축제를 즐길 권리가 있다!",
-      detail: "",
-      thumbnail:
-        "https://blog.kakaocdn.net/dn/lnSa2/btrr13iiqDM/HZY4AHaN6LHLZC7JmVEz3k/img.jpg",
-      warning: "대학원생 전용 부스",
+      name,
+      category,
+      description,
+      thumbnail: "",
+      longitude: longitude,
+      latitude: latitude,
       festivalId: 1,
-      location: "신공학관 앞",
-      latitude: 37.54081,
-      longitude: 127.0791,
+      location: "위치 설명을 달아주세요",
     });
 
     if (!data) {
@@ -72,27 +57,15 @@ export function SetDescription() {
   };
 
   const handleSkipButtonClick = async () => {
-    // const data = await addAuthBooth({
-    //   name,
-    //   category,
-    //   description,
-    //   longitude: position.longitude,
-    //   latitude: position.latitude,
-    //   festivalId: 1,
-    // });
-
     const data = await addAuthBooth({
-      name: "대학원생 부스2",
-      category: "BAR",
-      description: "대학원생도 축제를 즐길 권리가 있다!",
-      detail: "",
-      thumbnail:
-        "https://blog.kakaocdn.net/dn/lnSa2/btrr13iiqDM/HZY4AHaN6LHLZC7JmVEz3k/img.jpg",
-      warning: "대학원생 전용 부스",
+      name,
+      category,
+      description,
+      thumbnail: "",
+      longitude: longitude,
+      latitude: latitude,
       festivalId: 1,
-      location: "신공학관 앞",
-      latitude: 37.54081,
-      longitude: 127.0791,
+      location: "위치 설명을 달아주세요",
     });
 
     if (!data) {
