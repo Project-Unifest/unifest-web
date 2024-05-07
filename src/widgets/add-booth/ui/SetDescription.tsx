@@ -1,6 +1,6 @@
 "use client";
 
-import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
+import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { Button } from "@/src/shared/ui/button";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -15,13 +15,14 @@ export function SetDescription() {
   const router = useRouter();
   const addAuthBooth = useAuthFetch(addBooth);
 
-  const { editDescription, name, category, description, position } =
-    useBoothStore((state) => ({
+  const { editDescription, name, category, description, latitude, longitude } =
+    useBoothDraftStore((state) => ({
       editDescription: state.editDescription,
       name: state.name,
       category: state.category,
       description: state.description,
-      position: state.position,
+      latitude: state.latitude,
+      longitude: state.longitude,
     }));
 
   const isFormValid = name && category && description;
@@ -34,12 +35,31 @@ export function SetDescription() {
   };
 
   const handleSubmitButtonClick = async () => {
+    // const data = await addAuthBooth({
+    //   name,
+    //   category,
+    //   description,
+    //   longitude: position.longitude,
+    //   latitude: position.latitude,
+    //   festivalId: 1,
+    //   detail: "1213",
+    //   warning: "124124124",
+    //   location: "124214",
+    //   thumbnail: "1241242",
+    // });
+
     const data = await addAuthBooth({
-      name,
-      category,
-      description,
-      longitude: position.longitude,
-      latitude: position.latitude,
+      name: "대학원생 부스2",
+      category: "BAR",
+      description: "대학원생도 축제를 즐길 권리가 있다!",
+      detail: "",
+      thumbnail:
+        "https://blog.kakaocdn.net/dn/lnSa2/btrr13iiqDM/HZY4AHaN6LHLZC7JmVEz3k/img.jpg",
+      warning: "대학원생 전용 부스",
+      festivalId: 1,
+      location: "신공학관 앞",
+      latitude: 37.54081,
+      longitude: 127.0791,
     });
 
     if (!data) {
@@ -52,12 +72,27 @@ export function SetDescription() {
   };
 
   const handleSkipButtonClick = async () => {
+    // const data = await addAuthBooth({
+    //   name,
+    //   category,
+    //   description,
+    //   longitude: position.longitude,
+    //   latitude: position.latitude,
+    //   festivalId: 1,
+    // });
+
     const data = await addAuthBooth({
-      name,
-      category,
-      description,
-      longitude: position.longitude,
-      latitude: position.latitude,
+      name: "대학원생 부스2",
+      category: "BAR",
+      description: "대학원생도 축제를 즐길 권리가 있다!",
+      detail: "",
+      thumbnail:
+        "https://blog.kakaocdn.net/dn/lnSa2/btrr13iiqDM/HZY4AHaN6LHLZC7JmVEz3k/img.jpg",
+      warning: "대학원생 전용 부스",
+      festivalId: 1,
+      location: "신공학관 앞",
+      latitude: 37.54081,
+      longitude: 127.0791,
     });
 
     if (!data) {

@@ -1,19 +1,15 @@
 import { devtools, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
+import { Booth } from "../../lib/types";
 
 export interface Position {
   latitude: number;
   longitude: number;
 }
 
-export type BoothState = {
-  name: string;
-  category: string;
-  description: string;
-  position: Position;
-};
+export type BoothDraftState = Omit<Booth, "id">;
 
-export type BoothActions = {
+export type BoothDraftActions = {
   editName: (newName: string) => void;
   editCategory: (newCategory: string) => void;
   editDescription: (newDescription: string) => void;
@@ -21,7 +17,7 @@ export type BoothActions = {
   reset: () => void;
 };
 
-export type BoothStore = BoothState & BoothActions;
+export type BoothDraftStore = BoothDraftState & BoothDraftActions;
 
 export enum CampusPosition {
   latitude = 37.542352,
@@ -32,16 +28,18 @@ export const defaultInitState = {
   name: "",
   category: "",
   description: "",
-  position: {
-    latitude: CampusPosition.latitude,
-    longitude: CampusPosition.longitude,
-  },
-} satisfies BoothState;
+  detail: "",
+  thumbnail: "",
+  warning: "",
+  location: "",
+  latitude: CampusPosition.latitude,
+  longitude: CampusPosition.longitude,
+} satisfies BoothDraftState;
 
-export const createBoothStore =
+export const createBoothDraftStore =
   process.env.NODE_ENV === "development"
-    ? (initState: BoothState = defaultInitState) => {
-        return createStore<BoothStore>()(
+    ? (initState: BoothDraftState = defaultInitState) => {
+        return createStore<BoothDraftStore>()(
           devtools(
             persist(
               (set) => ({
@@ -64,8 +62,8 @@ export const createBoothStore =
           ),
         );
       }
-    : (initState: BoothState = defaultInitState) => {
-        return createStore<BoothStore>()(
+    : (initState: BoothDraftState = defaultInitState) => {
+        return createStore<BoothDraftStore>()(
           persist(
             (set) => ({
               ...initState,
@@ -76,11 +74,15 @@ export const createBoothStore =
               editDescription: (newDescription) =>
                 set((state) => ({ ...state, description: newDescription })),
               editPosition: (newPosition) =>
-                set((state) => ({ ...state, position: { ...newPosition } })),
+                set((state) => ({
+                  ...state,
+                  latitude: newPosition.latitude,
+                  longitude: newPosition.longitude,
+                })),
               reset: () => set((state) => ({ ...state, ...defaultInitState })),
             }),
             {
-              name: "booth-storage",
+              name: "booth-draft-storage",
             },
           ),
         );

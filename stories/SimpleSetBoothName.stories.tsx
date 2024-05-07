@@ -1,7 +1,7 @@
 import {
-  BoothStoreProvider,
-  useBoothStore,
-} from "@/src/shared/model/provider/booth-store-provider";
+  BoothDraftStoreProvider,
+  useBoothDraftStore,
+} from "@/src/shared/model/provider/booth-draft-store-provider";
 import { OverviewSetBoothName } from "@/src/widgets/add-booth";
 import { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
@@ -13,8 +13,8 @@ const meta = {
   tags: ["autodocs"],
   decorators: [
     (Story) => {
-      const reset = useBoothStore((state) => state.reset);
-      const name = useBoothStore((state) => state.name);
+      const reset = useBoothDraftStore((state) => state.reset);
+      const name = useBoothDraftStore((state) => state.name);
 
       useEffect(() => {
         reset();

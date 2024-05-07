@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/src/widgets/header";
 import { pretendard } from "@/src/shared/lib/fonts";
-import { BoothStoreProvider } from "@/src/shared/model/provider/booth-store-provider";
+import { BoothDraftStoreProvider } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { MSWProvider } from "@/src/app/ui/MSWProvider";
 import { AuthStoreProvider } from "@/src/shared/model/provider/auth-store-provider";
+import { BoothListStoreProvider } from "@/src/shared/model/provider/booth-list-store-provider";
 
 export const metadata: Metadata = {
   title: "Unifest",
@@ -21,14 +22,16 @@ export default function RootLayout({
       <body>
         <MSWProvider>
           <AuthStoreProvider>
-            <BoothStoreProvider>
-              <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
-                <Header />
-                <div className="flex flex-auto flex-col items-stretch justify-start px-5">
-                  {children}
+            <BoothDraftStoreProvider>
+              <BoothListStoreProvider>
+                <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
+                  <Header />
+                  <div className="flex flex-auto flex-col items-stretch justify-start px-5">
+                    {children}
+                  </div>
                 </div>
-              </div>
-            </BoothStoreProvider>
+              </BoothListStoreProvider>
+            </BoothDraftStoreProvider>
           </AuthStoreProvider>
         </MSWProvider>
       </body>

@@ -45,6 +45,9 @@ export const createAuthStore =
               }),
               {
                 name: "auth-storage",
+                onRehydrateStorage: () => (state, error) => {
+                  state?.setHydrated();
+                },
               },
             ),
           ),

@@ -1,7 +1,7 @@
 "use client";
 
 import { BoothCategory } from "@/src/shared/lib/types";
-import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
+import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import AlcoholIcon from "@/src/shared/ui/AlcoholIcon";
 import { Button } from "@/src/shared/ui/button";
 import CircleEllipsisIcon from "@/src/shared/ui/CircleEllipsisIcon";
@@ -15,7 +15,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 export function SetCategory() {
-  const [category, editCategory] = useBoothStore((state) => [
+  const [category, editCategory] = useBoothDraftStore((state) => [
     state.category,
     state.editCategory,
   ]);

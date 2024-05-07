@@ -1,7 +1,7 @@
 "use client";
 
-import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
-import { CampusPosition } from "@/src/shared/model/store/booth-store";
+import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
+import { CampusPosition } from "@/src/shared/model/store/booth-draft-store";
 import { Button } from "@/src/shared/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import {
@@ -17,8 +17,9 @@ import { useRouter } from "next/navigation";
 
 export function GoogleMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  const [{ latitude, longitude }, editPosition] = useBoothStore((state) => [
-    state.position,
+  const [latitude, longitude, editPosition] = useBoothDraftStore((state) => [
+    state.latitude,
+    state.longitude,
     state.editPosition,
   ]);
   const router = useRouter();

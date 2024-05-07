@@ -1,7 +1,7 @@
 "use client";
 
 import { EditImageBox } from "@/src/features/booth/ui/EditImageBox";
-import { CampusPosition } from "@/src/shared/model/store/booth-store";
+import { CampusPosition } from "@/src/shared/model/store/booth-draft-store";
 import {
   Form,
   FormControl,

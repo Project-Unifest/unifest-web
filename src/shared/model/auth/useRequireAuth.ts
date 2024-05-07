@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../provider/auth-store-provider";
 import { useRouter } from "next/navigation";
 
@@ -13,6 +13,8 @@ export default function useRequireAuth(requiredAuthType: AuthType) {
     state.refreshToken,
     state.isHydrated,
   ]);
+
+  const isLoading = !isHydrated;
 
   const currentAuthType = (accessToken && AuthType.MEMBER) || AuthType.GUEST;
   const router = useRouter();
@@ -35,4 +37,6 @@ export default function useRequireAuth(requiredAuthType: AuthType) {
       router.push("/");
     }
   }, [router, currentAuthType, requiredAuthType, isHydrated]);
+
+  return isLoading;
 }
