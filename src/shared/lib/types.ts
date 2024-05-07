@@ -6,18 +6,18 @@ export interface Product {
 }
 
 export interface Booth {
-  id: number;
+  id?: number;
   name: string;
   category: string;
-  description: string;
-  detail: string;
+  description?: string;
+  detail?: string;
   thumbnail: string;
-  warning: string;
+  warning?: string;
   location: string;
   latitude: number;
   longitude: number;
-  menus: Product[];
-  enabled: boolean;
+  menus?: Product[];
+  enabled?: boolean;
 }
 
 export interface Member {

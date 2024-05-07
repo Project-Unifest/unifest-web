@@ -3,13 +3,17 @@ import PencilIcon from "@/src/shared/ui/PencilIcon";
 import Link from "next/link";
 import React from "react";
 
-export function EditButton() {
+interface EditButtonPropsType {
+  boothId: number;
+}
+
+export function EditButton({ boothId }: EditButtonPropsType) {
   return (
     <Button
       className="flex-1 rounded-xl border-[#d2d2d2] bg-white text-[#2d2d2d] hover:bg-white"
       asChild
     >
-      <Link href="/edit-booth">
+      <Link href={`/edit-booth/${boothId}`}>
         <PencilIcon />
         부스 편집하기
       </Link>

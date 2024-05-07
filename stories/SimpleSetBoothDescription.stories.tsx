@@ -1,4 +1,4 @@
-import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
+import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { OverviewSetBoothDescription } from "@/src/widgets/add-booth";
 import { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
@@ -9,7 +9,7 @@ const meta = {
   component: OverviewSetBoothDescription,
   decorators: [
     (Story) => {
-      const [reset, editCategory, editName] = useBoothStore((state) => [
+      const [reset, editCategory, editName] = useBoothDraftStore((state) => [
         state.reset,
         state.editCategory,
         state.editName,
