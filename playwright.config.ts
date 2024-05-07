@@ -1,10 +1,14 @@
 import { defineConfig, devices } from "@playwright/test";
+import { PathParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import path from "path";
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, ".", ".env.local") });
+
+const BASE_URL = process.env.BASE_URL;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -24,54 +28,87 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: `${process.env.BASE_URL}`,
+    baseURL: `${BASE_URL}`,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
   },
+  timeout: 5 * 60 * 1000,
 
   /* Configure projects for major browsers */
   projects: [
+    { name: "setup", testMatch: /.*\.setup\.ts/ },
+
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "playwright/.auth/user.json", // use prepared auth state.
+      },
+      dependencies: ["setup"],
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: "firefox",
+      use: {
+        ...devices["Desktop Firefox"],
+        storageState: "playwright/.auth/user.json", // use prepared auth state.
+      },
+      dependencies: ["setup"],
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: "webkit",
+      use: {
+        ...devices["Desktop Safari"],
+        storageState: "playwright/.auth/user.json", // use prepared auth state.
+      },
+      dependencies: ["setup"],
+    },
 
     /* Test against mobile viewports. */
     // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
+    //   name: "Mobile Chrome",
+    //   use: {
+    //     ...devices["Pixel 5"],
+    //     storageState: "playwright/.auth/user.json", // use prepared auth state.
+    //   },
+    //   dependencies: ["setup"],
     // },
     // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
+    //   name: "Mobile Safari",
+    //   use: {
+    //     ...devices["iPhone 12"],
+    //     storageState: "playwright/.auth/user.json", // use prepared auth state.
+    //   },
+    //   dependencies: ["setup"],
     // },
 
     /* Test against branded browsers. */
     // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    //   name: "Microsoft Edge",
+    //   use: {
+    //     ...devices["Desktop Edge"],
+    //     channel: "msedge",
+    //     storageState: "playwright/.auth/user.json", // use prepared auth state.
+    //   },
+    //   dependencies: ["setup"],
     // },
     // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    //   name: "Google Chrome",
+    //   use: {
+    //     ...devices["Desktop Chrome"],
+    //     channel: "chrome",
+    //     storageState: "playwright/.auth/user.json", // use prepared auth state.
+    //   },
+    //   dependencies: ["setup"],
     // },
   ],
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: "yarn storybook",
-  //   url: "http://localhost:6006",
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  webServer: {
+    command: "yarn dev",
+    url: BASE_URL,
+    reuseExistingServer: !process.env.CI,
+  },
 });
