@@ -56,7 +56,7 @@ export const createBoothDraftStore =
                   set((state) => ({ ...state, ...defaultInitState })),
               }),
               {
-                name: "booth-storage",
+                name: "booth-draft-storage",
               },
             ),
           ),
