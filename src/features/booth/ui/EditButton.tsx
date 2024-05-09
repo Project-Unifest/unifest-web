@@ -13,7 +13,7 @@ export function EditButton({ boothId }: EditButtonPropsType) {
       className="flex-1 rounded-xl border-[#d2d2d2] bg-white text-[#2d2d2d] hover:bg-white"
       asChild
     >
-      <Link href={`/edit-booth/${boothId}`}>
+      <Link href={`/edit-booth/${boothId}/position`}>
         <PencilIcon />
         부스 편집하기
       </Link>

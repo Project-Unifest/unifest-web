@@ -60,6 +60,7 @@ export enum HTTPHeaderKey {
 
 export enum HTTPHeaderValue {
   APPLICATION_JSON = "application/json",
+  MULTI_PART_FORM = "multipart/form-data",
 }
 
 export const getAuthorziationValue = (accessToken: string) =>
