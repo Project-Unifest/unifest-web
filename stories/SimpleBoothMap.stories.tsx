@@ -1,4 +1,4 @@
-import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
+import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { OverviewBoothMap } from "@/src/widgets/add-booth";
 import { Meta, StoryObj } from "@storybook/react";
 import { expect, within } from "@storybook/test";
@@ -9,7 +9,7 @@ const meta = {
   component: OverviewBoothMap,
   decorators: [
     (Story) => {
-      const reset = useBoothStore((state) => state.reset);
+      const reset = useBoothDraftStore((state) => state.reset);
 
       useEffect(() => {
         reset();
