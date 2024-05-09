@@ -1,4 +1,4 @@
-import { API_URL } from "@/src/shared/api/config";
+import { API_URL, HTTPHeaderKey } from "@/src/shared/api/config";
 import { HttpMethods } from "msw";
 
 interface AuthDetails {
@@ -23,4 +23,13 @@ export const signUp = async (authDetails: AuthDetails) => {
   });
   const data = response.json();
   return data;
+};
+
+export const restoreAccessToken = async (refreshToken: string) => {
+  const response = await fetch(`${API_URL}/reissue`, {
+    headers: {
+      [`${HTTPHeaderKey.REFRESH_TOKEN}`]: refreshToken,
+    },
+  });
+  return response;
 };

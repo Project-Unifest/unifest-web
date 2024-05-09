@@ -1,6 +1,6 @@
 "use client";
 
-import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
+import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { Button } from "@/src/shared/ui/button";
 import DotIcon from "@/src/shared/ui/DotIcon";
 import RedDotIcon from "@/src/shared/ui/RedDotIcon";
@@ -12,8 +12,8 @@ import React, { ChangeEvent, useState } from "react";
 export function SetName() {
   const [nameInput, setNameInput] = useState("");
   const [parent] = useAutoAnimate();
-  const editName = useBoothStore((state) => state.editName);
-  const name = useBoothStore((state) => state.name);
+  const editName = useBoothDraftStore((state) => state.editName);
+  const name = useBoothDraftStore((state) => state.name);
 
   const handleNameInputChange = (event: ChangeEvent<HTMLInputElement>) =>
     editName(event.target.value);

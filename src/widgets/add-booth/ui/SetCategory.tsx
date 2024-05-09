@@ -1,6 +1,7 @@
 "use client";
 
-import { useBoothStore } from "@/src/shared/model/provider/booth-store-provider";
+import { BoothCategory } from "@/src/shared/lib/types";
+import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import AlcoholIcon from "@/src/shared/ui/AlcoholIcon";
 import { Button } from "@/src/shared/ui/button";
 import CircleEllipsisIcon from "@/src/shared/ui/CircleEllipsisIcon";
@@ -14,7 +15,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 export function SetCategory() {
-  const [category, editCategory] = useBoothStore((state) => [
+  const [category, editCategory] = useBoothDraftStore((state) => [
     state.category,
     state.editCategory,
   ]);
@@ -39,12 +40,16 @@ export function SetCategory() {
           htmlFor="bar"
           className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-12 ${category === "bar" ? "border-pink" : "border-[#B7B7B7]"}`}
         >
-          <RadioGroupItem className="sr-only" value="bar" id="bar" />
+          <RadioGroupItem
+            className="sr-only"
+            value={BoothCategory.BAR}
+            id="bar"
+          />
           <AlcoholIcon
-            className={`${category === "bar" ? "text-pink" : "text-[#b2b2b2]"}`}
+            className={`${category === BoothCategory.BAR ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div
-            className={`text-base font-bold ${category === "bar" ? "text-pink" : "text-[#A7A7A7]"}`}
+            className={`text-base font-bold ${category === BoothCategory.BAR ? "text-pink" : "text-[#A7A7A7]"}`}
           >
             주점
           </div>
@@ -52,33 +57,45 @@ export function SetCategory() {
 
         <Label
           htmlFor="food"
-          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-12 ${category === "food" ? "border-pink" : "border-[#B7B7B7]"}`}
+          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-12 ${category === BoothCategory.FOOD ? "border-pink" : "border-[#B7B7B7]"}`}
         >
-          <RadioGroupItem className="sr-only" value="food" id="food" />
+          <RadioGroupItem
+            className="sr-only"
+            value={BoothCategory.FOOD}
+            id="food"
+          />
           <FoodIcon
-            className={`${category === "food" ? "text-pink" : "text-[#b2b2b2]"}`}
+            className={`${category === BoothCategory.FOOD ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div className="text-base font-bold text-[#A7A7A7]">먹거리</div>
         </Label>
 
         <Label
           htmlFor="event"
-          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-7 ${category === "event" ? "border-pink" : "border-[#B7B7B7]"}`}
+          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-7 ${category === BoothCategory.EVENT ? "border-pink" : "border-[#B7B7B7]"}`}
         >
-          <RadioGroupItem className="sr-only" value="event" id="event" />
+          <RadioGroupItem
+            className="sr-only"
+            value={BoothCategory.EVENT}
+            id="event"
+          />
           <EventIcon
-            className={`${category === "event" ? "text-pink" : "text-[#b2b2b2]"}`}
+            className={`${category === BoothCategory.EVENT ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div className="text-base font-bold text-[#A7A7A7]">이벤트</div>
         </Label>
 
         <Label
           htmlFor="more"
-          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-9 ${category === "more" ? "border-pink" : "border-[#B7B7B7]"}`}
+          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-9 ${category === BoothCategory.NORMAL ? "border-pink" : "border-[#B7B7B7]"}`}
         >
-          <RadioGroupItem className="sr-only" value="more" id="more" />
+          <RadioGroupItem
+            className="sr-only"
+            value={BoothCategory.NORMAL}
+            id="more"
+          />
           <CircleEllipsisIcon
-            className={`${category === "more" ? "text-pink" : "text-[#b2b2b2]"}`}
+            className={`${category === BoothCategory.NORMAL ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div className="text-base font-bold text-[#A7A7A7]">일반</div>
         </Label>
