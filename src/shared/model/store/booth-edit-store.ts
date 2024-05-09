@@ -1,6 +1,6 @@
 import { devtools, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
-import { Booth } from "../../lib/types";
+import { Booth, BoothCategory } from "../../lib/types";
 
 export interface Position {
   latitude: number;
@@ -12,7 +12,7 @@ export type BoothEditState = Booth;
 export type BoothDraftActions = {
   initialize: (booth: Booth) => void;
   editName: (newName: string) => void;
-  editCategory: (newCategory: string) => void;
+  editCategory: (newCategory: BoothCategory) => void;
   editDescription: (newDescription: string) => void;
   editPosition: (newPosition: Position) => void;
   editThumbnail: (url: string) => void;
@@ -28,7 +28,7 @@ export enum CampusPosition {
 
 export const defaultInitState = {
   name: "",
-  category: "",
+  category: BoothCategory.BAR,
   description: "",
   detail: "",
   thumbnail: "",
@@ -42,56 +42,44 @@ export const createBoothEditStore =
   process.env.NODE_ENV === "development"
     ? (initState: BoothEditState = defaultInitState) => {
         return createStore<BoothEditStore>()(
-          devtools(
-            persist(
-              (set) => ({
-                ...initState,
-                initialize: (booth) => set((state) => ({ ...state, ...booth })),
-                editName: (newName) =>
-                  set((state) => ({ ...state, name: newName })),
-                editCategory: (newCategory) =>
-                  set((state) => ({ ...state, category: newCategory })),
-                editDescription: (newDescription) =>
-                  set((state) => ({ ...state, description: newDescription })),
-                editPosition: (newPosition) =>
-                  set((state) => ({ ...state, position: { ...newPosition } })),
-                editThumbnail: (url) =>
-                  set((state) => ({ ...state, thumbnail: url })),
-                reset: () =>
-                  set((state) => ({ ...state, ...defaultInitState })),
-              }),
-              {
-                name: "booth-edit-storage",
-              },
-            ),
-          ),
+          devtools((set) => ({
+            ...initState,
+            initialize: (booth) => set((state) => ({ ...state, ...booth })),
+            editName: (newName) =>
+              set((state) => ({ ...state, name: newName })),
+            editCategory: (newCategory) =>
+              set((state) => ({ ...state, category: newCategory })),
+            editDescription: (newDescription) =>
+              set((state) => ({ ...state, description: newDescription })),
+            editPosition: (newPosition) =>
+              set((state) => ({
+                ...state,
+                latitude: newPosition.latitude,
+                longitude: newPosition.longitude,
+              })),
+            editThumbnail: (url) =>
+              set((state) => ({ ...state, thumbnail: url })),
+            reset: () => set((state) => ({ ...state, ...defaultInitState })),
+          })),
         );
       }
     : (initState: BoothEditState = defaultInitState) => {
-        return createStore<BoothEditStore>()(
-          persist(
-            (set) => ({
-              ...initState,
-              initialize: (booth) => set((state) => ({ ...state, ...booth })),
-              editName: (newName) =>
-                set((state) => ({ ...state, name: newName })),
-              editCategory: (newCategory) =>
-                set((state) => ({ ...state, category: newCategory })),
-              editDescription: (newDescription) =>
-                set((state) => ({ ...state, description: newDescription })),
-              editPosition: (newPosition) =>
-                set((state) => ({
-                  ...state,
-                  latitude: newPosition.latitude,
-                  longitude: newPosition.longitude,
-                })),
-              editThumbnail: (url) =>
-                set((state) => ({ ...state, thumbnail: url })),
-              reset: () => set((state) => ({ ...state, ...defaultInitState })),
-            }),
-            {
-              name: "booth-edit-storage",
-            },
-          ),
-        );
+        return createStore<BoothEditStore>()((set) => ({
+          ...initState,
+          initialize: (booth) => set((state) => ({ ...state, ...booth })),
+          editName: (newName) => set((state) => ({ ...state, name: newName })),
+          editCategory: (newCategory) =>
+            set((state) => ({ ...state, category: newCategory })),
+          editDescription: (newDescription) =>
+            set((state) => ({ ...state, description: newDescription })),
+          editPosition: (newPosition) =>
+            set((state) => ({
+              ...state,
+              latitude: newPosition.latitude,
+              longitude: newPosition.longitude,
+            })),
+          editThumbnail: (url) =>
+            set((state) => ({ ...state, thumbnail: url })),
+          reset: () => set((state) => ({ ...state, ...defaultInitState })),
+        }));
       };

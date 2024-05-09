@@ -28,36 +28,132 @@ import { Label } from "@/src/shared/ui/label";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
+import { getBoothDetail } from "@/src/entities/booth/api/boothDetail";
+import { useEffect, useState } from "react";
+import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
+import useRequireAuth, {
+  AuthType,
+} from "@/src/shared/model/auth/useRequireAuth";
+import { BoothCategory } from "@/src/shared/lib/types";
+import { MenuItemForm } from "@/src/features/menu";
+import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
+import { editBooth } from "@/src/features/booth/api/booth";
+import { useRouter } from "next/navigation";
 
-export function Edit() {
+interface MenuItem {
+  id?: number;
+  name: string;
+  price: number;
+  imgUrl?: string;
+}
+
+export function Edit({ boothId }: { boothId: number }) {
+  const [thumbnail, latitude, longitude] = useBoothEditStore((state) => [
+    state.thumbnail,
+    state.latitude,
+    state.longitude,
+  ]);
+
+  const [menuItemParent] = useAutoAnimate();
+
+  useRequireAuth(AuthType.MEMBER);
+  const [menuList, setMenuList] = useState<MenuItem[]>([
+    { name: "", price: 0 },
+  ]);
+
+  const addItem = () => {
+    setMenuList((menuList) => [...menuList, { name: "", price: 0 }]);
+  };
+
+  const changeNameHelper = (index: number) => (name: string) => {
+    setMenuList((menuList) =>
+      menuList
+        .slice(0, index)
+        .concat({ ...menuList[index], name })
+        .concat(menuList.slice(index + 1)),
+    );
+  };
+
+  const changePriceHelper = (index: number) => (price: number) => {
+    setMenuList((menuList) =>
+      menuList
+        .slice(0, index)
+        .concat({ ...menuList[index], price })
+        .concat(menuList.slice(index + 1)),
+    );
+  };
+
+  const changeImageHelper = (index: number) => (imgUrl: string) => {
+    setMenuList((menuList) =>
+      menuList
+        .slice(0, index)
+        .concat({ ...menuList[index], imgUrl })
+        .concat(menuList.slice(index + 1)),
+    );
+  };
+
+  const removeMenuItemHelper = (index: number) => () => {
+    setMenuList((menuList) =>
+      menuList.slice(0, index).concat(menuList.slice(index + 1)),
+    );
+  };
+
+  const generateBoothIdHelper = (index: number) => (id: number) => {
+    setMenuList((menuList) =>
+      menuList
+        .slice(0, index)
+        .concat({ ...menuList[index], id })
+        .concat(menuList.slice(index + 1)),
+    );
+  };
+
+  const editAuthBooth = useAuthFetch(editBooth);
+
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
     defaultValues: {
-      thumbnail: "https://www.naver.com",
       name: "",
       warning: "",
       location: "",
       description: "",
       latitude: CampusPosition.latitude,
       longitude: CampusPosition.longitude,
-      menu: [],
     },
   });
 
-  // TODO fetch booth from the backend
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  const { reset } = form;
+  console.log(form.formState.errors);
 
   const [parent] = useAutoAnimate();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const getBoothDetailEffect = async () => {
+      const { data: booth } = await getBoothDetail(boothId);
+      const { menus } = booth;
+      console.log(booth);
+      reset({
+        ...booth,
+        latitude,
+        longitude,
+      });
+      setMenuList(menus);
+    };
+    getBoothDetailEffect();
+  }, [boothId, reset, latitude, longitude]);
+
+  const onSubmit = async (data: any) => {
+    await editAuthBooth({ id: boothId, ...data });
+    router.push("/");
+  };
 
   return (
     <>
       <EditImageBox />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
+          {/* <FormField
             name="thumbnail"
             control={form.control}
             render={({ field }) => (
@@ -67,8 +163,29 @@ export function Edit() {
                 </FormControl>
               </FormItem>
             )}
+          /> */}
+          <FormField
+            name="latitude"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="hidden" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
           />
-
+          <FormField
+            name="longitude"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="hidden" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <FormField
             name="category"
             control={form.control}
@@ -86,7 +203,7 @@ export function Edit() {
                         <RadioGroupItem value="bar" className="sr-only" />
                       </FormControl>
                       <FormLabel
-                        className={`${field.value === "bar" ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
+                        className={`${field.value === BoothCategory.BAR ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
                         주점
                       </FormLabel>
@@ -96,7 +213,7 @@ export function Edit() {
                         <RadioGroupItem value="food" className="sr-only" />
                       </FormControl>
                       <FormLabel
-                        className={`${field.value === "food" ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
+                        className={`${field.value === BoothCategory.FOOD ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
                         음식
                       </FormLabel>
@@ -106,7 +223,7 @@ export function Edit() {
                         <RadioGroupItem value="event" className="sr-only" />
                       </FormControl>
                       <FormLabel
-                        className={`${field.value === "event" ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
+                        className={`${field.value === BoothCategory.EVENT ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
                         행사
                       </FormLabel>
@@ -116,7 +233,7 @@ export function Edit() {
                         <RadioGroupItem value="more" className="sr-only" />
                       </FormControl>
                       <FormLabel
-                        className={`${field.value === "more" ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
+                        className={`${field.value === BoothCategory.NORMAL ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
                         일반
                       </FormLabel>
@@ -192,30 +309,30 @@ export function Edit() {
               </FormItem>
             )}
           />
-          <Card>
+          <Card ref={menuItemParent}>
             <CardHeader>
               <CardTitle>메뉴</CardTitle>
             </CardHeader>
-            <CardContent className="flex items-center justify-center gap-3">
-              <Label className="flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-[#D9D9D9]">
-                <div>
-                  <PlusCircledIcon className="h-6 w-6 text-[#4b4b4b]" />
-                  <span className="sr-only">메뉴 추가</span>
-                </div>
-                <Input
-                  type="file"
-                  className="sr-only"
-                  id="menu-1"
-                  accept="image/*"
-                />
-              </Label>
-              <div className="flex flex-auto flex-col items-center justify-center">
-                <Input placeholder="메뉴 이름" />
-                <Input placeholder="가격" type="number" />
-              </div>
-            </CardContent>
+            {menuList.map((menuItem, index) => (
+              <MenuItemForm
+                key={menuItem.id}
+                {...menuItem}
+                changeName={changeNameHelper(index)}
+                changePrice={changePriceHelper(index)}
+                changeImage={changeImageHelper(index)}
+                boothId={boothId}
+                remove={removeMenuItemHelper(index)}
+                generateId={generateBoothIdHelper(index)}
+              />
+            ))}
             <CardFooter>
-              <Button className="w-full">메뉴 추가하기</Button>
+              <Button
+                type="button"
+                className="w-full"
+                onClick={() => addItem()}
+              >
+                메뉴 추가하기
+              </Button>
             </CardFooter>
           </Card>
           <div

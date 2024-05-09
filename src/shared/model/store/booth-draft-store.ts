@@ -1,6 +1,6 @@
 import { devtools, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
-import { Booth } from "../../lib/types";
+import { Booth, BoothCategory } from "../../lib/types";
 
 export interface Position {
   latitude: number;
@@ -11,7 +11,7 @@ export type BoothDraftState = Omit<Booth, "id">;
 
 export type BoothDraftActions = {
   editName: (newName: string) => void;
-  editCategory: (newCategory: string) => void;
+  editCategory: (newCategory: BoothCategory) => void;
   editDescription: (newDescription: string) => void;
   editPosition: (newPosition: Position) => void;
   reset: () => void;
@@ -26,7 +26,7 @@ export enum CampusPosition {
 
 export const defaultInitState = {
   name: "",
-  category: "",
+  category: BoothCategory.BAR,
   description: "",
   detail: "",
   thumbnail: "",

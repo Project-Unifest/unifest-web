@@ -8,7 +8,7 @@ export interface Product {
 export interface Booth {
   id?: number;
   name: string;
-  category: string;
+  category: BoothCategory;
   description?: string;
   detail?: string;
   thumbnail: string;
