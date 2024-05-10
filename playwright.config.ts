@@ -9,9 +9,6 @@ import path from "path";
 require("dotenv").config({ path: path.resolve(__dirname, ".", ".env.local") });
 
 const BASE_URL = process.env.BASE_URL;
-console.log("check env variables");
-console.log(process.env.BASE_URL);
-console.log(process.env.API_URL);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
