@@ -25,7 +25,7 @@ jobs:
           BASE_URL: ${{ vars.BASE_URL}}
           # build time environment secrets
           VERIFIED_ACCOUNT_ID: ${{ secrets.VERIFIED_ACCOUNT_ID}}
-          VERIFIED_ACCOUNT_PASSWORD: ${{ secrets.VERIFIED_ACCOUNT_ID}}
+          VERIFIED_ACCOUNT_PASSWORD: ${{ secrets.VERIFIED_ACCOUNT_PASSWORD}}
           # run time environment variables
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_BASE_URL: ${{ vars.NEXT_PUBLIC_BASE_URL}}
