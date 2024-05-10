@@ -17,8 +17,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     name: "컴공주점",
-    editButton: <BoothEditButton />,
-    deleteButton: <BoothDeleteButton />,
+    editButton: <BoothEditButton boothId={0} />,
+    deleteButton: <BoothDeleteButton boothId={0} />,
     switchButton: <BoothSwitchButton />,
   },
 };
@@ -28,8 +28,8 @@ export const WithOptional: Story = {
     name: "컴공주점",
     description: "컴퓨터공학부 전용 부스",
     location: "청심대 앞",
-    editButton: <BoothEditButton />,
-    deleteButton: <BoothDeleteButton />,
+    editButton: <BoothEditButton boothId={0} />,
+    deleteButton: <BoothDeleteButton boothId={0} />,
     switchButton: <BoothSwitchButton />,
   },
 };
