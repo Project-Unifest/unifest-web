@@ -8,7 +8,7 @@ export type AuthState = {
 };
 
 export type AuthActions = {
-  setCredentials: (credentials: AuthState) => void;
+  setCredentials: (credentials: Omit<AuthState, "isHydrated">) => void;
   refresh: (newAccessToken: string) => void;
   reset: () => void;
   setHydrated: () => void;
