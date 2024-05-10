@@ -38,7 +38,7 @@ export function SetCategory() {
       >
         <Label
           htmlFor="bar"
-          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-12 ${category === "bar" ? "border-pink" : "border-[#B7B7B7]"}`}
+          className={`flex cursor-pointer flex-col items-center justify-between rounded-xl border pb-7 pt-12 ${category === BoothCategory.BAR ? "border-pink" : "border-[#B7B7B7]"}`}
         >
           <RadioGroupItem
             className="sr-only"

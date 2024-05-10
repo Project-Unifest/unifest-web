@@ -1,3 +1,4 @@
+import { BoothCategory } from "@/src/shared/lib/types";
 import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { OverviewSetBoothDescription } from "@/src/widgets/add-booth";
 import { Meta, StoryObj } from "@storybook/react";
@@ -16,7 +17,7 @@ const meta = {
       ]);
       useEffect(() => {
         reset();
-        editCategory("bar");
+        editCategory(BoothCategory.BAR);
         editName("컴퓨터공학부 주점");
       }, [reset, editCategory, editName]);
 
