@@ -21,17 +21,17 @@ jobs:
         run: yarn playwright test
         env:
           # build time environment variables
-          API_URL: ${{ env.API_URL}}
-          BASE_URL: ${{ env.BASE_URL}}
+          API_URL: ${{ vars.API_URL}}
+          BASE_URL: ${{ vars.BASE_URL}}
           # build time environment secrets
           VERIFIED_ACCOUNT_ID: ${{ secrets.VERIFIED_ACCOUNT_ID}}
           VERIFIED_ACCOUNT_PASSWORD: ${{ secrets.VERIFIED_ACCOUNT_ID}}
           # run time environment variables
-          NEXT_PUBLIC_API_URL: ${{env.NEXT_PUBLIC_API_URL}}
-          NEXT_PUBLIC_BASE_URL: ${{ env.NEXT_PUBLIC_BASE_URL}}
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_BASE_URL: ${{ vars.NEXT_PUBLIC_BASE_URL}}
           # run time environment secrets
-          NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}}
-          NEXT_PUBLIC_GOOGLE_MAPS_ID: ${{secrets.NEXT_PUBLIC_GOOGLE_MAPS_ID}}
+          NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+          NEXT_PUBLIC_GOOGLE_MAPS_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_ID }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
