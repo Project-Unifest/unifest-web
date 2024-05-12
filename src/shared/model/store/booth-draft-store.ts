@@ -7,7 +7,7 @@ export interface Position {
   longitude: number;
 }
 
-export type BoothDraftState = Omit<Booth, "id">;
+export type BoothDraftState = Booth;
 
 export type BoothDraftActions = {
   editName: (newName: string) => void;
@@ -34,6 +34,7 @@ export const defaultInitState = {
   location: "",
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
+  menus: [],
 } satisfies BoothDraftState;
 
 export const createBoothDraftStore =

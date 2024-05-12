@@ -1,8 +1,11 @@
+import { MenuItemState } from "../model/store/booth-edit-store";
+
 export interface Product {
+  state: MenuItemState;
   id: number;
   name: string;
   price: number;
-  imgUrl: string;
+  imgUrl?: string;
 }
 
 export interface Booth {
@@ -16,7 +19,7 @@ export interface Booth {
   location: string;
   latitude: number;
   longitude: number;
-  menus?: Product[];
+  menus: Product[];
   enabled?: boolean;
 }
 
@@ -37,3 +40,10 @@ export enum BoothCategory {
 }
 
 export type BoothList = Booth[];
+export interface MenuItem {
+  id: number;
+  name: string;
+  price: number;
+  imgUrl?: string;
+  state: MenuItemState;
+}

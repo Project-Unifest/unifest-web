@@ -1,1 +1,1 @@
-export { MenuItem as MenuItemForm } from "./ui/MenuItem";
+export { MenuCard as MenuItemForm } from "./ui/MenuItem";

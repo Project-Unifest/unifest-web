@@ -17,40 +17,41 @@ import { uploadImage } from "../../booth/api/image";
 import { deleteMenuItem, uploadMenuItem } from "../model/menu";
 import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
+import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
+import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
+import { MenuItem } from "@/src/shared/lib/types";
 
 interface MenuItemPropsType {
   boothId: number;
-  id?: number;
+  id: number;
   name: string;
-  changeName: (newName: string) => void;
   price: number;
-  changePrice: (newPrice: number) => void;
   imgUrl?: string;
-  changeImage: (imgUrl: string) => void;
-  remove: () => void;
-  generateId: (id: number) => void;
+  state: MenuItemState;
+  edit: (id: number, menuProp: Partial<MenuItem>) => void;
+  add: () => void;
+  remove: (id: number) => void;
 }
 
-export function MenuItem({
+export function MenuCard({
   boothId,
   id: menuItemId,
   name,
   price,
   imgUrl,
-  changeName,
-  changePrice,
-  changeImage,
+  state,
+  add,
   remove,
-  generateId,
+  edit,
 }: MenuItemPropsType) {
   const uploadAuthMemuItem = useAuthFetch(uploadMenuItem);
   const deleteAuthMemuItem = useAuthFetch(deleteMenuItem);
 
-  const canBeRegistered = Boolean(!menuItemId && name && price);
+  const canBeRegistered = Boolean(
+    state === MenuItemState.DRAFT && name && price,
+  );
 
-  console.log(imgUrl);
   const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("invoked");
     const file = event.target.files![0];
     if (!file) {
       return;
@@ -59,8 +60,8 @@ export function MenuItem({
       alert("파일 사이즈가 너무 큽니다.");
       return;
     }
-    const { imgUrl } = await uploadImage(file);
-    changeImage(imgUrl);
+    const { imgUrl } = (await uploadImage(file)) as { imgUrl: string };
+    edit(menuItemId, { imgUrl });
   };
 
   return (
@@ -87,7 +88,7 @@ export function MenuItem({
           <Input
             placeholder="메뉴 이름"
             value={name}
-            onChange={(event) => changeName(event.target.value)}
+            onChange={(event) => edit(menuItemId, { name: event.target.value })}
           />
 
           <Button
@@ -100,7 +101,7 @@ export function MenuItem({
                   imgUrl,
                 });
               }
-              remove();
+              remove(menuItemId);
             }}
           >
             삭제하기
@@ -111,7 +112,9 @@ export function MenuItem({
             placeholder="가격"
             type="number"
             value={price}
-            onChange={(event) => changePrice(Number(event.target.value))}
+            onChange={(event) => {
+              edit(menuItemId, { price: Number(event.target.value) });
+            }}
           />
           {canBeRegistered && (
             <Button
@@ -121,8 +124,9 @@ export function MenuItem({
                   name,
                   price,
                   imgUrl,
+                  state: MenuItemState.UNCHANGED,
                 });
-                generateId(id);
+                edit(menuItemId, { id });
               }}
             >
               등록하기

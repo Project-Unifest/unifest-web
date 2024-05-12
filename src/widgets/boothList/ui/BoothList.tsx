@@ -68,7 +68,9 @@ export function BoothList() {
           {...booth}
           editButton={<EditButton boothId={booth.id!} />}
           deleteButton={<DeleteButton boothId={booth.id!} />}
-          switchButton={<SwitchButton boothId={booth.id!} />}
+          switchButton={
+            <SwitchButton boothId={booth.id!} initialOpened={booth.enabled} />
+          }
         />
       ))}
     </div>

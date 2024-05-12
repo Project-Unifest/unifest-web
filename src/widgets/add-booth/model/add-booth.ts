@@ -23,5 +23,7 @@ export const addBooth = async (
     body: JSON.stringify(booth),
   });
 
-  return response;
+  const data = response.json();
+
+  return data;
 };
