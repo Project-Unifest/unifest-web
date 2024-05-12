@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatedPathSegment } from "@/src/shared/lib/types";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
@@ -7,12 +8,6 @@ import RedDotIcon from "@/src/shared/ui/RedDotIcon";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { DotIcon } from "@radix-ui/react-icons";
 import { usePathname } from "next/navigation";
-
-export enum AnimatedPathSegment {
-  SET_NAME = "set-name",
-  SET_CATEGORY = "set-category",
-  SET_DESCRIPTION = "set-description",
-}
 
 export default function AddBoothLayout({
   children,
