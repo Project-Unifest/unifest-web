@@ -41,6 +41,7 @@ import { editBooth } from "@/src/features/booth/api/booth";
 import { useRouter } from "next/navigation";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { deleteMenuItem } from "@/src/features/menu/model/menu";
+import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
 
 interface MenuItem {
   id: number;
@@ -50,7 +51,7 @@ interface MenuItem {
   state: MenuItemState;
 }
 
-export function Edit({ boothId }: { boothId: number }) {
+export function Add({ boothId }: { boothId: number }) {
   const [
     name,
     category,
@@ -60,13 +61,13 @@ export function Edit({ boothId }: { boothId: number }) {
     location,
     latitude,
     longitude,
+    menuList,
     thumbnail,
     editThumbnail,
-    menuList,
     addMenuItem,
     editMenuItem,
     removeMemuItem,
-  ] = useBoothEditStore((state) => [
+  ] = useBoothDetailsDraftStore((state) => [
     state.name,
     state.category,
     state.description,
@@ -75,9 +76,9 @@ export function Edit({ boothId }: { boothId: number }) {
     state.location,
     state.latitude,
     state.longitude,
+    state.menus,
     state.thumbnail,
     state.editThumbnail,
-    state.menus,
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
@@ -111,7 +112,6 @@ export function Edit({ boothId }: { boothId: number }) {
     },
   });
 
-  const { reset } = form;
   console.log(form.formState.errors);
 
   const [parent] = useAutoAnimate();
@@ -119,6 +119,8 @@ export function Edit({ boothId }: { boothId: number }) {
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
+    console.log(data);
+    console.log(boothId);
     await editAuthBooth({ id: boothId, thumbnail, ...data });
     router.push("/");
   };
