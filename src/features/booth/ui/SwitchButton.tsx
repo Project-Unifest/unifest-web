@@ -10,7 +10,7 @@ export function SwitchButton({
   boothId,
   initialOpened,
 }: Readonly<{ boothId: number; initialOpened?: boolean }>) {
-  const [opened, setIsOpened] = useState<boolean>(false);
+  const [opened, setIsOpened] = useState<boolean>(Boolean(initialOpened));
 
   const updateAuthBoothOpened = useAuthFetch(updateBoothOpened);
 

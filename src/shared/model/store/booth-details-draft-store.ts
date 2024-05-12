@@ -1,6 +1,7 @@
 import { devtools, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
 import { Booth, BoothCategory } from "../../lib/types";
+import { MenuItemState } from "./booth-edit-store";
 import { MenuItem } from "../../lib/types";
 
 export interface Position {
@@ -8,17 +9,11 @@ export interface Position {
   longitude: number;
 }
 
-export enum MenuItemState {
-  DRAFT = "DRAFT",
-  UNCHANGED = "UNCHANGED",
-  DELETED = "DELETED",
-  EDITED = "EDITED",
-}
+export type BoothDetailsDraftState = Booth;
 
-export type BoothEditState = Booth;
-
-export type BoothDraftActions = {
-  initialize: (booth: BoothEditState) => void;
+export type BoothDetailsDraftActions = {
+  initialize: (booth: Booth) => void;
+  setField: (boothProps: Partial<BoothDetailsDraftState>) => void;
   editName: (newName: string) => void;
   editCategory: (newCategory: BoothCategory) => void;
   editDescription: (newDescription: string) => void;
@@ -30,7 +25,8 @@ export type BoothDraftActions = {
   removeMenuItem: (id: number) => void;
 };
 
-export type BoothEditStore = BoothEditState & BoothDraftActions;
+export type BoothDetailsDraftStore = BoothDetailsDraftState &
+  BoothDetailsDraftActions;
 
 export enum CampusPosition {
   latitude = 37.542352,
@@ -48,15 +44,17 @@ export const defaultInitState = {
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
   menus: [],
-} satisfies BoothEditState;
+} satisfies BoothDetailsDraftState;
 
-export const createBoothEditStore =
+export const createBoothDetailsDraftStore =
   process.env.NODE_ENV === "development"
-    ? (initState: BoothEditState = defaultInitState) => {
-        return createStore<BoothEditStore>()(
+    ? (initState: BoothDetailsDraftState = defaultInitState) => {
+        return createStore<BoothDetailsDraftStore>()(
           devtools((set) => ({
             ...initState,
             initialize: (booth) => set((state) => ({ ...state, ...booth })),
+            setField: (boothProps) =>
+              set((state) => ({ ...state, ...boothProps })),
             editName: (newName) =>
               set((state) => ({ ...state, name: newName })),
             editCategory: (newCategory) =>
@@ -100,10 +98,12 @@ export const createBoothEditStore =
           })),
         );
       }
-    : (initState: BoothEditState = defaultInitState) => {
-        return createStore<BoothEditStore>()((set) => ({
+    : (initState: BoothDetailsDraftState = defaultInitState) => {
+        return createStore<BoothDetailsDraftStore>()((set) => ({
           ...initState,
           initialize: (booth) => set((state) => ({ ...state, ...booth })),
+          setField: (boothProps) =>
+            set((state) => ({ ...state, ...boothProps })),
           editName: (newName) => set((state) => ({ ...state, name: newName })),
           editCategory: (newCategory) =>
             set((state) => ({ ...state, category: newCategory })),

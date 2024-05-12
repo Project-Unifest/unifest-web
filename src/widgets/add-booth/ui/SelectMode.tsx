@@ -6,10 +6,18 @@ import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { addBooth } from "../model/add-booth";
+import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
+import { BoothCategory } from "@/src/shared/lib/types";
+import { useRouter } from "next/navigation";
+import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
 
 export function SelectMode() {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [parent] = useAutoAnimate();
+  const addAuthBooth = useAuthFetch(addBooth);
+  const router = useRouter();
+  const setField = useBoothDetailsDraftStore((state) => state.setField);
 
   return (
     <>
@@ -70,15 +78,46 @@ export function SelectMode() {
         className="sticky bottom-0 mt-auto flex w-full bg-white pb-4 pt-4"
         ref={parent}
       >
-        {selectedOption !== null && (
+        {selectedOption === "overview" && (
           <Button
             className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
             asChild
           >
-            {selectedOption === "overview" && (
-              <Link href="/add-booth/set-position">선택완료</Link>
-            )}
-            {/* TODO navigate to detailed add-booth route */}
+            <Link href="/add-booth/set-position">선택완료</Link>
+          </Button>
+        )}
+
+        {/* FIXME skip making api call when the server updates APIs */}
+        {selectedOption === "details" && (
+          <Button
+            className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
+            type="button"
+            onClick={async () => {
+              const id = await addAuthBooth({
+                name: "이름",
+                category: BoothCategory.BAR,
+                description: "",
+                thumbnail: "",
+                festivalId: 1,
+                location: "위치를 설정해주세요",
+                latitude: 0,
+                longitude: 0,
+              });
+              console.log(id);
+              setField({
+                id,
+                name: "이름",
+                category: BoothCategory.BAR,
+                description: "",
+                thumbnail: "",
+                location: "위치를 설정해주세요",
+                latitude: 0,
+                longitude: 0,
+              });
+              router.push(`/add-booth/details/set-position/${id}`);
+            }}
+          >
+            선택완료
           </Button>
         )}
       </div>
