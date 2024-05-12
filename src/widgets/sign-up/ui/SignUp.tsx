@@ -138,7 +138,15 @@ export function SignUp() {
                   />
                 </FormControl>
                 <FormLabel>
-                  개인정보 수집 및 이용 약관을 읽고 전체 동의합니다.
+                  <a
+                    href="https://abiding-hexagon-faa.notion.site/bb387c20f4c348d7a992d121692f2c8d?pvs=4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    개인정보 수집 및 이용 약관
+                  </a>
+                  을 읽고 전체 동의합니다.
                 </FormLabel>
               </div>
               <FormMessage />
