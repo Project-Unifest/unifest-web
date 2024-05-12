@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedPathSegment } from "@/app/add-booth/layout";
+import { AnimatedPathSegment } from "@/src/shared/lib/types";
 import { Button } from "@/src/shared/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter } from "next/navigation";

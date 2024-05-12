@@ -1,5 +1,3 @@
-"use client";
-
 import { Input } from "@/src/shared/ui/input";
 import { Label } from "@/src/shared/ui/label";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
@@ -8,12 +6,13 @@ import { uploadImage } from "../api/image";
 import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
 import Image from "next/image";
 
-export function EditImageBox() {
+interface ImageBoxPropsType {
+  thumbnail: string;
+  editThumbnail: (url: string) => void;
+}
+
+export function EditImageBox({ thumbnail, editThumbnail }: ImageBoxPropsType) {
   const [selectedFile, setSelectedFile] = useState<null | File>(null);
-  const [thumbnail, editThumbnail] = useBoothEditStore((state) => [
-    state.thumbnail,
-    state.editThumbnail,
-  ]);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -23,6 +22,8 @@ export function EditImageBox() {
     const { imgUrl } = await uploadImage(file);
     editThumbnail(imgUrl);
   };
+  console.log("썸네읽밧");
+  console.log(thumbnail);
 
   return (
     <>

@@ -34,3 +34,20 @@ export const editBooth = async (
   const data = await response.json();
   return data;
 };
+
+export const updateBoothOpened = async (
+  accessToken: string,
+  boothId: number,
+  opened: boolean,
+) => {
+  const response = await fetch(`${API_URL}/api/booths/${boothId}`, {
+    method: HTTPMethod.PATCH,
+    headers: {
+      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
+      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
+    },
+    body: JSON.stringify({ enabled: opened }),
+  });
+  const data = await response.json();
+  return data;
+};
