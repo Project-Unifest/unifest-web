@@ -19,7 +19,7 @@ export const Default: Story = {
     name: "컴공주점",
     editButton: <BoothEditButton boothId={0} />,
     deleteButton: <BoothDeleteButton boothId={0} />,
-    switchButton: <BoothSwitchButton />,
+    switchButton: <BoothSwitchButton boothId={0} />,
   },
 };
 
@@ -30,6 +30,6 @@ export const WithOptional: Story = {
     location: "청심대 앞",
     editButton: <BoothEditButton boothId={0} />,
     deleteButton: <BoothDeleteButton boothId={0} />,
-    switchButton: <BoothSwitchButton />,
+    switchButton: <BoothSwitchButton boothId={0} />,
   },
 };
