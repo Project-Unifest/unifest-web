@@ -47,3 +47,8 @@ export interface MenuItem {
   imgUrl?: string;
   state: MenuItemState;
 }
+export enum AnimatedPathSegment {
+  SET_NAME = "set-name",
+  SET_CATEGORY = "set-category",
+  SET_DESCRIPTION = "set-description",
+}
