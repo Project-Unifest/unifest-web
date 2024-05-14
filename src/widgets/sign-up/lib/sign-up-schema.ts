@@ -1,9 +1,13 @@
 import { getMessage } from "@/src/shared/model/zod";
 import { z } from "zod";
 
+export enum University {
+  Konkuk = "건국대 서울캠",
+}
+
 export const signUpSchema = z
   .object({
-    university: z.enum(["건국대 서울캠"], {
+    university: z.nativeEnum(University, {
       errorMap: () => getMessage("학교를 선택해주세요"),
     }),
     email: z.string().email(getMessage("올바른 이메일이 아닙니다")),
