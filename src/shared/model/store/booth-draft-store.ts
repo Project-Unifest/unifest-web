@@ -52,7 +52,11 @@ export const createBoothDraftStore =
                 editDescription: (newDescription) =>
                   set((state) => ({ ...state, description: newDescription })),
                 editPosition: (newPosition) =>
-                  set((state) => ({ ...state, position: { ...newPosition } })),
+                  set((state) => ({
+                    ...state,
+                    latitude: newPosition.latitude,
+                    longitude: newPosition.longitude,
+                  })),
                 reset: () =>
                   set((state) => ({ ...state, ...defaultInitState })),
               }),

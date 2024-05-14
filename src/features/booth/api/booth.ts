@@ -39,6 +39,8 @@ export const updateBoothOpened = async (
   accessToken: string,
   boothId: number,
   opened: boolean,
+  latitude: number,
+  longitude: number,
 ) => {
   const response = await fetch(`${API_URL}/api/booths/${boothId}`, {
     method: HTTPMethod.PATCH,
@@ -46,7 +48,7 @@ export const updateBoothOpened = async (
       [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
       [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
     },
-    body: JSON.stringify({ enabled: opened }),
+    body: JSON.stringify({ enabled: opened, latitude, longitude }),
   });
   const data = await response.json();
   return data;
