@@ -10,7 +10,7 @@ import {
 } from "@/src/shared/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { signUpSchema } from "../lib/sign-up-schema";
+import { University, signUpSchema } from "../lib/sign-up-schema";
 import { Input } from "@/src/shared/ui/input";
 import { Button } from "@/src/shared/ui/button";
 import { z } from "zod";
@@ -62,7 +62,9 @@ export function SignUp() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="건국대 서울캠">건국대 서울캠</SelectItem>
+                  <SelectItem value={University.Konkuk}>
+                    {University.Konkuk}
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
