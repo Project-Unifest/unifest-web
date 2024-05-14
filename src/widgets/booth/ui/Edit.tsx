@@ -66,6 +66,7 @@ export function Edit({ boothId }: { boothId: number }) {
     addMenuItem,
     editMenuItem,
     removeMemuItem,
+    enabled,
   ] = useBoothEditStore((state) => [
     state.name,
     state.category,
@@ -81,6 +82,7 @@ export function Edit({ boothId }: { boothId: number }) {
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
+    state.enabled,
   ]);
 
   const [menuItemParent] = useAutoAnimate();
@@ -119,7 +121,7 @@ export function Edit({ boothId }: { boothId: number }) {
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    await editAuthBooth({ id: boothId, thumbnail, ...data });
+    await editAuthBooth({ id: boothId, thumbnail, enabled, ...data });
     router.push("/");
   };
 
