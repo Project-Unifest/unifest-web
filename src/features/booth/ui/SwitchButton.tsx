@@ -5,18 +5,29 @@ import { Label } from "@/src/shared/ui/label";
 import { Switch } from "@/src/shared/ui/switch";
 import React, { useState } from "react";
 import { updateBoothOpened } from "../api/booth";
+import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
 
 export function SwitchButton({
   boothId,
   initialOpened,
 }: Readonly<{ boothId: number; initialOpened?: boolean }>) {
   const [opened, setIsOpened] = useState<boolean>(Boolean(initialOpened));
+  const booth = useBoothListStore((state) =>
+    state.booths.filter((booth) => booth.id === boothId),
+  )[0];
+  const edit = useBoothListStore((state) => state.edit);
 
   const updateAuthBoothOpened = useAuthFetch(updateBoothOpened);
 
   const toggleBoothOpened = async () => {
-    await updateAuthBoothOpened(boothId, !opened);
+    await updateAuthBoothOpened(
+      boothId,
+      !opened,
+      booth.latitude,
+      booth.longitude,
+    );
     setIsOpened((currentOpened) => !currentOpened);
+    edit({ ...booth, enabled: !opened });
   };
 
   return (
