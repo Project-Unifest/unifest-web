@@ -62,7 +62,7 @@ export function SignUp() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="건국대학교">건국대학교</SelectItem>
+                  <SelectItem value="건국대 서울캠">건국대 서울캠</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
