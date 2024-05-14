@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const signUpSchema = z
   .object({
-    university: z.enum(["건국대학교"], {
+    university: z.enum(["건국대 서울캠"], {
       errorMap: () => getMessage("학교를 선택해주세요"),
     }),
     email: z.string().email(getMessage("올바른 이메일이 아닙니다")),
