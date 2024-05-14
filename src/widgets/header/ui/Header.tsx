@@ -1,6 +1,9 @@
 "use client";
 
 import { AnimatedPathSegment } from "@/src/shared/lib/types";
+import useRequireAuth from "@/src/shared/model/auth/useRequireAuth";
+import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
+import LogoutIcon from "@/src/shared/ui/LogoutIcon";
 import { Button } from "@/src/shared/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter } from "next/navigation";
@@ -40,6 +43,12 @@ export function Header() {
     ? "운영자/학생회 로그인"
     : "운영자모드";
 
+  const [accessToken, reset] = useAuthStore((state) => [
+    state.accessToken,
+    state.reset,
+  ]);
+  const isLoggedIn = Boolean(accessToken);
+
   if (isHeaderless) {
     return <div />;
   }
@@ -62,15 +71,30 @@ export function Header() {
   return (
     <header>
       <div className="relative flex items-center justify-center rounded-b-3xl pb-6 pt-5 shadow-lg">
-        <div className="relative">
-          {pathname !== "/" && (
-            <button type="button" onClick={() => router.back()}>
-              {/* TODO place icon on the left side */}
-              <ChevronLeftIcon />
-            </button>
-          )}
-        </div>
+        {pathname !== "/" && (
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="absolute left-4"
+          >
+            {/* TODO place icon on the left side */}
+            <ChevronLeftIcon />
+          </button>
+        )}
+
         <div className="shrink-0 font-black">{headerText}</div>
+        {isLoggedIn && (
+          <button
+            type="button"
+            onClick={() => {
+              reset();
+              router.replace("/sign-in");
+            }}
+            className="absolute right-4"
+          >
+            <LogoutIcon />
+          </button>
+        )}
       </div>
     </header>
   );
