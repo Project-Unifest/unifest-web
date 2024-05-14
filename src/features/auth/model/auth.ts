@@ -1,4 +1,5 @@
 import { API_URL, HTTPHeaderKey } from "@/src/shared/api/config";
+import { University } from "@/src/widgets/sign-up/lib/sign-up-schema";
 import { HttpMethods } from "msw";
 
 interface AuthDetails {
@@ -15,9 +16,10 @@ export const signUp = async (authDetails: AuthDetails) => {
     headers: {
       ["content-type"]: "application/json",
     },
+    // TODO change schoolId based on university
     body: JSON.stringify({
       ...authDetails,
-      schoolId: authDetails.university === "건국대학교" && 0,
+      schoolId: 1,
       phoneNum: authDetails.contact,
     }),
   });

@@ -66,7 +66,12 @@ export const createAuthStore =
                 })),
               refresh: (newAccessToken) =>
                 set((state) => ({ ...state, accessToken: newAccessToken })),
-              reset: () => set((state) => ({ ...state, ...defaultInitState })),
+              reset: () =>
+                set((state) => ({
+                  ...state,
+                  accessToken: "",
+                  refreshToken: "",
+                })),
               setHydrated: () =>
                 set((state) => ({ ...state, isHydrated: true })),
             }),
