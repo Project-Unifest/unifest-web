@@ -42,13 +42,12 @@ export function EditMap({ boothId }: Readonly<{ boothId: string }>) {
     <APIProvider apiKey={apiKey}>
       <Map
         className="h-screen w-full"
-        center={{
+        defaultCenter={{
           lat: CampusPosition.latitude,
           lng: CampusPosition.longitude,
         }}
         defaultZoom={17}
-        gestureHandling="none"
-        disableDefaultUI
+        gestureHandling="cooperative"
         onClick={handleMapClick}
         mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID}
       >
