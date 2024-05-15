@@ -45,7 +45,7 @@ export function GoogleMap() {
           lng: CampusPosition.longitude,
         }}
         defaultZoom={17}
-        gestureHandling="none"
+        gestureHandling="cooperative"
         disableDefaultUI
         onClick={handleMapClick}
         mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID}
