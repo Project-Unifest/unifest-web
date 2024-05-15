@@ -8,7 +8,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "unifest-dev-bucket.s3.ap-northeast-2.amazonaws.com",
+        hostname: process.env.IMAGE_SERVER_HOSTNAME,
         port: "",
         pathname: "/**",
       },
