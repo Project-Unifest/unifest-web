@@ -34,3 +34,14 @@ jobs:
           build_command: yarn build-storybook # default: npm run build-storybook
           path: storybook-static # default: dist/storybook
           checkout: false # default: true
+        env:
+          # build time environment variables
+          API_URL: ${{ vars.API_URL}}
+          BASE_URL: ${{ vars.BASE_URL}}
+          IMAGE_SERVER_HOSTNAME: ${{ vars.IMAGE_SERVER_HOSTNAME }}
+          # run time environment variables
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_BASE_URL: ${{ vars.NEXT_PUBLIC_BASE_URL}}
+          # run time environment secrets
+          NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+          NEXT_PUBLIC_GOOGLE_MAPS_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_ID }}

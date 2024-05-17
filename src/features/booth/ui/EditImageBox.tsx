@@ -28,9 +28,19 @@ export function EditImageBox({ thumbnail, editThumbnail }: ImageBoxPropsType) {
   return (
     <>
       {thumbnail ? (
-        <div className="relative flex h-60 w-full cursor-pointer items-center justify-center">
+        <Label
+          htmlFor="booth-uploaded-image"
+          className="relative flex h-60 w-full cursor-pointer items-center justify-center"
+        >
           <Image src={thumbnail} alt="부스 이미지" fill />
-        </div>
+          <Input
+            type="file"
+            className="sr-only"
+            accept="image/*"
+            id="booth-uploaded-image"
+            onChange={handleFileChange}
+          />
+        </Label>
       ) : (
         <Label
           htmlFor="booth-image"

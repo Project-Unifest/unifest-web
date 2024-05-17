@@ -23,6 +23,7 @@ jobs:
           # build time environment variables
           API_URL: ${{ vars.API_URL}}
           BASE_URL: ${{ vars.BASE_URL}}
+          IMAGE_SERVER_HOSTNAME: ${{ vars.IMAGE_SERVER_HOSTNAME }}
           # build time environment secrets
           VERIFIED_ACCOUNT_ID: ${{ secrets.VERIFIED_ACCOUNT_ID}}
           VERIFIED_ACCOUNT_PASSWORD: ${{ secrets.VERIFIED_ACCOUNT_PASSWORD}}
