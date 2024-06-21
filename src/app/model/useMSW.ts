@@ -5,14 +5,21 @@ async function enableMocking() {
   if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
     const { worker } = await import("@/mocks/browser");
 
-    // `worker.start()` returns a Promise that resolves
-    // once the Service Worker is up and ready to intercept requests.
     await worker.start();
   }
 }
 
 export default function useMSW() {
+  const [isLoading, setLoading] = useState(true);
+
   useEffect(() => {
-    enableMocking();
+    const mockEffect = async () => {
+      await enableMocking();
+      setLoading(false);
+    };
+
+    mockEffect();
   }, []);
+
+  return isLoading;
 }
