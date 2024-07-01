@@ -1,0 +1,30 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+	"name": "Node.js",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+	"remoteEnv": {
+		"API_URL": "http://ec2-43-200-72-31.ap-northeast-2.compute.amazonaws.com:9090",
+		"BASE_URL": "http://localhost:3000",
+		"IMAGE_SERVER_HOSTNAME": "unifest-dev-bucket.s3.ap-northeast-2.amazonaws.com",
+		"NEXT_PUBLIC_API_URL": "http://ec2-43-200-72-31.ap-northeast-2.compute.amazonaws.com:9090",
+		"NEXT_PUBLIC_BASE_URL": "http://localhost:3000",
+		"STORYBOOK_URL": "http://localhost:6006"
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
