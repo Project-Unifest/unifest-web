@@ -22,10 +22,11 @@
 				"formulahendry.auto-rename-tag",
 				"ms-vsliveshare.vsliveshare",
 				"streetsidesoftware.code-spell-checker",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"dsznajder.es7-react-js-snippets"
 			]
 		}
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -34,7 +35,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+	"postCreateCommand": "yarn install && npx playwright install"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
