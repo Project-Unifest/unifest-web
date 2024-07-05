@@ -36,6 +36,7 @@
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": [
+    "npm install -g yarn",
     "yarn install",
     "npx playwright install-deps",
     "npx playwright install"
