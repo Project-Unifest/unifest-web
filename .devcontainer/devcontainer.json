@@ -35,12 +35,7 @@
   // "forwardPorts": [],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": [
-    "source $NVM_DIR/nvm.sh",
-    "yarn install",
-    "npx playwright install-deps",
-    "npx playwright install"
-  ]
+  "postCreateCommand": "yarn install && npx playwright install-deps && npx playwright install",
 
   // Configure tool-specific properties.
   // "customizations": {},
