@@ -36,6 +36,8 @@
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": [
+    "npm -v",
+    "nvm -v",
     "nvm install 20",
     "npm install -g yarn",
     "yarn install",
