@@ -36,10 +36,7 @@
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": [
-    "npm -v",
-    "nvm -v",
-    "nvm install 20",
-    "npm install -g yarn",
+    "source $NVM_DIR/nvm.sh",
     "yarn install",
     "npx playwright install-deps",
     "npx playwright install"
