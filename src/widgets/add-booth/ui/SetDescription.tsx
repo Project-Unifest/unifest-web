@@ -27,7 +27,7 @@ export function SetDescription() {
 
   const isFormValid = name && category && description;
 
-  const hanldeDescriptionInputChange = (
+  const handleDescriptionInputChange = (
     event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
     // TODO filter description input
@@ -89,7 +89,7 @@ export function SetDescription() {
       </div>
       <Textarea
         value={description}
-        onChange={hanldeDescriptionInputChange}
+        onChange={handleDescriptionInputChange}
         placeholder="부스 컨텐츠, 판매 음식 등 자유롭게 부스를 소개해보세요."
         className="h-32 resize-none rounded-xl border border-[#D6D6D6] bg-[#FAFAFA] shadow-none placeholder:text-[#B0B0B0]"
       />
