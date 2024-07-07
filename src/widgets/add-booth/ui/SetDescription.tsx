@@ -7,7 +7,6 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 import { addBooth } from "../model/add-booth";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 
 export function SetDescription() {
@@ -30,7 +29,10 @@ export function SetDescription() {
   const handleDescriptionInputChange = (
     event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    // TODO filter description input
+    if (event.target.value.length > 100) {
+      return;
+    }
+
     editDescription(event.target.value);
   };
 

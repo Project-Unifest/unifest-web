@@ -36,7 +36,7 @@ export const DescriptionTyped: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(
-      canvas.getByRole("link", { name: "건너뛰기" }),
+      canvas.getByRole("button", { name: "건너뛰기" }),
     ).toBeInTheDocument();
     await userEvent.type(
       canvas.getByPlaceholderText(
@@ -45,10 +45,10 @@ export const DescriptionTyped: Story = {
       "컴퓨터공학부 주점입니다. 새내기, 헌내기 모두 환영합니다.",
     );
     await expect(
-      canvas.getByRole("link", { name: "건너뛰기" }),
+      canvas.getByRole("button", { name: "건너뛰기" }),
     ).toBeInTheDocument();
     await expect(
-      await canvas.findByRole("link", { name: "입력완료" }),
+      await canvas.findByRole("button", { name: "입력완료" }),
     ).toBeInTheDocument();
   },
 };
