@@ -28,10 +28,12 @@ export function Item({
     <Card data-testid={`booth-item-${name}`}>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>{name}</CardTitle>
-          {switchButton}
+          <CardTitle className="w-full flex-auto truncate">{name}</CardTitle>
+          <div className="flex-none">{switchButton}</div>
         </div>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="line-clamp-2 text-ellipsis">
+          {description}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <p>{location}</p>

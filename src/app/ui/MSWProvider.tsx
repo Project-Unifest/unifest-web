@@ -8,6 +8,11 @@ export function MSWProvider({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  useMSW();
+  const isMSWLoading = useMSW();
+
+  if (isMSWLoading) {
+    return <></>;
+  }
+
   return <>{children}</>;
 }

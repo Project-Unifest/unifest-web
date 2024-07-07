@@ -45,6 +45,7 @@ export function SetDescription() {
       latitude: latitude,
       festivalId: 1,
       location: "위치 설명을 달아주세요",
+      menus: [],
     });
 
     if (!data) {
@@ -66,6 +67,7 @@ export function SetDescription() {
       latitude: latitude,
       festivalId: 1,
       location: "위치 설명을 달아주세요",
+      menus: [],
     });
 
     if (!data) {
