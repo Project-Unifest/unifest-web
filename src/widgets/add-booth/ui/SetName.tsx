@@ -2,21 +2,25 @@
 
 import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { Button } from "@/src/shared/ui/button";
-import DotIcon from "@/src/shared/ui/DotIcon";
-import RedDotIcon from "@/src/shared/ui/RedDotIcon";
 import { Input } from "@/src/shared/ui/input";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
 export function SetName() {
-  const [nameInput, setNameInput] = useState("");
   const [parent] = useAutoAnimate();
-  const editName = useBoothDraftStore((state) => state.editName);
-  const name = useBoothDraftStore((state) => state.name);
+  const [name, editName] = useBoothDraftStore((state) => [
+    state.name,
+    state.editName,
+  ]);
 
-  const handleNameInputChange = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedName = event.target.value;
+    if (updatedName.length > 30) {
+      return;
+    }
     editName(event.target.value);
+  };
 
   return (
     <>
@@ -36,7 +40,9 @@ export function SetName() {
             onChange={handleNameInputChange}
           />
           <div className="flex items-start justify-end">
-            <div className="text-[10px] font-medium text-gray">0/30자</div>
+            <div className="text-[10px] font-medium text-gray">
+              {name.length}/30자
+            </div>
           </div>
         </div>
       </div>
