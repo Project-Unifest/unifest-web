@@ -32,7 +32,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const DescriptionEmpty: Story = {
+export const EmptyDescription: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(
@@ -55,7 +55,7 @@ export const DescriptionEmpty: Story = {
   },
 };
 
-export const DescriptionTyped: Story = {
+export const FilledDescription: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -74,7 +74,7 @@ export const DescriptionTyped: Story = {
   },
 };
 
-export const DescriptionOvertyping: Story = {
+export const OverfilledDescription: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
