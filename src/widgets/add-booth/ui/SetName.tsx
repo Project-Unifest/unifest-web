@@ -15,7 +15,8 @@ export function SetName() {
   ]);
 
   const handleNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (name.length >= 30) {
+    const updatedName = event.target.value;
+    if (updatedName.length > 30) {
       return;
     }
     editName(event.target.value);
@@ -39,7 +40,9 @@ export function SetName() {
             onChange={handleNameInputChange}
           />
           <div className="flex items-start justify-end">
-            <div className="text-[10px] font-medium text-gray">{name.length}/30자</div>
+            <div className="text-[10px] font-medium text-gray">
+              {name.length}/30자
+            </div>
           </div>
         </div>
       </div>
