@@ -39,7 +39,7 @@ export function SetName() {
             onChange={handleNameInputChange}
           />
           <div className="flex items-start justify-end">
-            <div className="text-[10px] font-medium text-gray">{}/30자</div>
+            <div className="text-[10px] font-medium text-gray">{name.length}/30자</div>
           </div>
         </div>
       </div>
