@@ -7,7 +7,6 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 import { addBooth } from "../model/add-booth";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 
 export function SetDescription() {
@@ -27,10 +26,13 @@ export function SetDescription() {
 
   const isFormValid = name && category && description;
 
-  const hanldeDescriptionInputChange = (
+  const handleDescriptionInputChange = (
     event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    // TODO filter description input
+    if (event.target.value.length > 100) {
+      return;
+    }
+
     editDescription(event.target.value);
   };
 
@@ -89,12 +91,14 @@ export function SetDescription() {
       </div>
       <Textarea
         value={description}
-        onChange={hanldeDescriptionInputChange}
+        onChange={handleDescriptionInputChange}
         placeholder="부스 컨텐츠, 판매 음식 등 자유롭게 부스를 소개해보세요."
         className="h-32 resize-none rounded-xl border border-[#D6D6D6] bg-[#FAFAFA] shadow-none placeholder:text-[#B0B0B0]"
       />
       <div className="mt-2 flex items-start justify-end">
-        <div className="text-[10px] font-medium text-gray">0/100자</div>
+        <div className="text-[10px] font-medium text-gray">
+          {(description && description.length) || 0}/100자
+        </div>
       </div>
       <div
         className="sticky bottom-0 mt-auto flex w-full gap-8 bg-white pb-4 pt-4"
