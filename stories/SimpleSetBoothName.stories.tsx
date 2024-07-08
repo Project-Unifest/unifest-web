@@ -39,7 +39,7 @@ export const FilledInput: Story = {
       "컴퓨터공학부 주점",
     );
     await expect(
-      canvas.findByRole("link", { name: /입력완료/ }),
+      canvas.getByRole("link", { name: /입력완료/ }),
     ).toBeInTheDocument();
   },
 };
