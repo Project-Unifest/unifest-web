@@ -30,7 +30,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const FilledInput: Story = {
+export const EmptyName: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByRole("textbox", { name: "" })).toBeInTheDocument();
+
+    await expect(
+      canvas.queryByRole("link", { name: /입력완료/ }),
+    ).not.toBeInTheDocument();
+  },
+};
+
+export const FilledName: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -41,5 +53,20 @@ export const FilledInput: Story = {
     await expect(
       canvas.getByRole("link", { name: /입력완료/ }),
     ).toBeInTheDocument();
+  },
+};
+
+export const OverfilledName: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const nameTextField = canvas.getByPlaceholderText(/부스 이름/);
+
+    await userEvent.type(
+      nameTextField,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    );
+
+    await expect(nameTextField.textContent?.length).toBeLessThanOrEqual(30);
   },
 };
