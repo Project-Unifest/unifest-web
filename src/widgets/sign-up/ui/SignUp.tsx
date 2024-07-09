@@ -44,8 +44,6 @@ export function SignUp() {
     router.push("/sign-in");
   };
 
-  // TODO style form based on Figma
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
