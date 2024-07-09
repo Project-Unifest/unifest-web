@@ -5,6 +5,7 @@ const config: StorybookConfig = {
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
+
   addons: [
     "@storybook/addon-onboarding",
     "@storybook/addon-links",
@@ -12,14 +13,16 @@ const config: StorybookConfig = {
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
     "@storybook/addon-coverage",
+    "@storybook/addon-mdx-gfm"
   ],
+
   framework: {
     name: "@storybook/nextjs",
     options: {},
   },
-  docs: {
-    autodocs: "tag",
-  },
+
+  docs: {},
+
   staticDirs: [
     "../public",
     {
@@ -27,8 +30,13 @@ const config: StorybookConfig = {
       to: "static/fonts",
     },
   ],
+
   features: {
     experimentalRSC: true,
   },
+
+  typescript: {
+    reactDocgen: "react-docgen-typescript"
+  }
 };
 export default config;
