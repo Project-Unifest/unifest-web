@@ -56,7 +56,7 @@ export function SignUp() {
               <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="학교를 선택해주세요" />
+                    <SelectValue placeholder="학교" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
