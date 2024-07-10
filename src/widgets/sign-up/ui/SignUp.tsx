@@ -51,7 +51,7 @@ export function SignUp() {
           control={form.control}
           name="university"
           render={({ field }) => (
-            <FormItem>
+            <FormItem data-testid={"form-item-university"}>
               <FormLabel>학교 선택</FormLabel>
               <Select onValueChange={field.onChange}>
                 <FormControl>
