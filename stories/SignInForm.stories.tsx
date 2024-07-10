@@ -14,6 +14,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const Empty: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole("button", { name: "로그인" }));
+
+    await expect(
+      canvas.getByText(/올바른 이메일이 아닙니다/),
+    ).toBeInTheDocument();
+  },
+};
+
 export const Submit: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
