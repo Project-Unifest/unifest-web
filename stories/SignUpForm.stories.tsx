@@ -1,6 +1,23 @@
+import { cn } from "@/src/shared/lib/utils";
 import { SignUpForm } from "@/src/widgets/sign-up";
 import { Meta, StoryObj } from "@storybook/react";
 import { expect, fireEvent, userEvent, waitFor, within } from "@storybook/test";
+import { delay } from "msw";
+
+// https:github.com/testing-library/user-event/blob/a5ca2e47f30ea71b72a443c227ea125beb4e84b7/src/options.ts
+export enum PointerEventsCheckLevel {
+  /**
+   * Check pointer events on every user interaction that triggers a bunch of events.
+   * E.g. once for releasing a mouse button even though this triggers `pointerup`, `mouseup`, `click`, etc...
+   */
+  EachTrigger = 4,
+  /** Check each target once per call to pointer (related) API */
+  EachApiCall = 2,
+  /** Check each event target once */
+  EachTarget = 1,
+  /** No pointer events check */
+  Never = 0,
+}
 
 const meta = {
   title: "Widgets/Auth/SignUpForm",
@@ -40,10 +57,12 @@ export const Success: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // TODO userEvent api has an error: https://github.com/testing-library/user-event/issues/922
-    await fireEvent.click(canvas.getByRole("combobox", { name: "학교 선택" }));
-    const option = canvas.getByText(/건국대/);
-    userEvent.click(option);
+    const universityItemElement = canvas.getByTestId("form-item-university");
+    const universityItem = within(universityItemElement);
+    await userEvent.selectOptions(
+      universityItem.getByRole("combobox", { name: "", hidden: true }),
+      "건국대 서울캠",
+    );
 
     await userEvent.type(
       canvas.getByRole("textbox", { name: "이메일" }),
@@ -67,4 +86,14 @@ export const Success: Story = {
   },
 };
 
-export const WithoutSchool: Story = {};
+export const WithoutSchool: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const universityItemElement = canvas.getByTestId("form-item-university");
+    const universityItem = within(universityItemElement);
+    await userEvent.selectOptions(
+      universityItem.getByRole("combobox", { name: "", hidden: true }),
+      "건국대 서울캠",
+    );
+  },
+};
