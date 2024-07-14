@@ -8,7 +8,9 @@ export const boothEditSchema = z.object({
   // thumbnail: z.string().url(),
   warning: z.string(),
   location: z.string(),
-  description: z.string().max(100, getMessage("최대 20자까지 입력 가능합니다")),
+  description: z
+    .string()
+    .max(100, getMessage("최대 100자까지 입력 가능합니다")),
   latitude: z.number(),
   longitude: z.number(),
 });
