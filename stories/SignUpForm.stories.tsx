@@ -82,6 +82,30 @@ export const Success: Story = {
         name: "개인정보 수집 및 이용 약관을 읽고 전체 동의합니다.",
       }),
     );
+
+    const schoolErrorMessage = "학교를 선택해주세요";
+    const emailErrorMessage = "올바른 이메일이 아닙니다";
+    const passwordErrorMessage = "비밀번호는 8자 이상이 되어야 합니다";
+    const contactNumberErrorMessage = "전화번호는 숫자만 입력하셔야 합니다";
+    const termsAndConditionsErrorMessage = "약관에 동의하셔야 합니다";
+
+    await expect(
+      canvas.queryByText(schoolErrorMessage),
+    ).not.toBeInTheDocument();
+    await expect(canvas.queryByText(emailErrorMessage)).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByText(passwordErrorMessage),
+    ).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByText(contactNumberErrorMessage),
+    ).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByText(schoolErrorMessage),
+    ).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByText(termsAndConditionsErrorMessage),
+    ).not.toBeInTheDocument();
+
     await userEvent.click(canvas.getByRole("button", { name: "회원가입" }));
   },
 };
