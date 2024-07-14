@@ -48,6 +48,7 @@ const preview: Preview = {
   },
   // Provide the MSW addon loader globally
   loaders: [mswLoader],
+  tags: ["autodocs"],
 };
 
 export default preview;

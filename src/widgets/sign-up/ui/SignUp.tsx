@@ -44,8 +44,6 @@ export function SignUp() {
     router.push("/sign-in");
   };
 
-  // TODO style form based on Figma
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -53,12 +51,12 @@ export function SignUp() {
           control={form.control}
           name="university"
           render={({ field }) => (
-            <FormItem>
+            <FormItem data-testid={"form-item-university"}>
               <FormLabel>학교 선택</FormLabel>
               <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="학교를 선택해주세요" />
+                    <SelectValue placeholder="학교" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
