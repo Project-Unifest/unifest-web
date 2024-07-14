@@ -32,7 +32,8 @@ export const Default: Story = {};
 export const EmptyForm: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button", { name: "회원가입" }));
+    const user = userEvent.setup();
+    await user.click(canvas.getByRole("button", { name: "회원가입" }));
 
     const schoolErrorMessage = "학교를 선택해주세요";
     const emailErrorMessage = "올바른 이메일이 아닙니다";
@@ -56,6 +57,7 @@ export const EmptyForm: Story = {
 export const Success: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const user = userEvent.setup();
 
     const universityItemElement = canvas.getByTestId("form-item-university");
     const universityItem = within(universityItemElement);
@@ -64,20 +66,20 @@ export const Success: Story = {
       "건국대 서울캠",
     );
 
-    await userEvent.type(
+    await user.type(
       canvas.getByRole("textbox", { name: "이메일" }),
       "abcd1234@naver.com",
     );
 
-    await userEvent.type(canvas.getByLabelText("비밀번호"), "012345678");
+    await user.type(canvas.getByLabelText("비밀번호"), "012345678");
 
-    await userEvent.type(canvas.getByLabelText("비밀번호 확인"), "012345678");
+    await user.type(canvas.getByLabelText("비밀번호 확인"), "012345678");
 
-    await userEvent.type(
+    await user.type(
       canvas.getByRole("textbox", { name: "전화번호" }),
       "24884911",
     );
-    await userEvent.click(
+    await user.click(
       canvas.getByRole("checkbox", {
         name: "개인정보 수집 및 이용 약관을 읽고 전체 동의합니다.",
       }),
@@ -106,16 +108,17 @@ export const Success: Story = {
       canvas.queryByText(termsAndConditionsErrorMessage),
     ).not.toBeInTheDocument();
 
-    await userEvent.click(canvas.getByRole("button", { name: "회원가입" }));
+    await user.click(canvas.getByRole("button", { name: "회원가입" }));
   },
 };
 
 export const WithoutSchool: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const user = userEvent.setup();
     const universityItemElement = canvas.getByTestId("form-item-university");
     const universityItem = within(universityItemElement);
-    await userEvent.selectOptions(
+    await user.selectOptions(
       universityItem.getByRole("combobox", { name: "", hidden: true }),
       "건국대 서울캠",
     );
