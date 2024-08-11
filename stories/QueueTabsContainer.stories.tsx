@@ -35,6 +35,8 @@ const groups = [
   },
 ];
 
+// TODO change props
+
 export const Default: Story = {
   args: {
     tabSlot: <QueueTabs onToggle={() => {}} />,
