@@ -52,3 +52,15 @@ export enum AnimatedPathSegment {
   SET_CATEGORY = "set-category",
   SET_DESCRIPTION = "set-description",
 }
+
+export interface QueueGroup {
+  boothId: number;
+  waitingId: number;
+  partySize: number;
+  tel: string;
+  deviceId: string;
+  createdAt: string;
+  updatedAt: string;
+  status: "RESERVED" | "CALLED" | "COMPLETED" | "CANCELED";
+  waitingOrder: number;
+}
