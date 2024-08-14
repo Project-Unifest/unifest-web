@@ -18,20 +18,20 @@ const groups = [
   {
     id: "111",
     index: 1,
-    peopleCount: 10,
-    phoneNumber: "010-3042-1322",
+    partySize: 10,
+    tel: "010-3042-1322",
   },
   {
     id: "112",
     index: 2,
-    peopleCount: 10,
-    phoneNumber: "010-2352-1322",
+    partySize: 10,
+    tel: "010-2352-1322",
   },
   {
     id: "113",
     index: 3,
-    peopleCount: 5,
-    phoneNumber: "010-4663-4244",
+    partySize: 5,
+    tel: "010-4663-4244",
   },
 ];
 
@@ -44,19 +44,17 @@ export const Default: Story = {
       <>
         <p className="pb-1">총 {groups.length}팀</p>
         {groups.map(({ id, ...props }) => (
-          // <li key={id}>
           <GroupItem
-            id={id}
             {...props}
+            id={id}
             key={id}
             actionSlot={
               <div className="flex space-x-2">
-                <CancelButton />
-                <NotifyButton />
+                <CancelButton id={100} onCancel={() => {}} />
+                <NotifyButton id={100} onNotify={() => {}} />
               </div>
             }
           />
-          // </li>
         ))}
       </>
     ),
