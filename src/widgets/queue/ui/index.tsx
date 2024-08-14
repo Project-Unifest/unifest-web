@@ -9,24 +9,23 @@ import { useParams } from "next/navigation";
 import { API_URL, HTTPMethod } from "@/src/shared/api/config";
 import { QueueGroup } from "@/src/shared/lib/types";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
+import { formatDateString } from "../lib/formatDateString";
 
 export default function Queue() {
-  const [activatedTab, setActivatedTab] = useState<string>("active");
+  const [activatedTab, setActivatedTab] = useState<
+    "active" | "completed" | "canceled"
+  >("active");
   const params = useParams<{ boothId: string }>()!;
   const boothId = parseInt(params.boothId);
   const [groups, setGroups] = useState<QueueGroup[] | undefined>();
 
+  const getQueue = async () => {
+    const response = await fetch(`${API_URL}/waiting/${boothId}/all`);
+    const data = await response.json();
+    setGroups(data);
+  };
+
   useEffect(() => {
-    const getQueue = async () => {
-      const response = await fetch(`${API_URL}/waiting/${boothId}/all`);
-      const data = await response.json();
-      setGroups(data);
-    };
-
-    console.log(API_URL);
-    console.log(process.env.API_URL);
-    console.log(process.env.NEXT_PUBLIC_API_URL);
-
     getQueue();
   }, [boothId]);
 
@@ -47,21 +46,22 @@ export default function Queue() {
   const isActivatedTabEmpty = activatedGroups.length === 0;
 
   const activatedGroupItems = activatedGroups.map(
-    ({ waitingId, status, ...props }) => (
+    ({ waitingId, status, updatedAt, ...props }) => (
       <GroupItem
         {...props}
+        status={activatedTab}
         id={waitingId}
         key={waitingId}
         actionSlot={
-          activatedTab === "active" && (
+          (activatedTab === "active" && (
             <div className="flex space-x-2">
               <CancelButton
                 id={waitingId}
                 onCancel={async (id: number) => {
                   try {
-                    await fetch(`${API_URL}/waiting/${id}`, {
-                      method: HTTPMethod.DELETE,
-                    });
+                    // await fetch(`${API_URL}/waiting/${id}`, {
+                    //   method: HTTPMethod.DELETE,
+                    // });
                     setGroups((currentGroups) =>
                       currentGroups?.map((currentGroup) => {
                         if (currentGroup.waitingId === id) {
@@ -80,17 +80,13 @@ export default function Queue() {
                   id={waitingId}
                   onNotify={async (id: number) => {
                     try {
-                      await fetch(`${API_URL}/waiting/call/${id}`, {
-                        method: HTTPMethod.PUT,
-                      });
-                      setGroups((currentGroups) =>
-                        currentGroups?.map((currentGroup) => {
-                          if (currentGroup.waitingId === id) {
-                            return { ...currentGroup, status: "CALLED" };
-                          }
-                          return currentGroup;
-                        }),
+                      const response = await fetch(
+                        `${API_URL}/waiting/${id}/call`,
+                        {
+                          method: HTTPMethod.PUT,
+                        },
                       );
+                      await getQueue();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
@@ -103,14 +99,13 @@ export default function Queue() {
                   onEnter={async (id: number) => {
                     try {
                       // TODO invoke api call to update the server
-                      setGroups((currentGroups) =>
-                        currentGroups?.map((currentGroup) => {
-                          if (currentGroup.waitingId === id) {
-                            return { ...currentGroup, status: "COMPLETED" };
-                          }
-                          return currentGroup;
-                        }),
+                      const response = await fetch(
+                        `${API_URL}/waiting/${id}/complete`,
+                        {
+                          method: HTTPMethod.PUT,
+                        },
                       );
+                      await getQueue();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
@@ -118,7 +113,19 @@ export default function Queue() {
                 />
               )}
             </div>
-          )
+          )) ||
+          (activatedTab === "canceled" && (
+            <div className="flex space-x-2 text-sm">
+              <div>취소/부재</div>
+              <div className="font-bold">{formatDateString(updatedAt)}</div>
+            </div>
+          )) ||
+          (activatedTab === "completed" && (
+            <div className="flex space-x-2 text-sm">
+              <div>입장 시각</div>
+              <div className="font-bold">{formatDateString(updatedAt)}</div>
+            </div>
+          ))
         }
       />
     ),
@@ -126,11 +133,11 @@ export default function Queue() {
 
   const groupCountRow = (
     <li>
-      <p className="py-4">총 {activatedGroups.length}팀</p>
+      <p className="py-4 text-xs">총 {activatedGroups.length}팀</p>
     </li>
   );
 
-  const handleToggle = (updatedTab: string) => {
+  const handleToggle = (updatedTab: "active" | "completed" | "canceled") => {
     setActivatedTab(updatedTab);
   };
 

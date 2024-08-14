@@ -12,10 +12,11 @@ import formatPhoneNumber from "../libs/formatPhoneNumber";
 
 interface GroupItemPropsType {
   id: string | number;
-  waitingOrder: number;
+  waitingOrder?: number;
   partySize: number;
   tel: string;
   actionSlot?: ReactNode;
+  status?: "active" | "completed" | "canceled";
 }
 
 export default function GroupItem({
@@ -24,6 +25,7 @@ export default function GroupItem({
   id,
   partySize,
   tel,
+  status = "active",
 }: GroupItemPropsType) {
   const telInFormat = formatPhoneNumber(tel);
   return (
@@ -31,7 +33,9 @@ export default function GroupItem({
       <CardHeader className="p-4 pb-0">
         <CardDescription className="flex h-[22px] space-x-3">
           <div className="inline-flex h-[22px] items-center justify-center rounded-xl border border-solid  border-[#D2D2D2] px-4 text-xs font-normal text-[#F5687E]">
-            {waitingOrder}번째
+            {status === "active" && `${waitingOrder}번째`}
+            {status === "completed" && `입장완료`}
+            {status === "canceled" && `취소/부재`}
           </div>
           <Separator orientation="vertical" className="bg-[#E0E0E0]" />
           <span className="text-sm font-medium text-[#161616]">
