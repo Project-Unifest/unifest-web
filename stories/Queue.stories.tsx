@@ -95,13 +95,16 @@ export const EnterReservedItem: Story = {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
 
+    await canvas.findByText("123", {}, { timeout: 10000 });
+
     const groupItemElements = await canvas.findAllByRole("listitem");
+
     const reservedGroupElement = groupItemElements.find((groupItemElement) => {
       const groupItem = within(groupItemElement);
       return groupItem.queryByText("123");
     })!;
     const reservedGroup = within(reservedGroupElement);
-    const callButtonElement = reservedGroup.getByRole("button", {
+    const callButtonElement = await reservedGroup.findByRole("button", {
       name: "호출",
     });
     await user.click(callButtonElement);
@@ -111,7 +114,7 @@ export const EnterReservedItem: Story = {
     });
     await user.click(enterButtonElement);
 
-    await expect(reservedGroupElement).not.toBeInTheDocument();
+    await waitFor(() => expect(reservedGroupElement).not.toBeInTheDocument());
 
     const completedTab = await canvas.findByRole("tab", {
       name: "입장완료",
@@ -142,13 +145,16 @@ export const CancelReservedItem: Story = {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
 
+    await canvas.findByText("124", {}, { timeout: 10000 });
+
     const groupItemElements = await canvas.findAllByRole("listitem");
     const reservedGroupElement = groupItemElements.find((groupItemElement) => {
       const groupItem = within(groupItemElement);
-      return groupItem.queryByText("123");
+      return groupItem.queryByText("124");
     })!;
+
     const reservedGroup = within(reservedGroupElement);
-    const callButtonElement = reservedGroup.getByRole("button", {
+    const callButtonElement = await reservedGroup.findByRole("button", {
       name: "부재",
     });
     await user.click(callButtonElement);
@@ -160,12 +166,12 @@ export const CancelReservedItem: Story = {
     await user.click(completedTab);
 
     const updatedGroupItemElements = await canvas.findAllByRole("listitem");
-    const enteredGroupElement = updatedGroupItemElements.find(
+    const canceledGroupElement = updatedGroupItemElements.find(
       (groupItemElement) => {
         const groupItem = within(groupItemElement);
-        return groupItem.queryByText("123");
+        return groupItem.queryByText("124");
       },
     )!;
-    await expect(enteredGroupElement).not.toBeNull();
+    await waitFor(() => expect(canceledGroupElement).not.toBeNull());
   },
 };
