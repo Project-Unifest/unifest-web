@@ -19,7 +19,7 @@ export function EditButton({ boothId }: EditButtonPropsType) {
   const router = useRouter();
   return (
     <Button
-      className="flex-1 rounded-xl border-[#d2d2d2] bg-white text-[#2d2d2d] hover:bg-white"
+      className="z-20 flex-1 rounded-xl border border-[#d2d2d2] bg-white text-[#2d2d2d] hover:bg-white"
       onClick={() => {
         const selectedBooth = booths.filter((booth) => booth.id === boothId)[0];
         initialize(selectedBooth);

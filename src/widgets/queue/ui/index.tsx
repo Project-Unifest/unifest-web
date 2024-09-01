@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import QueueTabsContainer from "@/src/entities/queue/ui/QueueTabsContainer";
 import QueueTabs from "@/src/features/queue/ui/QueueTabs";
@@ -10,6 +11,8 @@ import { API_URL, HTTPMethod } from "@/src/shared/api/config";
 import { QueueGroup } from "@/src/shared/lib/types";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
+import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
+import { issuePIN } from "../api";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -19,9 +22,11 @@ export default function Queue() {
   const boothId = parseInt(params.boothId);
   const [groups, setGroups] = useState<QueueGroup[] | undefined>();
 
+  const authIssuePIN = useAuthFetch(issuePIN);
+
   const getQueue = async () => {
-    const response = await fetch(`${API_URL}/waiting/${boothId}/all`);
-    const data = await response.json();
+    const data = await authIssuePIN(boothId);
+    console.log(data);
     setGroups(data);
   };
 
