@@ -1,8 +1,4 @@
 import React, { ReactNode } from "react";
-import GroupItem from "./GroupItem";
-import CancelButton from "@/src/features/queue/ui/CancelButton";
-import NotifyButton from "@/src/features/queue/ui/NotifyButton";
-
 interface QueueTabsContainerPropsType {
   tabSlot: ReactNode;
   groupSlot: ReactNode;
