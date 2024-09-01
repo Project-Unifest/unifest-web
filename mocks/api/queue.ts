@@ -1,6 +1,8 @@
 import { API_URL } from "@/src/shared/api/config";
 import { QueueGroup } from "@/src/shared/lib/types";
-import { http, HttpResponse, PathParams } from "msw";
+import { http, HttpResponse } from "msw";
+import { groups } from "./constants/groups";
+import { booths } from "./constants/booths";
 
 const getReservedGroups = (groups: Map<number, QueueGroup>) => {
   const reservedKey = { reserved: true };
@@ -12,53 +14,7 @@ const getReservedGroups = (groups: Map<number, QueueGroup>) => {
   return new Map(groupsByReservation.get(reservedKey));
 };
 
-const groups: QueueGroup[] = [
-  {
-    boothId: 0,
-    waitingId: 123,
-    partySize: 1,
-    tel: "01012345678",
-    deviceId: "1sdasdg12421",
-    createdAt: "2024-08-12T16:07:36.057Z",
-    updatedAt: "2024-08-12T16:07:36.057Z",
-    status: "RESERVED",
-    waitingOrder: 1,
-  },
-  {
-    boothId: 0,
-    waitingId: 124,
-    partySize: 2,
-    tel: "01012345678",
-    deviceId: "1sdasdg12421",
-    createdAt: "2024-08-12T16:07:36.057Z",
-    updatedAt: "2024-08-12T16:07:36.057Z",
-    status: "CALLED",
-    waitingOrder: 2,
-  },
-  {
-    boothId: 0,
-    waitingId: 125,
-    partySize: 3,
-    tel: "01012345678",
-    deviceId: "1sdasdg12421",
-    createdAt: "2024-08-12T16:07:36.057Z",
-    updatedAt: "2024-08-12T16:07:36.057Z",
-    status: "COMPLETED",
-    waitingOrder: 3,
-  },
-  {
-    boothId: 0,
-    waitingId: 126,
-    partySize: 4,
-    tel: "01012345678",
-    deviceId: "1sdasdg12421",
-    createdAt: "2024-08-12T16:07:36.057Z",
-    updatedAt: "2024-08-12T16:07:36.057Z",
-    status: "CANCELED",
-    waitingOrder: 4,
-  },
-];
-
+const allBooths = new Map(booths.map((booth) => [booth.id, booth]));
 const allGroups = new Map(groups.map((group) => [group.waitingId, group]));
 
 const queueHandler = [

@@ -1,5 +1,9 @@
 import { API_URL } from "@/src/shared/api/config";
+import { Booth } from "@/src/shared/lib/types";
 import { HttpResponse, http } from "msw";
+import { booths } from "./constants/booths";
+
+const allBooths = new Map(booths.map((booth) => [booth.id, booth]));
 
 const boothHandler = [
   http.get(`${API_URL}/api/booths`, () => {
@@ -24,6 +28,55 @@ const boothHandler = [
           enabled: false,
         },
       ],
+    });
+  }),
+  http.get(`${API_URL}/api/booths/:boothId`, ({ params }) => {
+    const boothId = parseInt(params.boothId as string);
+
+    const booth = allBooths.get(boothId);
+
+    if (booth) {
+      return HttpResponse.json({
+        data: {
+          ...booth,
+        },
+      });
+    }
+
+    return HttpResponse.json("Not found", { status: 404 });
+  }),
+  http.get(`${API_URL}/waiting/pin/:boothId`, ({ params }) => {
+    const boothId = parseInt(params.boothId as string);
+
+    const booth = allBooths.get(boothId);
+
+    if (booth) {
+      return HttpResponse.json({
+        code: "200",
+        message: "성공",
+        data: "1234",
+      });
+    }
+
+    return new HttpResponse("Not found", {
+      status: 404,
+    });
+  }),
+  http.post(`${API_URL}/waiting/pin/:boothId`, ({ params }) => {
+    const boothId = parseInt(params.boothId as string);
+
+    const booth = allBooths.get(boothId);
+
+    if (booth) {
+      return HttpResponse.json({
+        code: "200",
+        message: "성공",
+        data: "5678",
+      });
+    }
+
+    return new HttpResponse("Not found", {
+      status: 404,
     });
   }),
 ];
