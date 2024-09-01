@@ -4,7 +4,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 
 const meta = {
-  title: "widget/queue/queue",
+  title: "widgets/queue/queue",
   component: Queue,
   decorators: [
     (Story) => {
