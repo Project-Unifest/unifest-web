@@ -13,6 +13,7 @@ import useRequireAuth, {
 } from "@/src/shared/model/auth/useRequireAuth";
 import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export function BoothList() {

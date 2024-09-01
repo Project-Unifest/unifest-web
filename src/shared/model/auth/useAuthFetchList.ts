@@ -27,7 +27,11 @@ export default function useAuthFetch(fetchFunc: FetchFunc) {
       const { code: originalCode, data: originalData } = await fetchFunc(
         accessToken,
         ...params,
-      );
+      ).then((response) => {
+        console.log(response);
+        return response;
+      });
+      console.log(originalCode, originalData);
 
       if (originalCode !== 2000) {
         return originalData;
