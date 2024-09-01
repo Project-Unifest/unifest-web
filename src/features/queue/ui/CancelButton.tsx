@@ -2,13 +2,13 @@ import { Button } from "@/src/shared/ui/button";
 import React from "react";
 
 interface CancelButtonPropsType {
-  id: number;
-  onCancel: (id: number) => void | Promise<void>;
+  
+  onCancel: () => void | Promise<void>;
 }
 
-export default function CancelButton({ id, onCancel }: CancelButtonPropsType) {
+export default function CancelButton({ onCancel }: CancelButtonPropsType) {
   const handleClick = () => {
-    onCancel(id);
+    onCancel();
   };
 
   return (
