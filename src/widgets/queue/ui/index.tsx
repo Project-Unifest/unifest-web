@@ -61,15 +61,14 @@ export default function Queue() {
           (activatedTab === "active" && (
             <div className="flex space-x-2">
               <CancelButton
-                id={waitingId}
-                onCancel={async (id: number) => {
+                onCancel={async () => {
                   try {
                     // await fetch(`${API_URL}/waiting/${id}`, {
                     //   method: HTTPMethod.DELETE,
                     // });
                     setGroups((currentGroups) =>
                       currentGroups?.map((currentGroup) => {
-                        if (currentGroup.waitingId === id) {
+                        if (currentGroup.waitingId === waitingId) {
                           return { ...currentGroup, status: "CANCELED" };
                         }
                         return currentGroup;
