@@ -13,6 +13,7 @@ import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { issuePIN } from "../api";
+import { cancelGroup } from "@/src/features/queue/api/queue";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -23,6 +24,7 @@ export default function Queue() {
   const [groups, setGroups] = useState<QueueGroup[] | undefined>();
 
   const authIssuePIN = useAuthFetch(issuePIN);
+  const authCancelGroup = useAuthFetch(cancelGroup);
 
   const getQueue = async () => {
     const data = await authIssuePIN(boothId);
@@ -44,7 +46,7 @@ export default function Queue() {
     } else if (activatedTab === "completed") {
       return status === "COMPLETED";
     } else if (activatedTab === "canceled") {
-      return status === "CANCELED";
+      return status === "CANCELED" || status === "NOSHOW";
     }
   });
 
@@ -63,9 +65,10 @@ export default function Queue() {
               <CancelButton
                 onCancel={async () => {
                   try {
-                    // await fetch(`${API_URL}/waiting/${id}`, {
-                    //   method: HTTPMethod.DELETE,
-                    // });
+                    const { code } = await authCancelGroup(waitingId);
+                    if (code === 500) {
+                      alert("실패");
+                    }
                     setGroups((currentGroups) =>
                       currentGroups?.map((currentGroup) => {
                         if (currentGroup.waitingId === waitingId) {
