@@ -64,6 +64,6 @@ export interface QueueGroup {
   deviceId: string;
   createdAt: string;
   updatedAt: string;
-  status: "RESERVED" | "CALLED" | "COMPLETED" | "CANCELED";
+  status: "RESERVED" | "CALLED" | "COMPLETED" | "CANCELED" | "NOSHOW";
   waitingOrder: number;
 }
