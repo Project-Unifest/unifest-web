@@ -1,3 +1,5 @@
+"use client";
+
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import { Button } from "@/src/shared/ui/button";
