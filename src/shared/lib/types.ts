@@ -40,7 +40,8 @@ export const BoothCategory = {
   MEDICAL: "MEDICAL",
 } as const;
 
-type BoothCategoryKeys = (typeof BoothCategory)[keyof typeof BoothCategory];
+export type BoothCategoryKeys =
+  (typeof BoothCategory)[keyof typeof BoothCategory];
 
 export type BoothList = Booth[];
 export interface MenuItem {

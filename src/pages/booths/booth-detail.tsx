@@ -16,7 +16,7 @@ export default function BoothDetail({ booth }: BoothDetailPropsType) {
   return (
     <>
       <div className="mb-3">
-        {/* <BoothItem
+        <BoothItem
           key={booth.id}
           {...booth}
           editButton={<EditButton boothId={booth.id!} />}
@@ -24,7 +24,7 @@ export default function BoothDetail({ booth }: BoothDetailPropsType) {
           switchButton={
             <SwitchButton boothId={booth.id!} initialOpened={booth.enabled} />
           }
-        /> */}
+        />
       </div>
       <Separator className="h-2 bg-slate-100" />
       <PINContainer boothId={booth.id!} />
