@@ -1,0 +1,48 @@
+import { QueueGroup } from "@/src/shared/lib/types";
+
+export const groups: QueueGroup[] = [
+  {
+    boothId: 77,
+    waitingId: 123,
+    partySize: 1,
+    tel: "01012345678",
+    deviceId: "1sdasdg12421",
+    createdAt: "2024-08-12T16:07:36.057Z",
+    updatedAt: "2024-08-12T16:07:36.057Z",
+    status: "RESERVED",
+    waitingOrder: 1,
+  },
+  {
+    boothId: 77,
+    waitingId: 124,
+    partySize: 2,
+    tel: "01012345678",
+    deviceId: "1sdasdg12421",
+    createdAt: "2024-08-12T16:07:36.057Z",
+    updatedAt: "2024-08-12T16:07:36.057Z",
+    status: "CALLED",
+    waitingOrder: 2,
+  },
+  {
+    boothId: 77,
+    waitingId: 125,
+    partySize: 3,
+    tel: "01012345678",
+    deviceId: "1sdasdg12421",
+    createdAt: "2024-08-12T16:07:36.057Z",
+    updatedAt: "2024-08-12T16:07:36.057Z",
+    status: "COMPLETED",
+    waitingOrder: 3,
+  },
+  {
+    boothId: 77,
+    waitingId: 126,
+    partySize: 4,
+    tel: "01012345678",
+    deviceId: "1sdasdg12421",
+    createdAt: "2024-08-12T16:07:36.057Z",
+    updatedAt: "2024-08-12T16:07:36.057Z",
+    status: "CANCELED",
+    waitingOrder: 4,
+  },
+];

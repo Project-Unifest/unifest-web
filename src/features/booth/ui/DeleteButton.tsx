@@ -1,3 +1,5 @@
+"use client";
+
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import { Button } from "@/src/shared/ui/button";
@@ -24,7 +26,6 @@ interface DeleteButtonPropsType {
 export function DeleteButton({ boothId }: DeleteButtonPropsType) {
   const deleteAuthBooth = useAuthFetch(deleteBooth);
   const deleteBoothFromStore = useBoothListStore((state) => state.delete);
-  console.log(boothId);
   const handleDelete = async () => {
     const data = await deleteAuthBooth(boothId);
     deleteBoothFromStore(boothId);
@@ -33,7 +34,7 @@ export function DeleteButton({ boothId }: DeleteButtonPropsType) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex-1 rounded-xl border-[#d2d2d2] bg-white text-pink hover:bg-white">
+        <Button className="z-20 flex-1 rounded-xl border border-[#d2d2d2] bg-white text-pink hover:bg-white">
           <TrashCanIcon />
           부스 삭제하기
         </Button>

@@ -1,7 +1,7 @@
 import { MenuItemState } from "../model/store/booth-edit-store";
 
 export interface Product {
-  state: MenuItemState;
+  menuStatus?: MenuItemState;
   id: number;
   name: string;
   price: number;
@@ -11,7 +11,7 @@ export interface Product {
 export interface Booth {
   id?: number;
   name: string;
-  category: BoothCategory;
+  category: BoothCategoryKeys;
   description?: string;
   detail?: string;
   thumbnail: string;
@@ -24,20 +24,24 @@ export interface Booth {
 }
 
 export interface Member {
+  id?: number;
   email: string;
   phoneNum: string;
   booths: Booth[];
   schoolId: number;
 }
 
-export enum BoothCategory {
-  BAR = "BAR",
-  FOOD = "FOOD",
-  EVENT = "EVENT",
-  NORMAL = "NORMAL",
-  MEDICAL = "MEDICAL",
-  TOILET = "TOILET",
-}
+export const BoothCategory = {
+  BAR: "BAR",
+  FOOD: "FOOD",
+  EVENT: "EVENT",
+  NORMAL: "NORMAL",
+  TOILET: "TOILET",
+  MEDICAL: "MEDICAL",
+} as const;
+
+export type BoothCategoryKeys =
+  (typeof BoothCategory)[keyof typeof BoothCategory];
 
 export type BoothList = Booth[];
 export interface MenuItem {
@@ -51,4 +55,16 @@ export enum AnimatedPathSegment {
   SET_NAME = "set-name",
   SET_CATEGORY = "set-category",
   SET_DESCRIPTION = "set-description",
+}
+
+export interface QueueGroup {
+  boothId: number;
+  waitingId: number;
+  partySize: number;
+  tel: string;
+  deviceId: string;
+  createdAt: string;
+  updatedAt: string;
+  status: "RESERVED" | "CALLED" | "COMPLETED" | "CANCELED" | "NOSHOW";
+  waitingOrder: number;
 }

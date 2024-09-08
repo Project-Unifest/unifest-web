@@ -27,9 +27,11 @@ export default function useAuthFetch(fetchFunc: FetchFunc) {
       const { code: originalCode, data: originalData } = await fetchFunc(
         accessToken,
         ...params,
-      );
+      ).then((response) => {
+        return response;
+      });
 
-      if (originalCode !== 2000) {
+      if (originalCode !== "2000") {
         return originalData;
       }
 
@@ -38,7 +40,7 @@ export default function useAuthFetch(fetchFunc: FetchFunc) {
 
       if (!restoredResponse.ok) {
         const { code: restoredCode } = await restoredResponse.json();
-        if (restoredCode === 2003) {
+        if (restoredCode === "2003") {
           reset();
           router.push("/sign-in");
         }
