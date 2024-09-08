@@ -27,8 +27,6 @@ export function BoothList() {
   const getAuthBooth = useAuthFetch(getBoothList);
   const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
-  console.log(booths);
-
   useEffect(() => {
     const getBoothListEffect = async () => {
       const data = await getAuthBooth();

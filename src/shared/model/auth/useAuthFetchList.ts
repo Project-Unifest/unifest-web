@@ -28,10 +28,8 @@ export default function useAuthFetch(fetchFunc: FetchFunc) {
         accessToken,
         ...params,
       ).then((response) => {
-        console.log(response);
         return response;
       });
-      console.log(originalCode, originalData);
 
       if (originalCode !== 2000) {
         return originalData;

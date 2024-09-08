@@ -89,17 +89,7 @@ export function Edit({ boothId }: { boothId: number }) {
   useRequireAuth(AuthType.MEMBER);
 
   const editAuthBooth = useAuthFetch(editBooth);
-  console.log(
-    name,
-    category,
-    warning,
-    location,
-    description,
-    thumbnail,
-    latitude,
-    longitude,
-  );
-  console.log(name);
+
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
     defaultValues: {
@@ -114,7 +104,6 @@ export function Edit({ boothId }: { boothId: number }) {
   });
 
   const { reset } = form;
-  console.log(form.formState.errors);
 
   const [parent] = useAutoAnimate();
 

@@ -103,7 +103,6 @@ export function SelectMode() {
                 latitude: 0,
                 longitude: 0,
               });
-              console.log(id);
               setField({
                 id,
                 name: "이름",
