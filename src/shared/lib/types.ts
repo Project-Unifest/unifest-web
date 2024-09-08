@@ -6,6 +6,7 @@ export interface Product {
   name: string;
   price: number;
   imgUrl?: string;
+  state: MenuItemState;
 }
 
 export interface Booth {
