@@ -24,7 +24,6 @@ export function EditMap({ boothId }: Readonly<{ boothId: string }>) {
     state.editPosition,
   ]);
   const router = useRouter();
-  console.log(latitude, longitude);
 
   if (!apiKey) {
     return <div>문제가 발생했습니다. 다시 시도해주세요.</div>;

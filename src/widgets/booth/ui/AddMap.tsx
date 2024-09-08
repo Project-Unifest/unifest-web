@@ -23,7 +23,6 @@ export function AddMap({ boothId }: { boothId: number }) {
     (state) => [state.latitude, state.longitude, state.editPosition],
   );
   const router = useRouter();
-  console.log(latitude, longitude);
 
   if (!apiKey) {
     return <div>문제가 발생했습니다. 다시 시도해주세요.</div>;

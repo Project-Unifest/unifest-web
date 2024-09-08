@@ -22,8 +22,6 @@ export function EditImageBox({ thumbnail, editThumbnail }: ImageBoxPropsType) {
     const { imgUrl } = await uploadImage(file);
     editThumbnail(imgUrl);
   };
-  console.log("썸네읽밧");
-  console.log(thumbnail);
 
   return (
     <>
