@@ -24,7 +24,6 @@ export default function PINContainer({ boothId }: PINContainerPropsType) {
   useEffect(() => {
     const asyncEffect = async () => {
       const data = await fetchAuthPIN(boothId);
-      console.log(data);
       setPIN(data);
     };
     asyncEffect();

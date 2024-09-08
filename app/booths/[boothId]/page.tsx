@@ -15,7 +15,6 @@ export default async function BoothDetailPage({
 }) {
   const boothId = parseInt(params.boothId);
   const { data: booth } = await getBoothDetail(boothId);
-  console.log(booth);
 
   return <BoothDetail booth={booth} />;
 }

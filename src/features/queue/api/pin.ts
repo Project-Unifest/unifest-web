@@ -9,6 +9,5 @@ export const reissuePIN = async (accessToken: string, boothId: number) => {
   });
 
   const data = await response.json();
-  console.log(data);
   return data;
 };

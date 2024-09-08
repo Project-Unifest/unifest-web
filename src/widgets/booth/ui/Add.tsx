@@ -88,17 +88,6 @@ export function Add({ boothId }: { boothId: number }) {
   useRequireAuth(AuthType.MEMBER);
 
   const editAuthBooth = useAuthFetch(editBooth);
-  console.log(
-    name,
-    category,
-    warning,
-    location,
-    description,
-    thumbnail,
-    latitude,
-    longitude,
-  );
-  console.log(name);
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
     defaultValues: {
@@ -112,15 +101,11 @@ export function Add({ boothId }: { boothId: number }) {
     },
   });
 
-  console.log(form.formState.errors);
-
   const [parent] = useAutoAnimate();
 
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-    console.log(boothId);
     await editAuthBooth({ id: boothId, thumbnail, ...data });
     router.push("/");
   };
