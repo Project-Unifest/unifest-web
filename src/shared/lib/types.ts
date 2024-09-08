@@ -29,6 +29,7 @@ export interface Member {
   phoneNum: string;
   booths: Booth[];
   schoolId: number;
+  memberRole: string;
 }
 
 export const BoothCategory = {
