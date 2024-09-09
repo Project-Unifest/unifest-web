@@ -19,7 +19,7 @@ import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
-import { MenuItem } from "@/src/shared/lib/types";
+import { Product } from "@/src/shared/lib/types";
 
 interface MenuItemPropsType {
   boothId: number;
@@ -27,8 +27,8 @@ interface MenuItemPropsType {
   name: string;
   price: number;
   imgUrl?: string;
-  state: MenuItemState;
-  edit: (id: number, menuProp: Partial<MenuItem>) => void;
+  menuStatus: MenuItemState | null;
+  edit: (id: number, menuProp: Partial<Product>) => void;
   add: () => void;
   remove: (id: number) => void;
 }
@@ -39,7 +39,7 @@ export function MenuCard({
   name,
   price,
   imgUrl,
-  state,
+  menuStatus,
   add,
   remove,
   edit,
@@ -48,7 +48,7 @@ export function MenuCard({
   const deleteAuthMemuItem = useAuthFetch(deleteMenuItem);
 
   const canBeRegistered = Boolean(
-    state === MenuItemState.DRAFT && name && price,
+    menuStatus === MenuItemState.DRAFT && name && price,
   );
 
   const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {

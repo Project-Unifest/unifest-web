@@ -292,7 +292,7 @@ export function Add({ boothId }: { boothId: number }) {
                 key={menuItem.id}
                 {...menuItem}
                 boothId={boothId}
-                state={menuItem.state}
+                menuStatus={menuItem.menuStatus}
                 add={addMenuItem}
                 remove={removeMemuItem}
                 edit={editMenuItem}

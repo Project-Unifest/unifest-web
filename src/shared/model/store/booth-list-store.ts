@@ -2,7 +2,8 @@ import { devtools, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
 import { Booth } from "../../lib/types";
 
-export type BoothState = Booth;
+export type BoothState = Required<Pick<Booth, "id" | "description">> &
+  Omit<Booth, "id">;
 
 export type BoothListState = {
   booths: BoothState[];

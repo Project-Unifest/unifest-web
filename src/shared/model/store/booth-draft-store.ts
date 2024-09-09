@@ -1,6 +1,6 @@
 import { devtools, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
-import { Booth, BoothCategory } from "../../lib/types";
+import { Booth, BoothCategory, BoothCategoryKeys } from "../../lib/types";
 
 export interface Position {
   latitude: number;
@@ -11,7 +11,7 @@ export type BoothDraftState = Booth;
 
 export type BoothDraftActions = {
   editName: (newName: string) => void;
-  editCategory: (newCategory: BoothCategory) => void;
+  editCategory: (newCategory: BoothCategoryKeys) => void;
   editDescription: (newDescription: string) => void;
   editPosition: (newPosition: Position) => void;
   reset: () => void;
