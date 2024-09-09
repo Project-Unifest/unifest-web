@@ -2,13 +2,12 @@ import { Button } from "@/src/shared/ui/button";
 import React from "react";
 
 interface NotifyButtonPropsType {
-  id: number;
-  onNotify: (waitingId: number) => void | Promise<void>;
+  onNotify: () => void | Promise<void>;
 }
 
-export default function NotifyButton({ id, onNotify }: NotifyButtonPropsType) {
+export default function NotifyButton({ onNotify }: NotifyButtonPropsType) {
   const handleClick = () => {
-    onNotify(id);
+    onNotify();
   };
 
   return (

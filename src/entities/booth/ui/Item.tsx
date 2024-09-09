@@ -10,13 +10,17 @@ import {
 import Link from "next/link";
 
 import React, { ReactNode } from "react";
+import { number, string } from "zod";
 
-type ItemPropsType = Pick<Booth, "name"> &
-  Partial<Pick<Booth, "description" | "location" | "id">> & {
-    editButton: ReactNode;
-    deleteButton: ReactNode;
-    switchButton: ReactNode;
-  };
+interface ItemPropsType {
+  id: number;
+  name: string;
+  description: string;
+  location: string;
+  editButton: ReactNode;
+  deleteButton: ReactNode;
+  switchButton: ReactNode;
+}
 
 export function Item({
   id,
