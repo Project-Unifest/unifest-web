@@ -50,8 +50,8 @@ export const Default: Story = {
             key={id}
             actionSlot={
               <div className="flex space-x-2">
-                <CancelButton id={100} onCancel={() => {}} />
-                <NotifyButton id={100} onNotify={() => {}} />
+                <CancelButton onCancel={() => {}} />
+                <NotifyButton onNotify={() => {}} />
               </div>
             }
           />

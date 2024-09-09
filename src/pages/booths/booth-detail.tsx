@@ -9,10 +9,21 @@ import PINContainer from "@/src/widgets/queue/ui/pin-container";
 import React from "react";
 
 interface BoothDetailPropsType {
-  booth: Booth;
+  booth: {
+    id: number;
+    name: string;
+    description: string;
+    location: string;
+    enabled: boolean;
+  };
 }
 
 export default function BoothDetail({ booth }: BoothDetailPropsType) {
+  // TODO change component to loading state
+  if (!booth) {
+    return <>페이지가 비어있어요.</>;
+  }
+
   return (
     <>
       <div className="mb-3">

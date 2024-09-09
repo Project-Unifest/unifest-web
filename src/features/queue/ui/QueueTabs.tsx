@@ -3,14 +3,14 @@ import React, { useState } from "react";
 
 interface QueueTabsPropsType {
   activatedTab?: string;
-  onToggle: (tab: string) => void;
+  onToggle: (tab: "active" | "completed" | "canceled") => void;
 }
 
 export default function QueueTabs({
   activatedTab,
   onToggle,
 }: QueueTabsPropsType) {
-  const handleValueChange = (value: string) => {
+  const handleValueChange = (value: "active" | "completed" | "canceled") => {
     onToggle(value);
   };
 
@@ -18,7 +18,7 @@ export default function QueueTabs({
     <Tabs
       defaultValue="queue"
       value={activatedTab}
-      onValueChange={handleValueChange}
+      onValueChange={handleValueChange as any}
     >
       <TabsList>
         <TabsTrigger value="active">웨이팅</TabsTrigger>

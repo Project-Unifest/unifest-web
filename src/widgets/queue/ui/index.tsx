@@ -5,7 +5,6 @@ import QueueTabs from "@/src/features/queue/ui/QueueTabs";
 import NotifyButton from "@/src/features/queue/ui/NotifyButton";
 import CancelButton from "@/src/features/queue/ui/CancelButton";
 import GroupItem from "@/src/entities/queue/ui/GroupItem";
-import Enter from "@/src/features/queue/ui/EnterButton";
 import { useParams } from "next/navigation";
 import { API_URL, HTTPMethod } from "@/src/shared/api/config";
 import { QueueGroup } from "@/src/shared/lib/types";
@@ -84,11 +83,10 @@ export default function Queue() {
               />
               {status === "RESERVED" && (
                 <NotifyButton
-                  id={waitingId}
-                  onNotify={async (id: number) => {
+                  onNotify={async () => {
                     try {
                       const response = await fetch(
-                        `${API_URL}/waiting/${id}/call`,
+                        `${API_URL}/waiting/${waitingId}/call`,
                         {
                           method: HTTPMethod.PUT,
                         },
@@ -102,12 +100,11 @@ export default function Queue() {
               )}
               {status === "CALLED" && (
                 <EnterButton
-                  id={waitingId}
-                  onEnter={async (id: number) => {
+                  onEnter={async () => {
                     try {
                       // TODO invoke api call to update the server
                       const response = await fetch(
-                        `${API_URL}/waiting/${id}/complete`,
+                        `${API_URL}/waiting/${waitingId}/complete`,
                         {
                           method: HTTPMethod.PUT,
                         },
