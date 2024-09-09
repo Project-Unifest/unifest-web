@@ -1,12 +1,11 @@
 import { MenuItemState } from "../model/store/booth-edit-store";
 
 export interface Product {
-  menuStatus?: MenuItemState;
+  menuStatus: MenuItemState | null;
   id: number;
   name: string;
   price: number;
   imgUrl?: string;
-  state: MenuItemState;
 }
 
 export interface Booth {
@@ -28,7 +27,7 @@ export interface Member {
   id?: number;
   email: string;
   phoneNum: string;
-  booths: Booth[];
+  booths: (Required<Pick<Booth, "id" | "description">> & Omit<Booth, "id">)[];
   schoolId: number;
   memberRole: string;
 }
@@ -46,13 +45,7 @@ export type BoothCategoryKeys =
   (typeof BoothCategory)[keyof typeof BoothCategory];
 
 export type BoothList = Booth[];
-export interface MenuItem {
-  id: number;
-  name: string;
-  price: number;
-  imgUrl?: string;
-  state: MenuItemState;
-}
+
 export enum AnimatedPathSegment {
   SET_NAME = "set-name",
   SET_CATEGORY = "set-category",

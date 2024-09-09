@@ -1,8 +1,12 @@
 import { devtools, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
-import { Booth, BoothCategory, BoothCategoryKeys } from "../../lib/types";
+import {
+  Booth,
+  BoothCategory,
+  BoothCategoryKeys,
+  Product,
+} from "../../lib/types";
 import { MenuItemState } from "./booth-edit-store";
-import { MenuItem } from "../../lib/types";
 
 export interface Position {
   latitude: number;
@@ -21,7 +25,7 @@ export type BoothDetailsDraftActions = {
   editThumbnail: (url: string) => void;
   reset: () => void;
   addMenuItem: () => void;
-  editMenuItem: (id: number, menuProp: Partial<MenuItem>) => void;
+  editMenuItem: (id: number, menuProp: Partial<Product>) => void;
   removeMenuItem: (id: number) => void;
 };
 
@@ -44,7 +48,7 @@ export const defaultInitState = {
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
   menus: [],
-} satisfies BoothDetailsDraftState;
+} satisfies Omit<BoothDetailsDraftState, "id">;
 
 export const createBoothDetailsDraftStore =
   process.env.NODE_ENV === "development"
@@ -79,7 +83,7 @@ export const createBoothDetailsDraftStore =
                     id: crypto.getRandomValues(new Uint32Array(1))[0],
                     name: "",
                     price: 0,
-                    state: MenuItemState.DRAFT,
+                    menuStatus: MenuItemState.DRAFT,
                   },
                 ],
               })),
@@ -127,7 +131,7 @@ export const createBoothDetailsDraftStore =
                   id: crypto.getRandomValues(new Uint32Array(1))[0],
                   name: "",
                   price: 0,
-                  state: MenuItemState.DRAFT,
+                  menuStatus: MenuItemState.DRAFT,
                 },
               ],
             })),
