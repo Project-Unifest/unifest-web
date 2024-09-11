@@ -22,14 +22,14 @@ export const editBooth = async (
   accessToken: string,
   booth: Omit<Booth, "enabled" | "menus" | "detail" | "description">,
 ) => {
-  const { id } = booth;
+  const { id, ...boothWithoutId } = booth;
   const response = await fetch(`${API_URL}/api/booths/${id}`, {
     method: HTTPMethod.PATCH,
     headers: {
       [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
       [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
     },
-    body: JSON.stringify(booth),
+    body: JSON.stringify(boothWithoutId),
   });
   const data = await response.json();
   return data;
