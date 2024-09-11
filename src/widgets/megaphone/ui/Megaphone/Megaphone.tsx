@@ -33,7 +33,7 @@ export function Megaphone({ boothId }: { boothId: number }) {
 
   useEffect(() => {
     const getBoothListEffect = async () => {
-      const data = await getAuthBooth();
+      const { data } = await getAuthBooth();
       if (data) {
         setBooth(data as Booth);
       }
