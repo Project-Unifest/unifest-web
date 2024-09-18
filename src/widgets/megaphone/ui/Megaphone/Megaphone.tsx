@@ -1,7 +1,10 @@
 "use client";
 
 import { BoothItem } from "@/src/entities/booth";
-import { getBoothDetail } from "@/src/entities/booth/api/boothDetail";
+import {
+  BoothDetail,
+  getBoothDetail,
+} from "@/src/entities/booth/api/boothDetail";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { SwitchButton } from "@/src/features/booth/ui/SwitchButton";
@@ -27,15 +30,14 @@ import { useForm } from "react-hook-form";
 
 export function Megaphone({ boothId }: { boothId: number }) {
   const accessToken = useAuthStore((state) => state.accessToken);
-  const [booth, setBooth] = useState<Booth>();
-  const getAuthBooth = useAuthFetch(() => getBoothDetail(boothId));
+  const [booth, setBooth] = useState<BoothDetail>();
   const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
   useEffect(() => {
     const getBoothListEffect = async () => {
-      const { data } = await getAuthBooth();
+      const { data } = await getBoothDetail(boothId);
       if (data) {
-        setBooth(data as Booth);
+        setBooth(data);
       }
     };
     if (!isAuthLoading) {
@@ -76,12 +78,12 @@ export function Megaphone({ boothId }: { boothId: number }) {
     <div className="my-4 space-y-2">
       <BoothItem
         key={booth.id}
-        {...booth}
         editButton={<EditButton boothId={booth.id!} />}
         deleteButton={<DeleteButton boothId={booth.id!} />}
         switchButton={
           <SwitchButton boothId={booth.id!} initialOpened={booth.enabled} />
         }
+        {...booth}
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
