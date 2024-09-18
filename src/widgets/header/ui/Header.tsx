@@ -23,6 +23,10 @@ enum SignInPathSegment {
   SIGN_IN = "sign-in",
 }
 
+enum MegaphonePathSegment {
+  MEGAPHONE = "megaphone",
+}
+
 // TODO change Header on sign-in and sign-on page
 
 export function Header() {
@@ -41,7 +45,11 @@ export function Header() {
     pathname.includes(segment),
   )
     ? "운영자/학생회 로그인"
-    : "운영자모드";
+    : Object.values(MegaphonePathSegment).some((segment) =>
+          pathname.includes(segment),
+        )
+      ? "확성기"
+      : "운영자모드";
 
   const [accessToken, reset] = useAuthStore((state) => [
     state.accessToken,
