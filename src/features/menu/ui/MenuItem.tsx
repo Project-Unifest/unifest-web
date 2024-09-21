@@ -27,7 +27,7 @@ interface MenuItemPropsType {
   name: string;
   price: number;
   imgUrl?: string;
-  menuStatus: MenuItemState | null;
+  menuStatus: MenuItemState | null | undefined;
   edit: (id: number, menuProp: Partial<Product>) => void;
   add: () => void;
   remove: (id: number) => void;
