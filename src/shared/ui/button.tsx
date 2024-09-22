@@ -14,10 +14,12 @@ const buttonVariants = cva(
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
         square: "h-14 w-14 text-xs font-semibold",
+        queue: "w-28 h-8 text-sm font-medium",
       },
       shape: {
         default: "",
         circle: "rounded-full",
+        rounded: "rounded-xl",
       },
       state: {
         default: "",
@@ -26,6 +28,7 @@ const buttonVariants = cva(
         filled: "bg-[#F5687E] text-white",
         secondary:
           "border border-solid border-[#D0D0D0] bg-white text-[#545454] hover:bg-white",
+        queue: "border border-solid border-[#D2D2D2] bg-white text-[#2D2D2D]",
       },
     },
     defaultVariants: {

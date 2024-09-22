@@ -6,18 +6,31 @@ import {
   getAuthorziationValue,
 } from "@/src/shared/api/config";
 
+import { Product } from "@/src/shared/lib/types";
+
+interface ProductForFetch {
+  name: string;
+  price: number;
+  imgUrl?: string;
+}
+
 export const uploadMenuItem = async (
   accessToken: string,
   boothId: number,
-  menuItem: { name: string; price: number; imgUrl: string },
+  menuItem: ProductForFetch,
 ) => {
+  const _menu: ProductForFetch = {
+    name: menuItem.name,
+    price: menuItem.price,
+    imgUrl: menuItem.imgUrl,
+  };
   const response = await fetch(`${API_URL}/api/menus/${boothId}`, {
     method: HTTPMethod.POST,
     headers: {
       [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
       [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
     },
-    body: JSON.stringify(menuItem),
+    body: JSON.stringify(_menu),
   });
   const data = await response.json();
   return data;
@@ -30,6 +43,28 @@ export const deleteMenuItem = async (accessToken: string, menuId: number) => {
       [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
     },
   });
+  const data = await response.json();
+  return data;
+};
+
+export const editMenu = async (accessToken: string, menuItem: Product) => {
+  const _menu: ProductForFetch = {
+    name: menuItem.name,
+    price: menuItem.price,
+    imgUrl: menuItem.imgUrl,
+  };
+
+  const response = await fetch(`${API_URL}/api/menus/${menuItem.id}`, {
+    method: HTTPMethod.PATCH,
+    headers: {
+      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
+      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
+    },
+    body: JSON.stringify(_menu),
+  });
+  // return response;
+
+  //얘는 왜 return을 menuID를 하지...??
   const data = await response.json();
   return data;
 };

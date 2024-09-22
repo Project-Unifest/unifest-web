@@ -40,8 +40,12 @@ import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { editBooth } from "@/src/features/booth/api/booth";
 import { useRouter } from "next/navigation";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
-import { deleteMenuItem } from "@/src/features/menu/model/menu";
 import { BoothTimeForm } from "@/src/features/booth";
+import {
+  uploadMenuItem,
+  deleteMenuItem,
+  editMenu,
+} from "@/src/features/menu/model/menu";
 
 interface MenuItem {
   id: number;
@@ -100,6 +104,9 @@ export function Edit({ boothId }: { boothId: number }) {
   useRequireAuth(AuthType.MEMBER);
 
   const editAuthBooth = useAuthFetch(editBooth);
+  const addAuthMenu = useAuthFetch(uploadMenuItem);
+  const editAuthMenu = useAuthFetch(editMenu);
+  const deleteAuthMenu = useAuthFetch(deleteMenuItem);
 
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
@@ -130,6 +137,14 @@ export function Edit({ boothId }: { boothId: number }) {
 
   const onSubmit = async (data: any) => {
     await editAuthBooth({ id: boothId, thumbnail, enabled, ...data });
+    menuList.forEach(async (menuItem) => {
+      const res = await editAuthMenu(menuItem);
+      //이거 res가 왜 responseBody 처럼 오지 않는 걸까요
+      //TODO : 현재 로직은 이론상 메뉴의 수가 매우 많아지면 오작동함!!!!!! 이번 축제 때는 그러지 않겠지...만...?
+      if (res === null) {
+        await addAuthMenu(boothId, menuItem);
+      }
+    });
     router.push("/");
   };
 
