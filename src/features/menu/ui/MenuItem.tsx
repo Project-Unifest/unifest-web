@@ -47,10 +47,6 @@ export function MenuCard({
   const uploadAuthMemuItem = useAuthFetch(uploadMenuItem);
   const deleteAuthMemuItem = useAuthFetch(deleteMenuItem);
 
-  const canBeRegistered = Boolean(
-    menuStatus === MenuItemState.DRAFT && name && price,
-  );
-
   const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
     if (!file) {
@@ -116,22 +112,6 @@ export function MenuCard({
               edit(menuItemId, { price: Number(event.target.value) });
             }}
           />
-          {canBeRegistered && (
-            <Button
-              type="button"
-              onClick={async () => {
-                const id = await uploadAuthMemuItem(boothId, {
-                  name,
-                  price,
-                  imgUrl,
-                  state: MenuItemState.UNCHANGED,
-                });
-                edit(menuItemId, { id });
-              }}
-            >
-              등록하기
-            </Button>
-          )}
         </div>
       </div>
     </CardContent>
