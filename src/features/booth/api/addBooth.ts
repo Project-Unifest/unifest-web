@@ -30,6 +30,8 @@ interface BoothForCreate {
   menus: ProductForCreate[];
   enabled?: boolean;
   festivalId: number;
+  openTime: null | string;
+  closeTime: null | string;
 }
 // TODO add body
 export const addBooth = async (accessToken: string, booth: Booth) => {
