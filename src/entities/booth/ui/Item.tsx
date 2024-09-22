@@ -45,7 +45,7 @@ export function Item({
             <p>{location}</p>
           </CardContent>
         </div>
-        <CardHeader className="flex flex-col items-end justify-start space-y-2">
+        <CardHeader className="flex flex-none flex-col items-end justify-start space-y-2">
           {switchButton}
         </CardHeader>
       </div>
