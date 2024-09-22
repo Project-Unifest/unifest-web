@@ -42,6 +42,7 @@ import { useRouter } from "next/navigation";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { deleteMenuItem } from "@/src/features/menu/model/menu";
 import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
+import { BoothTimeForm } from "@/src/features/booth";
 
 interface MenuItem {
   id: number;
@@ -63,7 +64,12 @@ export function Add({ boothId }: { boothId: number }) {
     longitude,
     menuList,
     thumbnail,
+    openTime,
+    closeTime,
     editThumbnail,
+    editOpenTime,
+    editCloseTime,
+    resetBoothTime,
     addMenuItem,
     editMenuItem,
     removeMemuItem,
@@ -78,7 +84,12 @@ export function Add({ boothId }: { boothId: number }) {
     state.longitude,
     state.menus,
     state.thumbnail,
+    state.openTime,
+    state.closeTime,
     state.editThumbnail,
+    state.editOpenTime,
+    state.editCloseTime,
+    state.resetBoothTime,
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
@@ -98,6 +109,8 @@ export function Add({ boothId }: { boothId: number }) {
       description,
       latitude,
       longitude,
+      openTime,
+      closeTime,
     },
   });
 
@@ -283,6 +296,18 @@ export function Add({ boothId }: { boothId: number }) {
               </FormItem>
             )}
           />
+          <Card className="mb-4">
+            <CardHeader>
+              <CardTitle>운영시간</CardTitle>
+              <BoothTimeForm
+                openTime={openTime}
+                closeTime={closeTime}
+                editOpenTime={editOpenTime}
+                editCloseTime={editCloseTime}
+                resetBoothTime={resetBoothTime}
+              />
+            </CardHeader>
+          </Card>
           <Card ref={menuItemParent}>
             <CardHeader>
               <CardTitle>메뉴</CardTitle>

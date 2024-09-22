@@ -23,6 +23,9 @@ export type BoothDetailsDraftActions = {
   editDescription: (newDescription: string) => void;
   editPosition: (newPosition: Position) => void;
   editThumbnail: (url: string) => void;
+  editOpenTime: (openTime: string) => void;
+  editCloseTime: (closeTime: string) => void;
+  resetBoothTime: () => void;
   reset: () => void;
   addMenuItem: () => void;
   editMenuItem: (id: number, menuProp: Partial<Product>) => void;
@@ -47,6 +50,8 @@ export const defaultInitState = {
   location: "",
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
+  openTime: undefined,
+  closeTime: undefined,
   menus: [],
 } satisfies Omit<BoothDetailsDraftState, "id">;
 
@@ -73,6 +78,16 @@ export const createBoothDetailsDraftStore =
               })),
             editThumbnail: (url) =>
               set((state) => ({ ...state, thumbnail: url })),
+            editOpenTime: (openTime) =>
+              set((state) => ({ ...state, openTime })),
+            editCloseTime: (closeTime) =>
+              set((state) => ({ ...state, closeTime })),
+            resetBoothTime: () =>
+              set((state) => ({
+                ...state,
+                openTime: undefined,
+                closeTime: undefined,
+              })),
             reset: () => set((state) => ({ ...state, ...defaultInitState })),
             addMenuItem: () =>
               set((state) => ({
@@ -121,7 +136,16 @@ export const createBoothDetailsDraftStore =
             })),
           editThumbnail: (url) =>
             set((state) => ({ ...state, thumbnail: url })),
+          editOpenTime: (openTime) => set((state) => ({ ...state, openTime })),
+          editCloseTime: (closeTime) =>
+            set((state) => ({ ...state, closeTime })),
           reset: () => set((state) => ({ ...state, ...defaultInitState })),
+          resetBoothTime: () =>
+            set((state) => ({
+              ...state,
+              openTime: undefined,
+              closeTime: undefined,
+            })),
           addMenuItem: () =>
             set((state) => ({
               ...state,
