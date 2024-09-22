@@ -35,6 +35,8 @@ export const defaultInitState = {
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
   menus: [],
+  openTime: null,
+  closeTime: null,
 } satisfies BoothDraftState;
 
 export const createBoothDraftStore =

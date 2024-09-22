@@ -40,6 +40,7 @@ import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { editBooth } from "@/src/features/booth/api/booth";
 import { useRouter } from "next/navigation";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
+import { BoothTimeForm } from "@/src/features/booth";
 import {
   uploadMenuItem,
   deleteMenuItem,
@@ -65,7 +66,12 @@ export function Edit({ boothId }: { boothId: number }) {
     latitude,
     longitude,
     thumbnail,
+    openTime,
+    closeTime,
     editThumbnail,
+    editOpenTime,
+    editCloseTime,
+    resetBoothTime,
     menuList,
     addMenuItem,
     editMenuItem,
@@ -81,7 +87,12 @@ export function Edit({ boothId }: { boothId: number }) {
     state.latitude,
     state.longitude,
     state.thumbnail,
+    state.openTime,
+    state.closeTime,
     state.editThumbnail,
+    state.editOpenTime,
+    state.editCloseTime,
+    state.resetBoothTime,
     state.menus,
     state.addMenuItem,
     state.editMenuItem,
@@ -107,8 +118,16 @@ export function Edit({ boothId }: { boothId: number }) {
       description,
       latitude,
       longitude,
+      openTime,
+      closeTime,
     },
   });
+  const changeOpenTimeInForm = (openTime: string | null) => {
+    form.setValue("openTime", openTime);
+  };
+  const changeCloseTimeInForm = (closeTime: string | null) => {
+    form.setValue("closeTime", closeTime);
+  };
 
   const { reset } = form;
 
@@ -302,6 +321,20 @@ export function Edit({ boothId }: { boothId: number }) {
               </FormItem>
             )}
           />
+          <Card className="mb-4">
+            <CardHeader>
+              <CardTitle>운영시간</CardTitle>
+              <BoothTimeForm
+                openTime={openTime}
+                closeTime={closeTime}
+                changeOpenTimeInForm={changeOpenTimeInForm}
+                changeCloseTimeInForm={changeCloseTimeInForm}
+                editOpenTime={editOpenTime}
+                editCloseTime={editCloseTime}
+                resetBoothTime={resetBoothTime}
+              />
+            </CardHeader>
+          </Card>
           <Card ref={menuItemParent}>
             <CardHeader>
               <CardTitle>메뉴</CardTitle>
