@@ -28,6 +28,9 @@ export type BoothDraftActions = {
   editDescription: (newDescription: string) => void;
   editPosition: (newPosition: Position) => void;
   editThumbnail: (url: string) => void;
+  editOpenTime: (openTime: string) => void;
+  editCloseTime: (closeTime: string) => void;
+  resetBoothTime: () => void;
   reset: () => void;
   addMenuItem: () => void;
   editMenuItem: (id: number, menuProp: Partial<Product>) => void;
@@ -75,6 +78,16 @@ export const createBoothEditStore =
               })),
             editThumbnail: (url) =>
               set((state) => ({ ...state, thumbnail: url })),
+            editOpenTime: (openTime) =>
+              set((state) => ({ ...state, openTime })),
+            editCloseTime: (closeTime) =>
+              set((state) => ({ ...state, closeTime })),
+            resetBoothTime: () =>
+              set((state) => ({
+                ...state,
+                openTime: undefined,
+                closeTime: undefined,
+              })),
             reset: () => set((state) => ({ ...state, ...defaultInitState })),
             addMenuItem: () =>
               set((state) => ({
@@ -121,6 +134,15 @@ export const createBoothEditStore =
             })),
           editThumbnail: (url) =>
             set((state) => ({ ...state, thumbnail: url })),
+          editOpenTime: (openTime) => set((state) => ({ ...state, openTime })),
+          editCloseTime: (closeTime) =>
+            set((state) => ({ ...state, closeTime })),
+          resetBoothTime: () =>
+            set((state) => ({
+              ...state,
+              openTime: undefined,
+              closeTime: undefined,
+            })),
           reset: () => set((state) => ({ ...state, ...defaultInitState })),
           addMenuItem: () =>
             set((state) => ({
