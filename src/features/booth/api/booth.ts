@@ -48,7 +48,24 @@ export const updateBoothOpened = async (
       [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
       [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
     },
-    body: JSON.stringify({ enabled: opened, latitude, longitude }),
+    body: JSON.stringify({ enabled: opened }),
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const toggleBoothQueueFeature = async (
+  accessToken: string,
+  boothId: number,
+  isQueueFeatureEnabled: boolean,
+) => {
+  const response = await fetch(`${API_URL}/api/booths/${boothId}`, {
+    method: HTTPMethod.PATCH,
+    headers: {
+      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
+      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
+    },
+    body: JSON.stringify({ waitingEnabled: isQueueFeatureEnabled }),
   });
   const data = await response.json();
   return data;
