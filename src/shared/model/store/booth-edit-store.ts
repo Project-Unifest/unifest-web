@@ -87,8 +87,8 @@ export const createBoothEditStore =
             resetBoothTime: () =>
               set((state) => ({
                 ...state,
-                openTime: undefined,
-                closeTime: undefined,
+                openTime: null,
+                closeTime: null,
               })),
             reset: () => set((state) => ({ ...state, ...defaultInitState })),
             addMenuItem: () =>
@@ -142,8 +142,8 @@ export const createBoothEditStore =
           resetBoothTime: () =>
             set((state) => ({
               ...state,
-              openTime: undefined,
-              closeTime: undefined,
+              openTime: null,
+              closeTime: null,
             })),
           reset: () => set((state) => ({ ...state, ...defaultInitState })),
           addMenuItem: () =>
