@@ -2,10 +2,10 @@
 
 import { BoothItem } from "@/src/entities/booth";
 import { getBoothList } from "@/src/entities/booth/api/boothList";
-import { AddBoothButton } from "@/src/features/booth";
+import { AddBoothButton, BoothSwitchButton } from "@/src/features/booth";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
-import { SwitchButton } from "@/src/features/booth/ui/SwitchButton";
+import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
 import { Member } from "@/src/shared/lib/types";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import useRequireAuth, {
@@ -15,6 +15,8 @@ import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
 import Link from "next/link";
 import { useEffect } from "react";
+import { Button } from "@/src/shared/ui/button";
+import ClockIcon from "@/src/shared/ui/ClockIcon";
 
 export function BoothList() {
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -68,7 +70,18 @@ export function BoothList() {
           editButton={<EditButton boothId={booth.id!} />}
           deleteButton={<DeleteButton boothId={booth.id!} />}
           switchButton={
-            <SwitchButton boothId={booth.id!} initialOpened={booth.enabled} />
+            <div className="flex flex-col items-end justify-start gap-2 ">
+              <BoothSwitchButton boothId={booth.id} />
+              <Button size="queue" state="queue" shape="rounded">
+                <Link
+                  href={`/booths/${booth.id}`}
+                  className="flex flex-row items-center justify-center gap-1"
+                >
+                  <ClockIcon />
+                  웨이팅 관리
+                </Link>
+              </Button>
+            </div>
           }
         />
       ))}
