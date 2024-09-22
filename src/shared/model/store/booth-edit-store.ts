@@ -54,6 +54,8 @@ export const defaultInitState = {
   location: "",
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
+  openTime: null,
+  closeTime: null,
   menus: [],
 } satisfies Omit<BoothEditState, "id">;
 

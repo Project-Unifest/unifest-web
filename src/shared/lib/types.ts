@@ -21,8 +21,8 @@ export interface Booth {
   longitude: number;
   menus: Product[];
   enabled?: boolean;
-  openTime?: string;
-  closeTime?: string;
+  openTime: string | null;
+  closeTime: string | null;
 }
 
 export interface Member {
