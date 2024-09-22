@@ -2,7 +2,7 @@ import { BoothItem } from "@/src/entities/booth";
 import { getBoothDetail } from "@/src/entities/booth/api/boothDetail";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
-import { SwitchButton } from "@/src/features/booth/ui/SwitchButton";
+import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
 import BoothDetail from "@/src/pages/booths/booth-detail";
 import { API_URL } from "@/src/shared/api/config";
 import { Booth, BoothCategoryKeys, Product } from "@/src/shared/lib/types";

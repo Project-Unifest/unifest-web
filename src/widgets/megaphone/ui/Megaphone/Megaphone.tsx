@@ -7,7 +7,7 @@ import {
 } from "@/src/entities/booth/api/boothDetail";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
-import { SwitchButton } from "@/src/features/booth/ui/SwitchButton";
+import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
 import { makeMegaphone } from "@/src/features/megaphone/api/megaphone";
 import { Booth } from "@/src/shared/lib/types";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
@@ -81,7 +81,10 @@ export function Megaphone({ boothId }: { boothId: number }) {
         editButton={<EditButton boothId={booth.id!} />}
         deleteButton={<DeleteButton boothId={booth.id!} />}
         switchButton={
-          <SwitchButton boothId={booth.id!} initialOpened={booth.enabled} />
+          <BoothAvailabilitySwitchButton
+            boothId={booth.id!}
+            initialOpened={booth.enabled}
+          />
         }
         {...booth}
       />

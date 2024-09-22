@@ -43,6 +43,7 @@ import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { deleteMenuItem } from "@/src/features/menu/model/menu";
 import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
 import { BoothTimeForm } from "@/src/features/booth";
+import { addBooth } from "@/src/features/booth/api/addBooth";
 
 interface MenuItem {
   id: number;
@@ -98,7 +99,7 @@ export function Add({ boothId }: { boothId: number }) {
   const [menuItemParent] = useAutoAnimate();
   useRequireAuth(AuthType.MEMBER);
 
-  const editAuthBooth = useAuthFetch(editBooth);
+  const addAuthBooth = useAuthFetch(addBooth);
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
     defaultValues: {
@@ -126,7 +127,7 @@ export function Add({ boothId }: { boothId: number }) {
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    await editAuthBooth({ id: boothId, thumbnail, ...data });
+    await addAuthBooth({ id: boothId, thumbnail, ...data, menus: menuList });
     router.push("/");
   };
 

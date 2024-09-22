@@ -1,4 +1,5 @@
 import { Button } from "@/src/shared/ui/button";
+import ClockIcon from "@/src/shared/ui/ClockIcon";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
@@ -44,5 +45,19 @@ export const CircleSecondary: Story = {
     shape: "circle",
     state: "secondary",
     children: <>입장</>,
+  },
+};
+
+export const QueueButton: Story = {
+  args: {
+    size: "queue",
+    shape: "rounded",
+    state: "queue",
+    children: (
+      <span className="flex flex-row items-center gap-1">
+        <ClockIcon />
+        웨이팅 관리
+      </span>
+    ),
   },
 };

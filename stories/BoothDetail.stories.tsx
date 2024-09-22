@@ -25,6 +25,7 @@ export const Default: Story = {
       description: "부동산학관에 위치한 닭꼬치맛집",
       location: "부동산학관 1층",
       enabled: false,
+      waitingEnabled: false,
     },
   },
 };

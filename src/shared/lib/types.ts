@@ -23,6 +23,7 @@ export interface Booth {
   enabled?: boolean;
   openTime: string | null;
   closeTime: string | null;
+  waitingEnabled?: boolean;
 }
 
 export interface Member {

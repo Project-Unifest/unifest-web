@@ -5,5 +5,5 @@ export { BoothTimeForm } from "./ui/BoothTimeForm";
 
 export { DeleteButton as BoothDeleteButton } from "./ui/DeleteButton";
 export { EditButton as BoothEditButton } from "./ui/EditButton";
-export { SwitchButton as BoothSwitchButton } from "./ui/SwitchButton";
+export { BoothAvailabilitySwitchButton as BoothSwitchButton } from "./ui/BoothAvailabilitySwitchButton";
 export { Button as AddBoothButton } from "./ui/Button";
