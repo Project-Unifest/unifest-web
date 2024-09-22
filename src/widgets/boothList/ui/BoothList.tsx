@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { Button } from "@/src/shared/ui/button";
 import ClockIcon from "@/src/shared/ui/ClockIcon";
+import PlusIcon from "@/src/shared/ui/PlusIcon";
 
 export function BoothList() {
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -85,6 +86,16 @@ export function BoothList() {
           }
         />
       ))}
+      <Button
+        type="button"
+        className="flex h-8 w-full justify-center  gap-1 rounded-xl border border-[#F5687E] bg-[#FFF0F3] text-sm font-medium text-[#F5687E]"
+        asChild
+      >
+        <Link href="/add-booth/select-mode">
+          <PlusIcon />
+          부스 추가하기
+        </Link>
+      </Button>
     </div>
   );
 }
