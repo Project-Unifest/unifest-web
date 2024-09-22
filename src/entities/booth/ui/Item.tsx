@@ -32,29 +32,27 @@ export function Item({
   switchButton,
 }: ItemPropsType) {
   return (
-    <div className="relative">
-      <Card data-testid={`booth-item-${name}`}>
-        <CardHeader>
-          <div className="flex items-center justify-between">
+    <Card data-testid={`booth-item-${name}`}>
+      <div className="flex items-start justify-between">
+        <div className="flex flex-col items-start justify-start">
+          <CardHeader>
             <CardTitle className="w-full flex-auto truncate">{name}</CardTitle>
-            <div className="flex-none">{switchButton}</div>
-          </div>
-          <CardDescription className="line-clamp-2 text-ellipsis">
-            {description}
-          </CardDescription>
+            <CardDescription className="line-clamp-2 text-ellipsis">
+              {description}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>{location}</p>
+          </CardContent>
+        </div>
+        <CardHeader className="flex flex-col items-end justify-start space-y-2">
+          {switchButton}
         </CardHeader>
-        <CardContent>
-          <p>{location}</p>
-        </CardContent>
-        <CardFooter className="flex items-center justify-between gap-2">
-          {editButton}
-          {deleteButton}
-        </CardFooter>
-      </Card>
-      <Link
-        href={`/booths/${id}`}
-        className="absolute left-0 top-0 z-10 h-full w-full"
-      />
-    </div>
+      </div>
+      <CardFooter className="flex items-center justify-between gap-2">
+        {editButton}
+        {deleteButton}
+      </CardFooter>
+    </Card>
   );
 }
