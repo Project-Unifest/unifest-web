@@ -114,6 +114,13 @@ export function Add({ boothId }: { boothId: number }) {
     },
   });
 
+  const changeOpenTimeInForm = (openTime: string | null) => {
+    form.setValue("openTime", openTime);
+  };
+  const changeCloseTimeInForm = (closeTime: string | null) => {
+    form.setValue("closeTime", closeTime);
+  };
+
   const [parent] = useAutoAnimate();
 
   const router = useRouter();
@@ -302,6 +309,8 @@ export function Add({ boothId }: { boothId: number }) {
               <BoothTimeForm
                 openTime={openTime}
                 closeTime={closeTime}
+                changeOpenTimeInForm={changeOpenTimeInForm}
+                changeCloseTimeInForm={changeCloseTimeInForm}
                 editOpenTime={editOpenTime}
                 editCloseTime={editCloseTime}
                 resetBoothTime={resetBoothTime}

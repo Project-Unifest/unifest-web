@@ -115,6 +115,12 @@ export function Edit({ boothId }: { boothId: number }) {
       closeTime,
     },
   });
+  const changeOpenTimeInForm = (openTime: string | null) => {
+    form.setValue("openTime", openTime);
+  };
+  const changeCloseTimeInForm = (closeTime: string | null) => {
+    form.setValue("closeTime", closeTime);
+  };
 
   const { reset } = form;
 
@@ -306,6 +312,8 @@ export function Edit({ boothId }: { boothId: number }) {
               <BoothTimeForm
                 openTime={openTime}
                 closeTime={closeTime}
+                changeOpenTimeInForm={changeOpenTimeInForm}
+                changeCloseTimeInForm={changeCloseTimeInForm}
                 editOpenTime={editOpenTime}
                 editCloseTime={editCloseTime}
                 resetBoothTime={resetBoothTime}

@@ -6,6 +6,8 @@ interface BoothTimeProps {
   closeTime: string | null;
   editOpenTime: (openTime: string) => void;
   editCloseTime: (closeTime: string) => void;
+  changeOpenTimeInForm: (openTime: string | null) => void;
+  changeCloseTimeInForm: (openTime: string | null) => void;
   resetBoothTime: () => void;
 }
 
@@ -14,6 +16,8 @@ export function BoothTimeForm({
   closeTime,
   editCloseTime,
   editOpenTime,
+  changeOpenTimeInForm,
+  changeCloseTimeInForm,
   resetBoothTime,
 }: BoothTimeProps) {
   const openTimeInputRef = useRef<HTMLInputElement | null>(null);
@@ -59,6 +63,7 @@ export function BoothTimeForm({
               onChange={(e) => {
                 if (e.target.value) {
                   editOpenTime(convertToHHMMSS(e.target.value));
+                  changeOpenTimeInForm(convertToHHMMSS(e.target.value));
                 }
               }}
               onClick={() => handleInputClick(openTimeInputRef)} // 클릭 시 시간 선택 창 열림
@@ -75,6 +80,7 @@ export function BoothTimeForm({
               onChange={(e) => {
                 if (e.target.value) {
                   editCloseTime(convertToHHMMSS(e.target.value));
+                  changeCloseTimeInForm(convertToHHMMSS(e.target.value));
                 }
               }}
               onClick={() => handleInputClick(closeTimeInputRef)} // 클릭 시 시간 선택 창 열림
@@ -90,6 +96,8 @@ export function BoothTimeForm({
             onClick={() => {
               editOpenTime("13:00:00");
               editCloseTime("18:00:00");
+              changeOpenTimeInForm("13:00:00");
+              changeCloseTimeInForm("18:00:00");
             }}
           >
             운영시간 추가하기
