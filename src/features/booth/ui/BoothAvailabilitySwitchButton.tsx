@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { updateBoothOpened } from "../api/booth";
 import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
 
-export function SwitchButton({
+export function BoothAvailabilitySwitchButton({
   boothId,
   initialOpened,
 }: Readonly<{ boothId: number; initialOpened?: boolean }>) {
@@ -37,6 +37,7 @@ export function SwitchButton({
         id="booth-mode"
         checked={opened}
         onCheckedChange={toggleBoothOpened}
+        color="primary"
       />
     </div>
   );

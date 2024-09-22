@@ -4,8 +4,10 @@ import { AnimatedPathSegment } from "@/src/shared/lib/types";
 import useRequireAuth from "@/src/shared/model/auth/useRequireAuth";
 import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import LogoutIcon from "@/src/shared/ui/LogoutIcon";
+import SpeakerIcon from "@/src/shared/ui/SpeakerIcon";
 import { Button } from "@/src/shared/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -27,7 +29,16 @@ enum MegaphonePathSegment {
   MEGAPHONE = "megaphone",
 }
 
+enum BoothDetailPathSegment {
+  booths = "booths",
+}
+
 // TODO change Header on sign-in and sign-on page
+
+const getBoothId = (pathname: string) => {
+  const boothId = pathname.split("/booths/")[1];
+  return boothId;
+};
 
 export function Header() {
   const router = useRouter();
@@ -91,7 +102,15 @@ export function Header() {
         )}
 
         <div className="shrink-0 font-black">{headerText}</div>
-        {isLoggedIn && (
+        {pathname.includes(BoothDetailPathSegment.booths) && (
+          <Link
+            href={`/megaphone/${getBoothId(pathname)}`}
+            className="absolute right-4"
+          >
+            <SpeakerIcon />
+          </Link>
+        )}
+        {!pathname.includes(BoothDetailPathSegment.booths) && isLoggedIn && (
           <button
             type="button"
             onClick={() => {
