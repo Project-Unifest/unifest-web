@@ -85,8 +85,8 @@ export const createBoothDetailsDraftStore =
             resetBoothTime: () =>
               set((state) => ({
                 ...state,
-                openTime: undefined,
-                closeTime: undefined,
+                openTime: null,
+                closeTime: null,
               })),
             reset: () => set((state) => ({ ...state, ...defaultInitState })),
             addMenuItem: () =>
@@ -143,8 +143,8 @@ export const createBoothDetailsDraftStore =
           resetBoothTime: () =>
             set((state) => ({
               ...state,
-              openTime: undefined,
-              closeTime: undefined,
+              openTime: null,
+              closeTime: null,
             })),
           addMenuItem: () =>
             set((state) => ({
