@@ -11,13 +11,16 @@ export const makeMegaphone = async (
   boothId: number,
   msg: { msgBody: string },
 ) => {
-  const response = await fetch(`${API_URL}/booths/${boothId}/announcement`, {
+  const response = await fetch(`${API_URL}/megaphone`, {
     method: HTTPMethod.POST,
     headers: {
       [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
       [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
     },
-    body: JSON.stringify(msg),
+    body: JSON.stringify({
+      ...msg,
+      boothId,
+    }),
   });
   const data = await response.json();
   return data;
