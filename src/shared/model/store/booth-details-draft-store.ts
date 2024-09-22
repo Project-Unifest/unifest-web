@@ -50,8 +50,8 @@ export const defaultInitState = {
   location: "",
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
-  openTime: undefined,
-  closeTime: undefined,
+  openTime: null,
+  closeTime: null,
   menus: [],
 } satisfies Omit<BoothDetailsDraftState, "id">;
 

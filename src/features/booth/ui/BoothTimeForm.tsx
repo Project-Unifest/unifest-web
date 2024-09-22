@@ -2,8 +2,8 @@ import { Button } from "@/src/shared/ui/button";
 import React, { useRef, useState } from "react";
 
 interface BoothTimeProps {
-  openTime?: string;
-  closeTime?: string;
+  openTime: string | null;
+  closeTime: string | null;
   editOpenTime: (openTime: string) => void;
   editCloseTime: (closeTime: string) => void;
   resetBoothTime: () => void;
