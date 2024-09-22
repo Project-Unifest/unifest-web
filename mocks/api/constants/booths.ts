@@ -15,8 +15,12 @@ export const booths: Booth[] = [
     longitude: 0.0,
     menus: [],
     enabled: true,
+    openTime: null,
+    closeTime: null,
   },
   {
+    openTime: null,
+    closeTime: null,
     id: 1,
     name: "부동산학관 부스",
     category: "FOOD",
@@ -56,6 +60,8 @@ export const booths: Booth[] = [
     enabled: false,
   },
   {
+    openTime: null,
+    closeTime: null,
     id: 2,
     name: "공대주점",
     category: "BAR",
@@ -112,6 +118,8 @@ export const booths: Booth[] = [
     enabled: true,
   },
   {
+    openTime: null,
+    closeTime: null,
     id: 3,
     name: "생명대 화장실",
     category: "TOILET",
@@ -126,6 +134,8 @@ export const booths: Booth[] = [
     enabled: true,
   },
   {
+    openTime: null,
+    closeTime: null,
     id: 4,
     name: "법학관 의무실",
     category: "MEDICAL",
@@ -141,6 +151,8 @@ export const booths: Booth[] = [
     enabled: true,
   },
   {
+    openTime: null,
+    closeTime: null,
     id: 5,
     name: "유니페스",
     category: "EVENT",
@@ -155,6 +167,8 @@ export const booths: Booth[] = [
     enabled: true,
   },
   {
+    openTime: null,
+    closeTime: null,
     id: 6,
     name: "일감호 보트",
     category: "EVENT",
