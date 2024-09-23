@@ -72,7 +72,10 @@ export function BoothList() {
           deleteButton={<DeleteButton boothId={booth.id!} />}
           switchButton={
             <div className="flex flex-col items-end justify-start gap-2 ">
-              <BoothSwitchButton boothId={booth.id} />
+              <BoothSwitchButton
+                boothId={booth.id}
+                initialOpened={booth.enabled}
+              />
               <Button size="queue" state="queue" shape="rounded">
                 <Link
                   href={`/booths/${booth.id}`}
