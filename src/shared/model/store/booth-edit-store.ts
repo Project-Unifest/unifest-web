@@ -40,8 +40,8 @@ export type BoothDraftActions = {
 export type BoothEditStore = BoothEditState & BoothDraftActions;
 
 export enum CampusPosition {
-  latitude = 37.542352,
-  longitude = 127.076824,
+  latitude = 37.01107,
+  longitude = 127.263816,
 }
 
 export const defaultInitState = {

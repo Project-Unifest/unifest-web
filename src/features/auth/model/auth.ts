@@ -10,18 +10,27 @@ interface AuthDetails {
   contact: string;
 }
 
+interface SignUpRequest {
+  email: string;
+  password: string;
+  schoolId: number;
+  phoneNum: string;
+}
+
 export const signUp = async (authDetails: AuthDetails) => {
+  const body: SignUpRequest = {
+    email: authDetails.email,
+    password: authDetails.password,
+    schoolId: authDetails.schoolId,
+    phoneNum: authDetails.contact,
+  };
   const response = await fetch(`${API_URL}/members`, {
     method: HttpMethods.POST,
     headers: {
       ["content-type"]: "application/json",
     },
     // TODO change schoolId based on university
-    body: JSON.stringify({
-      ...authDetails,
-      schoolId: 1,
-      phoneNum: authDetails.contact,
-    }),
+    body: JSON.stringify({ ...body, schoolId: 2 }),
   });
   const data = response.json();
   return data;
