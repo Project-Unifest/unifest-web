@@ -15,9 +15,11 @@ test("should add booth in the overview mode and delete booth", async ({
   await expect(setPositionButton).toBeVisible();
   await setPositionButton.click();
 
-  const fakeName = faker.commerce.product();
+  const uuid = crypto.randomUUID();
+  const title = faker.commerce.product();
+  const uniqueTitle = `${title}-${uuid}`;
   await page.waitForURL("/add-booth/set-name");
-  await page.getByPlaceholder(/부스 이름/).fill(fakeName);
+  await page.getByPlaceholder(/부스 이름/).fill(uniqueTitle);
   const setNameButton = page.getByRole("link", { name: /입력완료/ });
   await expect(setNameButton).toBeVisible();
   await setNameButton.click();
@@ -39,12 +41,14 @@ test("should add booth in the overview mode and delete booth", async ({
 
   await page.waitForURL("/");
   await expect(page.getByPlaceholder("운영중인 부스 없음")).not.toBeVisible();
-  await expect(page.getByRole("heading", { name: fakeName })).toBeVisible();
+  await expect(page.getByRole("heading", { name: uniqueTitle })).toBeVisible();
   await expect(page.getByText(fakeDescription)).toBeVisible();
 
-  const boothItem = page.getByTestId(`booth-item-${fakeName}`);
+  const boothItem = page.getByTestId(`booth-item-${uniqueTitle}`);
   await boothItem.getByRole("button", { name: "부스 삭제하기" }).click();
   await page.getByRole("button", { name: "삭제하기" }).click({ force: true });
-  await expect(page.getByRole("heading", { name: fakeName })).not.toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: uniqueTitle }),
+  ).not.toBeVisible();
   await expect(page.getByText(fakeDescription)).not.toBeVisible();
 });
