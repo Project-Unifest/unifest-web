@@ -3,6 +3,8 @@ import { z } from "zod";
 
 export enum University {
   Konkuk = "건국대 서울캠",
+  Hankyung = "한경대학교",
+  Transportation = "교통대학교",
 }
 
 export const signUpSchema = z
