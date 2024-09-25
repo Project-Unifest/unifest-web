@@ -27,7 +27,10 @@ interface BoothDetailResponse {
 export const getBoothDetail = async (
   boothId: number,
 ): Promise<BoothDetailResponse> => {
-  const response = await fetch(`${API_URL}/api/booths/${boothId}`);
-  const data = await response.json();
-  return data;
+  const response = await fetch(`${API_URL}/api/booths/${boothId}`, {
+    cache: "no-store",
+  });
+  const body = await response.json();
+  console.log(body);
+  return body;
 };
