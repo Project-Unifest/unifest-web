@@ -8,7 +8,7 @@ import {
 import { Booth, BoothCategoryKeys } from "@/src/shared/lib/types";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 
-const FESTIVAL_ID = 1;
+const FESTIVAL_ID = 2;
 interface ProductForCreate {
   menuStatus?: MenuItemState | null;
   id?: number;
