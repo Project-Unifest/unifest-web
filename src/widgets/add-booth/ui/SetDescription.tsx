@@ -45,7 +45,7 @@ export function SetDescription() {
       thumbnail: "",
       longitude: longitude,
       latitude: latitude,
-      festivalId: 1,
+      festivalId: 2,
       location: "위",
       menus: [],
     });
@@ -67,7 +67,7 @@ export function SetDescription() {
       thumbnail: "",
       longitude: longitude,
       latitude: latitude,
-      festivalId: 1,
+      festivalId: 2,
       location: "상세위치 지정 필요",
       menus: [],
     });
