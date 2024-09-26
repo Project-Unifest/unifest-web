@@ -98,7 +98,7 @@ export function SelectMode() {
                 category: BoothCategory.BAR,
                 description: "",
                 thumbnail: "",
-                festivalId: 1,
+                festivalId: 2,
                 location: "위치를 설정해주세요",
                 latitude: 0,
                 longitude: 0,
