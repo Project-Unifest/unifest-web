@@ -259,6 +259,7 @@ export function Add({ boothId }: { boothId: number }) {
                 <FormControl>
                   <Input
                     placeholder="주의사항 (예: 컴퓨터공학부만 출입 가능)"
+                    defaultValue=""
                     {...field}
                   />
                 </FormControl>

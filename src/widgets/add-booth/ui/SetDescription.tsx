@@ -46,7 +46,7 @@ export function SetDescription() {
       longitude: longitude,
       latitude: latitude,
       festivalId: 2,
-      location: "위",
+      location: "",
       menus: [],
     });
 
