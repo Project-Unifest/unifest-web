@@ -342,12 +342,11 @@ export function Edit({ boothId }: { boothId: number }) {
             {menuList.map((menuItem) => (
               <MenuItemForm
                 key={menuItem.id}
-                {...menuItem}
                 boothId={boothId}
-                menuStatus={menuItem.menuStatus}
                 add={addMenuItem}
                 remove={removeMemuItem}
                 edit={editMenuItem}
+                {...menuItem}
               />
             ))}
             <CardFooter>

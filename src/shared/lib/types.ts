@@ -1,7 +1,8 @@
+import { MenuStatus } from "@/src/features/menu/lib/types";
 import { MenuItemState } from "../model/store/booth-edit-store";
 
 export interface Product {
-  menuStatus: MenuItemState | null;
+  menuStatus: MenuStatus;
   id: number;
   name: string;
   price: number;
