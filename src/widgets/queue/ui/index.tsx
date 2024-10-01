@@ -13,6 +13,9 @@ import { formatDateString } from "../lib/formatDateString";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { issuePIN } from "../api";
 import { cancelGroup } from "@/src/features/queue/api/queue";
+import useRequireAuth, {
+  AuthType,
+} from "@/src/shared/model/auth/useRequireAuth";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -25,17 +28,19 @@ export default function Queue() {
   const authIssuePIN = useAuthFetch(issuePIN);
   const authCancelGroup = useAuthFetch(cancelGroup);
 
+  const isAuthLoading = useRequireAuth(AuthType.MEMBER);
+
   const getQueue = async () => {
     const data = await authIssuePIN(boothId);
-    console.log(data);
     setGroups(data);
   };
 
   useEffect(() => {
-    getQueue();
-  }, [boothId]);
+    if (!isAuthLoading) getQueue();
+    console.log(isAuthLoading);
+  }, [boothId, isAuthLoading]);
 
-  if (!groups) {
+  if (!groups || isAuthLoading) {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
   }
 
