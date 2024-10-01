@@ -7,6 +7,7 @@ import {
   Product,
 } from "../../lib/types";
 import { MenuItemState } from "./booth-edit-store";
+import { MenuStatus } from "@/src/features/menu/lib/types";
 
 export interface Position {
   latitude: number;
@@ -98,7 +99,7 @@ export const createBoothDetailsDraftStore =
                     id: crypto.getRandomValues(new Uint32Array(1))[0],
                     name: "",
                     price: 0,
-                    menuStatus: MenuItemState.DRAFT,
+                    menuStatus: MenuStatus.Enough,
                   },
                 ],
               })),
@@ -155,7 +156,7 @@ export const createBoothDetailsDraftStore =
                   id: crypto.getRandomValues(new Uint32Array(1))[0],
                   name: "",
                   price: 0,
-                  menuStatus: MenuItemState.DRAFT,
+                  menuStatus: MenuStatus.Enough,
                 },
               ],
             })),
