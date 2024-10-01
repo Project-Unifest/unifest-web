@@ -20,6 +20,9 @@ import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
 import { Product } from "@/src/shared/lib/types";
+import { RadioGroup } from "@radix-ui/react-radio-group";
+import { RadioGroupItem } from "@/src/shared/ui/radio-group";
+import { MenuStatus } from "../lib/types";
 
 interface MenuItemPropsType {
   boothId: number;
@@ -27,7 +30,7 @@ interface MenuItemPropsType {
   name: string;
   price: number;
   imgUrl?: string;
-  menuStatus: MenuItemState | null | undefined;
+  menuStatus: MenuStatus;
   edit: (id: number, menuProp: Partial<Product>) => void;
   add: () => void;
   remove: (id: number) => void;
@@ -46,10 +49,6 @@ export function MenuCard({
 }: MenuItemPropsType) {
   const uploadAuthMemuItem = useAuthFetch(uploadMenuItem);
   const deleteAuthMemuItem = useAuthFetch(deleteMenuItem);
-
-  const canBeRegistered = Boolean(
-    menuStatus === MenuItemState.DRAFT && name && price,
-  );
 
   const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -116,23 +115,32 @@ export function MenuCard({
               edit(menuItemId, { price: Number(event.target.value) });
             }}
           />
-          {canBeRegistered && (
-            <Button
-              type="button"
-              onClick={async () => {
-                const id = await uploadAuthMemuItem(boothId, {
-                  name,
-                  price,
-                  imgUrl,
-                  state: MenuItemState.UNCHANGED,
-                });
-                edit(menuItemId, { id });
-              }}
-            >
-              등록하기
-            </Button>
-          )}
         </div>
+        <RadioGroup
+          value={menuStatus}
+          onValueChange={(value: MenuStatus) => {
+            edit(menuItemId, { menuStatus: value });
+          }}
+          className="flex w-full items-center justify-start space-x-3"
+        >
+          <div className="flex items-center space-x-1">
+            <RadioGroupItem value={MenuStatus.Enough} id="option-enough" />
+            <Label htmlFor="option-one">정상</Label>
+          </div>
+          <div className="flex items-center space-x-1">
+            <RadioGroupItem value={MenuStatus.Under50} id="option-under-50" />
+            <Label htmlFor="option-under-50">50개 이하</Label>
+          </div>
+          <div className="flex items-center space-x-1">
+            <RadioGroupItem value={MenuStatus.Under10} id="option-under-10" />
+
+            <Label htmlFor="option-under-10">10개 이하</Label>
+          </div>
+          <div className="flex items-center space-x-1">
+            <RadioGroupItem value={MenuStatus.SoldOut} id="option-sold-out" />
+            <Label htmlFor="option-sold-out">품절</Label>
+          </div>
+        </RadioGroup>
       </div>
     </CardContent>
   );

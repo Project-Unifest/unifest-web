@@ -1,3 +1,4 @@
+import { MenuStatus } from "@/src/features/menu/lib/types";
 import { Booth } from "@/src/shared/lib/types";
 
 export const booths: Booth[] = [
@@ -38,7 +39,7 @@ export const booths: Booth[] = [
         price: 5000,
         imgUrl:
           "https://content.foodspring.co.kr/vendor/1781/images/101_4100052181_r.png",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
       {
         id: 1,
@@ -46,7 +47,7 @@ export const booths: Booth[] = [
         price: 4500,
         imgUrl:
           "https://thenaum.cdn-nhncommerce.com/data/goods/18/01/03/1000001570/1000001570_add3_023.jpg",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
       {
         id: 2,
@@ -54,7 +55,7 @@ export const booths: Booth[] = [
         price: 6000,
         imgUrl:
           "https://gwchild114.firstmall.kr/data/goods/1/2021/06/42952_tmp_bfbe39f750e2db665da61b3a2e3c74697887large.png",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
     ],
     enabled: false,
@@ -80,7 +81,7 @@ export const booths: Booth[] = [
         price: 6000,
         imgUrl:
           "https://gwchild114.firstmall.kr/data/goods/1/2021/06/42952_tmp_bfbe39f750e2db665da61b3a2e3c74697887large.png",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
       {
         id: 1,
@@ -88,7 +89,7 @@ export const booths: Booth[] = [
         price: 12000,
         imgUrl:
           "https://recipe1.ezmember.co.kr/cache/recipe/2021/10/06/fc673b15bc044419eba3f16c02981bd01.jpg",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
       {
         id: 2,
@@ -96,7 +97,7 @@ export const booths: Booth[] = [
         price: 5000,
         imgUrl:
           "https://roout.co.kr/m/p/u/CuAhLhz/labels/category%3A%EC%BD%98%EC%B9%98%EC%A6%88/i/HWBqoVuw1Qg.jpg",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
       {
         id: 3,
@@ -104,7 +105,7 @@ export const booths: Booth[] = [
         price: 5000,
         imgUrl:
           "https://img.khan.co.kr/news/2022/02/18/l_2022021801002225800200181.jpg",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
       {
         id: 4,
@@ -112,7 +113,7 @@ export const booths: Booth[] = [
         price: 5000,
         imgUrl:
           "https://health.chosun.com/site/data/img_dir/2015/08/11/2015081101302_0.jpg",
-        menuStatus: null,
+        menuStatus: MenuStatus.Enough,
       },
     ],
     enabled: true,

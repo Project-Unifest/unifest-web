@@ -7,11 +7,13 @@ import {
 } from "@/src/shared/api/config";
 
 import { Product } from "@/src/shared/lib/types";
+import { MenuStatus } from "../lib/types";
 
 interface ProductForFetch {
   name: string;
   price: number;
   imgUrl?: string;
+  menuStatus: MenuStatus;
 }
 
 export const uploadMenuItem = async (
@@ -23,6 +25,7 @@ export const uploadMenuItem = async (
     name: menuItem.name,
     price: menuItem.price,
     imgUrl: menuItem.imgUrl,
+    menuStatus: menuItem.menuStatus,
   };
   const response = await fetch(`${API_URL}/api/menus/${boothId}`, {
     method: HTTPMethod.POST,
@@ -52,6 +55,7 @@ export const editMenu = async (accessToken: string, menuItem: Product) => {
     name: menuItem.name,
     price: menuItem.price,
     imgUrl: menuItem.imgUrl,
+    menuStatus: menuItem.menuStatus,
   };
 
   const response = await fetch(`${API_URL}/api/menus/${menuItem.id}`, {
