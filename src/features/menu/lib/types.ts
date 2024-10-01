@@ -5,4 +5,4 @@ export const MenuStatus = {
   SoldOut: "SOLD_OUT",
 } as const;
 
-export type MenuStockStatus = (typeof MenuStatus)[keyof typeof MenuStatus];
+export type MenuStatus = (typeof MenuStatus)[keyof typeof MenuStatus];
