@@ -19,8 +19,8 @@ export type BoothListActions = {
 export type BoothListStore = BoothListState & BoothListActions;
 
 export enum CampusPosition {
-  latitude = 37.01107,
-  longitude = 127.263816,
+  latitude = 36.969868,
+  longitude = 127.871726,
 }
 
 export const defaultInitState = {

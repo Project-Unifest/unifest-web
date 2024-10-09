@@ -60,8 +60,8 @@ export function SignUp() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value={University.Hankyung}>
-                    {University.Hankyung}
+                  <SelectItem value={University.Transportation}>
+                    {University.Transportation}
                   </SelectItem>
                 </SelectContent>
               </Select>
