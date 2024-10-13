@@ -70,7 +70,11 @@ export function SetCategory() {
           <FoodIcon
             className={`${category === BoothCategory.FOOD ? "text-pink" : "text-[#b2b2b2]"}`}
           />
-          <div className="text-base font-bold text-[#A7A7A7]">푸드트럭</div>
+          <div
+            className={`text-base font-bold ${category === BoothCategory.FOOD ? "text-pink" : "text-[#A7A7A7]"}`}
+          >
+            푸드트럭
+          </div>
         </Label>
 
         <Label
@@ -85,7 +89,11 @@ export function SetCategory() {
           <SchoolIcon
             className={`${category === BoothCategory.EVENT ? "text-pink" : "text-[#b2b2b2]"}`}
           />
-          <div className="text-base font-bold text-[#A7A7A7]">교내</div>
+          <div
+            className={`text-base font-bold ${category === BoothCategory.EVENT ? "text-pink" : "text-[#b2b2b2]"}`}
+          >
+            교내
+          </div>
         </Label>
 
         <Label
@@ -100,7 +108,11 @@ export function SetCategory() {
           <BuildingIcon
             className={`${category === BoothCategory.NORMAL ? "text-pink" : "text-[#b2b2b2]"}`}
           />
-          <div className="text-base font-bold text-[#A7A7A7]">교외</div>
+          <div
+            className={`text-base font-bold ${category === BoothCategory.NORMAL ? "text-pink" : "text-[#b2b2b2]"}`}
+          >
+            교외
+          </div>
         </Label>
       </RadioGroup>
 
