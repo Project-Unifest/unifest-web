@@ -3,11 +3,14 @@
 import { BoothCategory } from "@/src/shared/lib/types";
 import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import AlcoholIcon from "@/src/shared/ui/AlcoholIcon";
+import BuildingIcon from "@/src/shared/ui/BuildingIcon";
 import { Button } from "@/src/shared/ui/button";
 import CircleEllipsisIcon from "@/src/shared/ui/CircleEllipsisIcon";
 import EventIcon from "@/src/shared/ui/EventIcon";
+import ExperienceIcon from "@/src/shared/ui/ExperienceIcon";
 import FoodIcon from "@/src/shared/ui/FoodIcon";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
+import SchoolIcon from "@/src/shared/ui/SchoolIcon";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TextNoneIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-label";
@@ -45,13 +48,13 @@ export function SetCategory() {
             value={BoothCategory.BAR}
             id="bar"
           />
-          <AlcoholIcon
+          <ExperienceIcon
             className={`${category === BoothCategory.BAR ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div
             className={`text-base font-bold ${category === BoothCategory.BAR ? "text-pink" : "text-[#A7A7A7]"}`}
           >
-            주점
+            체험
           </div>
         </Label>
 
@@ -67,7 +70,7 @@ export function SetCategory() {
           <FoodIcon
             className={`${category === BoothCategory.FOOD ? "text-pink" : "text-[#b2b2b2]"}`}
           />
-          <div className="text-base font-bold text-[#A7A7A7]">먹거리</div>
+          <div className="text-base font-bold text-[#A7A7A7]">푸드트럭</div>
         </Label>
 
         <Label
@@ -79,10 +82,10 @@ export function SetCategory() {
             value={BoothCategory.EVENT}
             id="event"
           />
-          <EventIcon
+          <SchoolIcon
             className={`${category === BoothCategory.EVENT ? "text-pink" : "text-[#b2b2b2]"}`}
           />
-          <div className="text-base font-bold text-[#A7A7A7]">이벤트</div>
+          <div className="text-base font-bold text-[#A7A7A7]">교내</div>
         </Label>
 
         <Label
@@ -94,10 +97,10 @@ export function SetCategory() {
             value={BoothCategory.NORMAL}
             id="more"
           />
-          <CircleEllipsisIcon
+          <BuildingIcon
             className={`${category === BoothCategory.NORMAL ? "text-pink" : "text-[#b2b2b2]"}`}
           />
-          <div className="text-base font-bold text-[#A7A7A7]">일반</div>
+          <div className="text-base font-bold text-[#A7A7A7]">교외</div>
         </Label>
       </RadioGroup>
 
