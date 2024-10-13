@@ -191,7 +191,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.BAR ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        주점
+                        체험
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex-auto">
@@ -204,7 +204,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.FOOD ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        음식
+                        푸드트럭
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex-auto">
@@ -217,7 +217,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.EVENT ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        행사
+                        교내
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex-auto">
@@ -230,7 +230,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.NORMAL ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        일반
+                        교외
                       </FormLabel>
                     </FormItem>
                   </RadioGroup>
