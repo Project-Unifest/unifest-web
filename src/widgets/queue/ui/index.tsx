@@ -17,6 +17,7 @@ import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
 import useImmediateIntervalAsyncTask from "../model/useImmediateIntervalAsyncTask";
+import useIntervalAsyncTask from "../model/useAsyncIntervalTask";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -38,8 +39,7 @@ export default function Queue() {
   }, [authFetchGroups, boothId, isAuthLoading]);
 
   const [groups, setGroups, reloadGroups] = useImmediateIntervalAsyncTask<
-    QueueGroup[],
-    []
+    QueueGroup[]
   >(loadGroups, 10000, !isAuthLoading);
 
   // const [groups, setGroups, reloadGroups] = useIntervalAsyncTask<
