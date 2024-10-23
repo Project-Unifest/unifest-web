@@ -42,11 +42,6 @@ export default function Queue() {
     QueueGroup[]
   >(loadGroups, 10000, !isAuthLoading);
 
-  // const [groups, setGroups, reloadGroups] = useIntervalAsyncTask<
-  //   QueueGroup[],
-  //   []
-  // >(loadGroups, 10000);
-
   if (!groups || isAuthLoading) {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
   }
