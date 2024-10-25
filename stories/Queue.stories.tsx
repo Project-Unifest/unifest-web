@@ -1,4 +1,8 @@
 import Page from "@/app/add-booth/set-category/page";
+import {
+  queueUserCallHandler,
+  TEST_QUEUE_GROUP_USER_CANCELS,
+} from "@/mocks/api/queue";
 import Queue from "@/src/widgets/queue/ui";
 import { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
@@ -173,5 +177,35 @@ export const CancelReservedItem: Story = {
       },
     )!;
     await waitFor(() => expect(canceledGroupElement).not.toBeNull());
+  },
+};
+
+export const UserCancelsQueue: Story = {
+  parameters: {
+    nextjs: {
+      navigation: {
+        segments: [["boothId", "0"]],
+      },
+    },
+    msw: {
+      handlers: [queueUserCallHandler],
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    await canvas.findByText(
+      TEST_QUEUE_GROUP_USER_CANCELS,
+      {},
+      { timeout: 5000 },
+    );
+    await waitFor(
+      () =>
+        expect(
+          canvas.queryByText(TEST_QUEUE_GROUP_USER_CANCELS),
+        ).not.toBeInTheDocument(),
+      { timeout: 15000 },
+    );
   },
 };
