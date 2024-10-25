@@ -16,8 +16,7 @@ import { cancelGroup } from "@/src/features/queue/api/queue";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
-import useImmediateIntervalAsyncTask from "../model/useImmediateIntervalAsyncTask";
-import useIntervalAsyncTask from "../model/useAsyncIntervalTask";
+import useImmediateInterval from "../model/useImmediateInterval";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -31,16 +30,22 @@ export default function Queue() {
 
   const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
-  const loadGroups = useCallback(async () => {
+  const fetchGroupsAfterAuth = useCallback(async () => {
     if (!isAuthLoading) {
       const data = await authFetchGroups(boothId);
       return data;
     }
   }, [authFetchGroups, boothId, isAuthLoading]);
 
-  const [groups, setGroups, reloadGroups] = useImmediateIntervalAsyncTask<
-    QueueGroup[]
-  >(loadGroups, 10000, !isAuthLoading);
+  const {
+    payload: groups,
+    load: loadGroups,
+    resetInterval: resetLoadingGroupsInterval,
+  } = useImmediateInterval<QueueGroup[]>(
+    fetchGroupsAfterAuth,
+    10000,
+    !isAuthLoading,
+  );
 
   if (!groups || isAuthLoading) {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
@@ -75,14 +80,7 @@ export default function Queue() {
                     if (code === 500) {
                       alert("실패");
                     }
-                    setGroups((currentGroups) =>
-                      currentGroups?.map((currentGroup) => {
-                        if (currentGroup.waitingId === waitingId) {
-                          return { ...currentGroup, status: "CANCELED" };
-                        }
-                        return currentGroup;
-                      }),
-                    );
+                    await loadGroups();
                   } catch (error) {
                     alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                   }
@@ -98,7 +96,7 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
-                      await reloadGroups();
+                      await loadGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
@@ -116,7 +114,7 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
-                      await reloadGroups();
+                      await loadGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
