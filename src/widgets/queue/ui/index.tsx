@@ -37,15 +37,12 @@ export default function Queue() {
     }
   }, [authFetchGroups, boothId, isAuthLoading]);
 
-  const {
-    payload: groups,
-    load: loadGroups,
-    resetInterval: resetLoadingGroupsInterval,
-  } = useImmediateInterval<QueueGroup[]>(
-    fetchGroupsAfterAuth,
-    10000,
-    !isAuthLoading,
-  );
+  const { payload: groups, loadAndResetInterval: loadGroupsAndResetInterval } =
+    useImmediateInterval<QueueGroup[]>(
+      fetchGroupsAfterAuth,
+      10000,
+      !isAuthLoading,
+    );
 
   if (!groups || isAuthLoading) {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
@@ -80,7 +77,7 @@ export default function Queue() {
                     if (code === 500) {
                       alert("실패");
                     }
-                    await loadGroups();
+                    await loadGroupsAndResetInterval();
                   } catch (error) {
                     alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                   }
@@ -96,7 +93,7 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
-                      await loadGroups();
+                      await loadGroupsAndResetInterval();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
@@ -114,7 +111,7 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
-                      await loadGroups();
+                      await loadGroupsAndResetInterval();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }

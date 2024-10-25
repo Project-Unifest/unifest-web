@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import useInterval from "./useInterval";
 import useResetInterval from "./useResetInterval";
 
@@ -21,12 +21,16 @@ export default function useImmediateInterval<T>(
     delay,
   );
 
+  const loadAndResetInterval = useCallback(() => {
+    load();
+    resetInterval();
+  }, [load, resetInterval]);
+
   useEffect(() => {
     if (shouldRunImmediately) {
-      load();
-      resetInterval();
+      loadAndResetInterval();
     }
-  }, [load, resetInterval, shouldRunImmediately]);
+  }, [loadAndResetInterval, shouldRunImmediately]);
 
-  return { load, resetInterval, ...intervalProps } as const;
+  return { loadAndResetInterval, ...intervalProps } as const;
 }
