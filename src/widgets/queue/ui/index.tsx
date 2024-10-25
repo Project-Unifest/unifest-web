@@ -6,12 +6,12 @@ import NotifyButton from "@/src/features/queue/ui/NotifyButton";
 import CancelButton from "@/src/features/queue/ui/CancelButton";
 import GroupItem from "@/src/entities/queue/ui/GroupItem";
 import { useParams } from "next/navigation";
-import { API_URL, HTTPMethod } from "@/src/shared/api/config";
+import { API_URL, HTTPMethod, StatusCode } from "@/src/shared/api/config";
 import { QueueGroup } from "@/src/shared/lib/types";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
-import { fetchGroups } from "../api";
+import { callGroup, fetchGroups } from "../api";
 import { cancelGroup } from "@/src/features/queue/api/queue";
 import useRequireAuth, {
   AuthType,
@@ -74,8 +74,8 @@ export default function Queue() {
                 onCancel={async () => {
                   try {
                     const { code } = await authCancelGroup(waitingId);
-                    if (code === 500) {
-                      alert("실패");
+                    if (code === StatusCode.NOT_FOUND) {
+                      alert("손님이 웨이팅을 취소했어요.");
                     }
                     await loadGroupsAndResetInterval();
                   } catch (error) {
@@ -87,12 +87,17 @@ export default function Queue() {
                 <NotifyButton
                   onNotify={async () => {
                     try {
+
+                      const {} = callGroup(waitingId)
                       const response = await fetch(
                         `${API_URL}/waiting/${waitingId}/call`,
                         {
                           method: HTTPMethod.PUT,
                         },
                       );
+                      if () === StatusCode.NOT_FOUND) {
+                        alert("손님이 웨이팅을 취소했어요.");
+                      }
                       await loadGroupsAndResetInterval();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");

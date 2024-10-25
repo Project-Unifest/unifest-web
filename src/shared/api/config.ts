@@ -69,3 +69,8 @@ export const getAuthorziationValue = (accessToken: string) =>
 export const getAccessToken = (authorization: string) => {
   return authorization.split(" ")[1];
 };
+
+export const StatusCode = {
+  NOT_FOUND: "404",
+  INTERNAL_SERVER_ERROR: "500",
+};

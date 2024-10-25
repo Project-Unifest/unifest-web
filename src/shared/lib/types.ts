@@ -67,3 +67,9 @@ export interface QueueGroup {
   status: "RESERVED" | "CALLED" | "COMPLETED" | "CANCELED" | "NOSHOW";
   waitingOrder: number;
 }
+
+export interface Response {
+  code: string;
+  message: string;
+  data: unknown;
+}
