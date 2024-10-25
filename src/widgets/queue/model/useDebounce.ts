@@ -1,17 +1,18 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function useDebounce<T extends unknown[]>(
-  task: (...args: T) => Promise<void>,
-  delay: number,
-  dependencies: T,
-) {
+export default function useDebounce<T>(value: T, delay?: number) {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
   useEffect(() => {
-    const handler = setTimeout(() => {
-      task(...dependencies);
-    }, delay);
+    const timer = window.setTimeout(
+      () => setDebouncedValue(debouncedValue),
+      delay || 1000,
+    );
 
     return () => {
-      clearTimeout(handler);
+      window.clearTimeout(timer);
     };
-  }, [delay, dependencies, task]);
+  }, [debouncedValue, delay]);
+
+  return debouncedValue;
 }
