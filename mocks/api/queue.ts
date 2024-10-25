@@ -125,55 +125,33 @@ export const queueUserCallHandler = [
       status: 404,
     });
   }),
-  http.get(`${API_URL}/waiting/:boothId/reserved`, ({ params }) => {
-    const id = parseInt(params.id as string);
-    const reservedGroups = getReservedGroups(allGroups);
+];
 
-    return HttpResponse.json(Array.from(reservedGroups.values()));
-  }),
-  http.put(`${API_URL}/waiting/:id/call`, ({ params }) => {
-    const id = parseInt(params.id as string);
-    const groupToBeCalled = allGroups.get(id);
+export const queueUserCancelsBeforeAdminCallsHandler = [
+  http.get(`${API_URL}/waiting/:boothId/all`, ({ params }) => {
+    const boothId = parseInt(params.boothId as string);
 
-    if (groupToBeCalled) {
-      allGroups.set(id, { ...groupToBeCalled, status: "CALLED" });
-      return HttpResponse.json({
-        code: "200",
-        message: "성공",
-        data: groupToBeCalled,
-      });
+    if (boothId === 0) {
+      return HttpResponse.json(
+        wrapResponse(2000, "OK", Array.from(allGroups.values())),
+      );
     }
 
+    if (boothId === 1) {
+      return HttpResponse.json([]);
+    }
+
+    return new HttpResponse("Not found", {
+      status: 404,
+    });
+  }),
+  http.put(`${API_URL}/waiting/:id/call`, ({ params }) => {
     return HttpResponse.json("Not found", {
       status: 404,
     });
   }),
   http.put(`${API_URL}/waiting/:id/complete`, ({ params }) => {
-    const id = parseInt(params.id as string);
-    const groupToBeCompleted = allGroups.get(id);
-
-    if (groupToBeCompleted) {
-      allGroups.set(id, { ...groupToBeCompleted, status: "COMPLETED" });
-      return HttpResponse.json({});
-    }
-
     return HttpResponse.json("Not found", {
-      status: 404,
-    });
-  }),
-  http.delete(`${API_URL}/waiting/:id`, ({ params }) => {
-    const id = parseInt(params.id as string);
-
-    const isGroupDeleted = allGroups.delete(id);
-
-    if (isGroupDeleted) {
-      return HttpResponse.json({
-        code: "200",
-        message: "성공",
-      });
-    }
-
-    return new HttpResponse("Not found", {
       status: 404,
     });
   }),

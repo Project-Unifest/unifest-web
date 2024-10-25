@@ -1,6 +1,7 @@
 import Page from "@/app/add-booth/set-category/page";
 import {
   queueUserCallHandler,
+  queueUserCancelsBeforeAdminCallsHandler,
   TEST_QUEUE_GROUP_USER_CANCELS,
 } from "@/mocks/api/queue";
 import Queue from "@/src/widgets/queue/ui";
@@ -180,7 +181,7 @@ export const CancelReservedItem: Story = {
   },
 };
 
-export const UserCancelsQueue: Story = {
+export const UserCancelsQueueBeforeFetchingQueue: Story = {
   parameters: {
     nextjs: {
       navigation: {
@@ -207,5 +208,48 @@ export const UserCancelsQueue: Story = {
         ).not.toBeInTheDocument(),
       { timeout: 15000 },
     );
+  },
+};
+
+export const UserCancelsQueueAndAdminCallsUser: Story = {
+  parameters: {
+    nextjs: {
+      navigation: {
+        segments: [["boothId", "0"]],
+      },
+    },
+    msw: {
+      handlers: [queueUserCancelsBeforeAdminCallsHandler],
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    await canvas.findByText(
+      TEST_QUEUE_GROUP_USER_CANCELS,
+      {},
+      { timeout: 10000 },
+    );
+
+    const groupItemElements = await canvas.findAllByRole("listitem");
+
+    const reservedGroupElement = groupItemElements.find((groupItemElement) => {
+      const groupItem = within(groupItemElement);
+      return groupItem.queryByText(TEST_QUEUE_GROUP_USER_CANCELS);
+    })!;
+    const reservedGroup = within(reservedGroupElement);
+    // const callButtonElement = await reservedGroup.findByRole("button", {
+    //   name: "호출",
+    // });
+    // await user.click(callButtonElement);
+
+    const enterButtonElement = await reservedGroup.findByRole("button", {
+      name: "입장",
+    });
+    await user.click(enterButtonElement);
+    await expect(
+      canvas.getByText("손님이 웨이팅을 취소하였어요."),
+    ).toBeInTheDocument();
   },
 };
