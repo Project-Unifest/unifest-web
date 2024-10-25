@@ -4,7 +4,7 @@ import {
   HTTPHeaderKey,
 } from "@/src/shared/api/config";
 
-export const issuePIN = async (accessToken: string, boothId: string) => {
+export const fetchGroups = async (accessToken: string, boothId: string) => {
   const response = await fetch(`${API_URL}/waiting/${boothId}/all`, {
     headers: {
       [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import QueueTabsContainer from "@/src/entities/queue/ui/QueueTabsContainer";
 import QueueTabs from "@/src/features/queue/ui/QueueTabs";
 import NotifyButton from "@/src/features/queue/ui/NotifyButton";
@@ -11,11 +11,12 @@ import { QueueGroup } from "@/src/shared/lib/types";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
-import { issuePIN } from "../api";
+import { fetchGroups } from "../api";
 import { cancelGroup } from "@/src/features/queue/api/queue";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
+import useImmediateInterval from "../model/useImmediateInterval";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -23,22 +24,28 @@ export default function Queue() {
   >("active");
   const params = useParams<{ boothId: string }>()!;
   const boothId = parseInt(params.boothId);
-  const [groups, setGroups] = useState<QueueGroup[] | undefined>();
 
-  const authIssuePIN = useAuthFetch(issuePIN);
+  const authFetchGroups = useAuthFetch(fetchGroups);
   const authCancelGroup = useAuthFetch(cancelGroup);
 
   const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
-  const getQueue = async () => {
-    const data = await authIssuePIN(boothId);
-    setGroups(data);
-  };
+  const fetchGroupsAfterAuth = useCallback(async () => {
+    if (!isAuthLoading) {
+      const data = await authFetchGroups(boothId);
+      return data;
+    }
+  }, [authFetchGroups, boothId, isAuthLoading]);
 
-  useEffect(() => {
-    if (!isAuthLoading) getQueue();
-    console.log(isAuthLoading);
-  }, [boothId, isAuthLoading]);
+  const {
+    payload: groups,
+    load: loadGroups,
+    resetInterval: resetLoadingGroupsInterval,
+  } = useImmediateInterval<QueueGroup[]>(
+    fetchGroupsAfterAuth,
+    10000,
+    !isAuthLoading,
+  );
 
   if (!groups || isAuthLoading) {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
@@ -73,14 +80,7 @@ export default function Queue() {
                     if (code === 500) {
                       alert("실패");
                     }
-                    setGroups((currentGroups) =>
-                      currentGroups?.map((currentGroup) => {
-                        if (currentGroup.waitingId === waitingId) {
-                          return { ...currentGroup, status: "CANCELED" };
-                        }
-                        return currentGroup;
-                      }),
-                    );
+                    await loadGroups();
                   } catch (error) {
                     alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                   }
@@ -96,7 +96,7 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
-                      await getQueue();
+                      await loadGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
@@ -114,7 +114,7 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
-                      await getQueue();
+                      await loadGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
