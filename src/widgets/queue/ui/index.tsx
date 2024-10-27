@@ -6,7 +6,7 @@ import NotifyButton from "@/src/features/queue/ui/NotifyButton";
 import CancelButton from "@/src/features/queue/ui/CancelButton";
 import GroupItem from "@/src/entities/queue/ui/GroupItem";
 import { useParams } from "next/navigation";
-import { API_URL, HTTPMethod } from "@/src/shared/api/config";
+import { API_URL, HTTPMethod, StatusCode } from "@/src/shared/api/config";
 import { QueueGroup } from "@/src/shared/lib/types";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
@@ -77,6 +77,9 @@ export default function Queue() {
                 onCancel={async () => {
                   try {
                     const { code } = await authCancelGroup(waitingId);
+                    if (code === StatusCode.NotFound.toString()) {
+                      alert("손님이 이미 취소한 웨이팅이에요.");
+                    }
                     if (code === 500) {
                       alert("실패");
                     }
@@ -96,6 +99,9 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
+                      if (response.status === StatusCode.NotFound) {
+                        alert("손님이 이미 취소한 웨이팅이에요.");
+                      }
                       await loadGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
@@ -114,6 +120,9 @@ export default function Queue() {
                           method: HTTPMethod.PUT,
                         },
                       );
+                      if (response.status === StatusCode.NotFound) {
+                        alert("손님이 이미 취소한 웨이팅이에요.");
+                      }
                       await loadGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");

@@ -1,6 +1,7 @@
 import Page from "@/app/add-booth/set-category/page";
 import {
-  queueUserCallHandler,
+  queueUserCancelsHandler,
+  queueUserCancelsBeforeAdminHandler,
   TEST_QUEUE_GROUP_USER_CANCELS,
 } from "@/mocks/api/queue";
 import Queue from "@/src/widgets/queue/ui";
@@ -188,7 +189,7 @@ export const UserCancelsQueue: Story = {
       },
     },
     msw: {
-      handlers: [queueUserCallHandler],
+      handlers: [queueUserCancelsHandler],
     },
   },
   play: async ({ canvasElement }) => {
@@ -207,5 +208,37 @@ export const UserCancelsQueue: Story = {
         ).not.toBeInTheDocument(),
       { timeout: 15000 },
     );
+  },
+};
+
+export const UserCancelsQueueBeforeAdminCalls: Story = {
+  parameters: {
+    nextjs: {
+      navigation: {
+        segments: [["boothId", "0"]],
+      },
+    },
+    msw: {
+      handlers: [queueUserCancelsHandler],
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    const groupItemElements = await canvas.findAllByRole("listitem");
+
+    const reservedGroupElement = groupItemElements.find((groupItemElement) => {
+      const groupItem = within(groupItemElement);
+      return groupItem.queryByText(TEST_QUEUE_GROUP_USER_CANCELS);
+    })!;
+    const reservedGroup = within(reservedGroupElement);
+    const callButtonElement = await reservedGroup.findByRole("button", {
+      name: "호출",
+    });
+    await user.click(callButtonElement);
+
+    // TODO: add assertion that alert ui pops up when admin clicks the call button
+    // await expect(await canvas.findByRole("alert")).toBeInTheDocument();
   },
 };
