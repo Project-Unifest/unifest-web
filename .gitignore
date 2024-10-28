@@ -45,3 +45,6 @@ next-env.d.ts
 .vercel
 
 playwright/.auth
+
+# Sentry Config File
+.env.sentry-build-plugin
