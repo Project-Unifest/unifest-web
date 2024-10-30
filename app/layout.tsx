@@ -8,7 +8,7 @@ import { AuthStoreProvider } from "@/src/shared/model/provider/auth-store-provid
 import { BoothListStoreProvider } from "@/src/shared/model/provider/booth-list-store-provider";
 import { BoothEditStoreProvider } from "@/src/shared/model/provider/booth-edit-store.provider";
 import { BoothDetailsDraftStoreProvider } from "@/src/shared/model/provider/booth-details-draft-store-provider";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "Unifest",
@@ -22,7 +22,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr" className={pretendard.className}>
-      <GoogleTagManager gtmId="G-R77K56TYEY" />
       <body>
         <MSWProvider>
           <AuthStoreProvider>
