@@ -8,6 +8,7 @@ import { AuthStoreProvider } from "@/src/shared/model/provider/auth-store-provid
 import { BoothListStoreProvider } from "@/src/shared/model/provider/booth-list-store-provider";
 import { BoothEditStoreProvider } from "@/src/shared/model/provider/booth-edit-store.provider";
 import { BoothDetailsDraftStoreProvider } from "@/src/shared/model/provider/booth-details-draft-store-provider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "Unifest",
@@ -41,6 +42,7 @@ export default function RootLayout({
           </AuthStoreProvider>
         </MSWProvider>
       </body>
+      <GoogleAnalytics gaId="G-7WTXSFSS6M" />
     </html>
   );
 }
