@@ -42,7 +42,7 @@ export default function RootLayout({
           </AuthStoreProvider>
         </MSWProvider>
       </body>
-      <GoogleAnalytics gaId="G-R77K56TYEY" />
+      <GoogleAnalytics gaId="G-7WTXSFSS6M" />
     </html>
   );
 }
