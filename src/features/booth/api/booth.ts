@@ -1,72 +1,41 @@
-import {
-  API_URL,
-  HTTPHeaderKey,
-  HTTPHeaderValue,
-  HTTPMethod,
-  getAuthorziationValue,
-} from "@/src/shared/api/config";
+import { client } from "@/src/shared/api/client";
 import { Booth } from "@/src/shared/lib/types";
 
-export const deleteBooth = async (accessToken: string, id: string) => {
-  const response = await fetch(`${API_URL}/api/booths/${id}`, {
-    method: HTTPMethod.DELETE,
-    headers: {
-      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
-    },
-  });
-  const data = await response.json();
-  return data;
+export const deleteBooth = async (id: string) => {
+  return client.delete(`api/booths/${id}`).json<void>();
 };
 
 export const editBooth = async (
-  accessToken: string,
   booth: Omit<Booth, "enabled" | "menus" | "detail" | "description">,
 ) => {
   const { id, ...boothWithoutId } = booth;
-  const response = await fetch(`${API_URL}/api/booths/${id}`, {
-    method: HTTPMethod.PATCH,
-    headers: {
-      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
-      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
-    },
-    body: JSON.stringify(boothWithoutId),
-  });
-  const data = await response.json();
-  return data;
+  return client
+    .patch(`api/booths/${id}`, {
+      json: boothWithoutId,
+    })
+    .json<Booth>();
 };
 
 export const updateBoothOpened = async (
-  accessToken: string,
   boothId: number,
   opened: boolean,
   latitude: number,
   longitude: number,
 ) => {
-  const response = await fetch(`${API_URL}/api/booths/${boothId}`, {
-    method: HTTPMethod.PATCH,
-    headers: {
-      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
-      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
-    },
-    body: JSON.stringify({ enabled: opened }),
-  });
-  const data = await response.json();
-  return data;
+  return client
+    .patch(`api/booths/${boothId}`, {
+      json: { enabled: opened },
+    })
+    .json<Booth>();
 };
 
 export const toggleBoothQueueFeature = async (
-  accessToken: string,
   boothId: number,
   isQueueFeatureEnabled: boolean,
 ) => {
-  const response = await fetch(`${API_URL}/api/booths/${boothId}`, {
-    method: HTTPMethod.PATCH,
-    headers: {
-      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
-      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
-    },
-    body: JSON.stringify({ waitingEnabled: isQueueFeatureEnabled }),
-  });
-  const data = await response.json();
-  return data;
+  return client
+    .patch(`api/booths/${boothId}`, {
+      json: { waitingEnabled: isQueueFeatureEnabled },
+    })
+    .json<Booth>();
 };
