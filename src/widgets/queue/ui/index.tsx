@@ -12,11 +12,16 @@ import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
 import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { fetchGroups } from "../api";
-import { cancelGroup } from "@/src/features/queue/api/queue";
+import {
+  cancelGroup,
+  callGroup,
+  completeGroup,
+} from "@/src/features/queue/api/queue";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
 import useImmediateInterval from "../model/useImmediateInterval";
+import { HTTPError } from "ky";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -25,23 +30,20 @@ export default function Queue() {
   const params = useParams<{ boothId: string }>()!;
   const boothId = parseInt(params.boothId);
 
-  const authFetchGroups = useAuthFetch(fetchGroups);
-  const authCancelGroup = useAuthFetch(cancelGroup);
-
   const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
   const fetchGroupsAfterAuth = useCallback(async () => {
     if (!isAuthLoading) {
-      const data = await authFetchGroups(boothId);
+      const data = await fetchGroups(String(boothId));
       return data;
     }
-  }, [authFetchGroups, boothId, isAuthLoading]);
+  }, [boothId, isAuthLoading]);
 
   const {
     payload: groups,
     load: loadGroups,
     resetInterval: resetLoadingGroupsInterval,
-  } = useImmediateInterval<QueueGroup[]>(
+  } = useImmediateInterval<QueueGroup[] | undefined>(
     fetchGroupsAfterAuth,
     10000,
     !isAuthLoading,
@@ -76,12 +78,9 @@ export default function Queue() {
               <CancelButton
                 onCancel={async () => {
                   try {
-                    const { code } = await authCancelGroup(waitingId);
+                    const { code } = await cancelGroup(String(waitingId));
                     if (code === StatusCode.NotFound.toString()) {
                       alert("손님이 이미 취소한 웨이팅이에요.");
-                    }
-                    if (code === 500) {
-                      alert("실패");
                     }
                     await loadGroups();
                   } catch (error) {
@@ -93,14 +92,10 @@ export default function Queue() {
                 <NotifyButton
                   onNotify={async () => {
                     try {
-                      const response = await fetch(
-                        `${API_URL}/waiting/${waitingId}/call`,
-                        {
-                          method: HTTPMethod.PUT,
-                        },
-                      );
-                      if (response.status === StatusCode.NotFound) {
+                      const { code } = await callGroup(String(waitingId));
+                      if (code === StatusCode.NotFound.toString()) {
                         alert("손님이 이미 취소한 웨이팅이에요.");
+                        return;
                       }
                       await loadGroups();
                     } catch (error) {
@@ -113,15 +108,10 @@ export default function Queue() {
                 <EnterButton
                   onEnter={async () => {
                     try {
-                      // TODO invoke api call to update the server
-                      const response = await fetch(
-                        `${API_URL}/waiting/${waitingId}/complete`,
-                        {
-                          method: HTTPMethod.PUT,
-                        },
-                      );
-                      if (response.status === StatusCode.NotFound) {
+                      const { code } = await completeGroup(String(waitingId));
+                      if (code === StatusCode.NotFound.toString()) {
                         alert("손님이 이미 취소한 웨이팅이에요.");
+                        return;
                       }
                       await loadGroups();
                     } catch (error) {
