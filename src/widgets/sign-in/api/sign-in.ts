@@ -1,5 +1,5 @@
-import { HTTPHeaderKey, HTTPHeaderValue } from "./../../../shared/api/config";
-import { API_URL, HTTPMethod } from "@/src/shared/api/config";
+import { publicClient } from "@/src/shared/api/client";
+import { HTTPHeaderKey } from "@/src/shared/api/config";
 
 interface Credentials {
   id: string;
@@ -7,15 +7,11 @@ interface Credentials {
 }
 
 export const signIn = async (credentials: Credentials) => {
-  const response = await fetch(`${API_URL}/login`, {
-    method: HTTPMethod.POST,
-    headers: {
-      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
-    },
-    body: JSON.stringify(credentials),
+  const response = await publicClient.post("login", {
+    json: credentials,
   });
-  const authorization = response.headers.get(HTTPHeaderKey.AUTHORIZATION)!;
 
+  const authorization = response.headers.get(HTTPHeaderKey.AUTHORIZATION)!;
   const accessToken = authorization.split(" ")[1];
   const refreshToken = response.headers.get(HTTPHeaderKey.REFRESH_TOKEN)!;
 
