@@ -6,7 +6,6 @@ import {
   HTTPMethod,
 } from "@/src/shared/api/config";
 import { Booth, BoothCategoryKeys } from "@/src/shared/lib/types";
-import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { MenuStatus } from "../../menu/lib/types";
 
 const FESTIVAL_ID = 2;
