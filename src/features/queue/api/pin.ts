@@ -1,13 +1,5 @@
-import { API_URL, HTTPHeaderKey, HTTPMethod } from "@/src/shared/api/config";
+import { client } from "@/src/shared/api/client";
 
-export const reissuePIN = async (accessToken: string, boothId: number) => {
-  const response = await fetch(`${API_URL}/waiting/pin/${boothId}`, {
-    method: HTTPMethod.POST,
-    headers: {
-      [HTTPHeaderKey.AUTHORIZATION]: accessToken,
-    },
-  });
-
-  const data = await response.json();
-  return data;
+export const reissuePIN = async (boothId: number) => {
+  return client.post(`waiting/pin/${boothId}`).json();
 };
