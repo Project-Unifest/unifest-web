@@ -1,5 +1,5 @@
 import ky, { HTTPError, KyInstance, Options as KyOptions } from "ky";
-import { API_URL } from "./config";
+import { API_URL, getAccessToken, HTTPHeaderKey } from "./config";
 import { useAuthStore } from "../model/provider/auth-store-provider";
 
 const defaultConfig: KyOptions = {
@@ -20,13 +20,17 @@ const refreshClient = ky.create({
 });
 
 const refreshAccessToken = async (refreshToken: string): Promise<string> => {
-  const data = await refreshClient
-    .post("reissue", {
-      json: { refreshToken },
-    })
-    .json<{ accessToken: string }>();
+  const response = await refreshClient.post("reissue", {
+    headers: {
+      [HTTPHeaderKey.REFRESH_TOKEN]: refreshToken,
+    },
+  });
 
-  return data.accessToken;
+  const authorization = response.headers.get(HTTPHeaderKey.AUTHORIZATION);
+  if (!authorization) {
+    throw new Error("Missing Authorization header in refresh token response");
+  }
+  return getAccessToken(authorization);
 };
 
 export const client = ky.create({
