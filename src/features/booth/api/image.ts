@@ -8,5 +8,5 @@ export const uploadImage = async (image: File) => {
     .post("images", {
       body: formData,
     })
-    .json();
+    .json<{ imgUrl: string }>();
 };
