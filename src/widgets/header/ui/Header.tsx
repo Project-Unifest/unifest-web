@@ -62,9 +62,9 @@ export function Header() {
       ? "확성기"
       : "운영자모드";
 
-  const [accessToken, reset] = useAuthStore((state) => [
+  const [accessToken, signOut] = useAuthStore((state) => [
     state.accessToken,
-    state.reset,
+    state.signOut,
   ]);
   const isLoggedIn = Boolean(accessToken);
 
@@ -114,7 +114,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => {
-              reset();
+              signOut();
               router.replace("/sign-in");
             }}
             className="absolute right-4"
