@@ -1,142 +1,142 @@
-## Refactor: Replace Fetch API with Ky Client
+## 리팩토링: Fetch API를 Ky 클라이언트로 교체
 
-This PR replaces raw `fetch()` calls with the Ky HTTP client to improve API communication and centralize auth logic.
+이 PR은 API 통신을 개선하고 인증 로직을 중앙화하기 위해 기존의 `fetch()` 호출을 Ky HTTP 클라이언트로 교체합니다.
 
-## Changes
+## 변경사항
 
-### API Client
+### API 클라이언트
 
-- Replaced raw `fetch()` with Ky client
-- Centralized request/response handling
-- Added consistent error handling
-- Improved request interceptors for auth
+- 기존 `fetch()`를 Ky 클라이언트로 교체
+- 요청/응답 처리 중앙화
+- 일관된 에러 처리 추가
+- 인증을 위한 요청 인터셉터 개선
 
-### Auth Integration
+### 인증 통합
 
-- Centralized auth token management
-- Added proper error handling for auth failures
-- Improved auth state persistence with localStorage
-- Removed auth-related devtools from production
+- 인증 토큰 관리 중앙화
+- 인증 실패에 대한 적절한 에러 처리 추가
+- localStorage를 통한 인증 상태 유지 개선
+- 프로덕션 환경에서 인증 관련 개발 도구 제거
 
-### API Refactoring
+### API 리팩토링
 
-- Booth operations (list, create, delete)
-- Menu operations
-- Queue operations
-- Megaphone functionality
-- Sign-in related APIs
+- 부스 관련 작업 (목록, 생성, 삭제)
+- 메뉴 관련 작업
+- 대기열 관련 작업
+- 메가폰 기능
+- 로그인 관련 API
 
-### Type System Updates
+### 타입 시스템 업데이트
 
-- Added temporary type assertions for booth initialization
-- Fixed type compatibility issues between API responses and store states
-- Added type bypasses for interim compatibility
-- TODO: Properly align types between API responses and store states
+- 부스 초기화를 위한 임시 타입 단언 추가
+- API 응답과 스토어 상태 간 타입 호환성 문제 해결
+- 임시 타입 우회 추가
+- TODO: API 응답과 스토어 상태 간 타입 정렬 필요
 
-## Testing Done
+## 테스트 완료 사항
 
-- [x] All API endpoints work with new Ky client
-- [x] Auth token handling works correctly
-- [x] Error handling for failed requests
-- [x] State persistence across page reloads
-- [x] Type assertions working as expected
+- [x] 모든 API 엔드포인트 정상 작동 확인
+- [x] 인증 토큰 처리 정상 작동 확인
+- [x] 에러 처리 정상 작동 확인
+- [x] 페이지 새로고침 시 상태 유지 확인
+- [x] 타입 단언 정상 작동 확인
 
-## Notes
+## 참고사항
 
-This change improves our API layer by:
+이번 변경으로 개선된 API 레이어의 특징:
 
-- Centralizing HTTP client configuration
-- Providing better error handling
-- Simplifying auth token management
-- Making API calls more consistent
+- HTTP 클라이언트 설정 중앙화
+- 더 나은 에러 처리
+- 단순화된 인증 토큰 관리
+- 일관된 API 호출 방식
 
-Known Technical Debt:
+알려진 기술 부채:
 
-- Type assertions need to be replaced with proper type definitions
-- API response types need alignment with store state types
+- 타입 단언을 적절한 타입 정의로 교체 필요
+- API 응답 타입과 스토어 상태 타입 간 정렬 필요
 
-No special migration steps needed as changes are internal.
+내부적인 변경이므로 특별한 마이그레이션 단계는 필요하지 않습니다.
 
-## Type of Change
+## 변경 유형
 
-- [x] Code refactoring (code improvements, no functional changes)
-- [x] Feature enhancement (improved API integration)
-- [x] Technical debt (temporary type solutions)
+- [x] 코드 리팩토링 (기능적 변경 없는 코드 개선)
+- [x] 기능 개선 (API 통합 개선)
+- [x] 기술 부채 (임시 타입 솔루션)
 
-## Changes Made
+## 상세 변경사항
 
-1. Authentication Store Improvements
+1. 인증 스토어 개선
 
-   - Removed devtools from production environment
-   - Enhanced auth store with better state management
-   - Added hydration support for localStorage
+   - 프로덕션 환경에서 개발 도구 제거
+   - 인증 스토어의 상태 관리 개선
+   - localStorage를 통한 상태 유지 지원 추가
 
-2. API Integration
+2. API 통합
 
-   - Integrated authentication with booth-related APIs
-   - Added proper error handling for API responses
-   - Implemented booth list fetching with auth
-   - Added delete booth API integration
+   - 부스 관련 API에 인증 통합
+   - API 응답에 대한 적절한 에러 처리 추가
+   - 인증이 포함된 부스 목록 조회 구현
+   - 부스 삭제 API 통합 추가
 
-3. Store Management
+3. 스토어 관리
 
-   - Split booth store into more focused stores:
-     - `booth-draft-store` for booth creation
-     - `booth-list-store` for managing booth lists
-   - Improved state persistence and management
-   - Added temporary type assertions for store compatibility
+   - 부스 스토어를 목적별로 분리:
+     - `booth-draft-store`: 부스 생성용
+     - `booth-list-store`: 부스 목록 관리용
+   - 상태 유지 및 관리 개선
+   - 스토어 호환성을 위한 임시 타입 단언 추가
 
-4. Component Updates
-   - Updated booth list components to use new auth system
-   - Enhanced booth management UI components
-   - Added proper auth checks in booth operations
-   - Implemented type bypasses for smooth integration
+4. 컴포넌트 업데이트
+   - 새로운 인증 시스템 적용
+   - 부스 관리 UI 컴포넌트 개선
+   - 적절한 인증 체크 추가
+   - 원활한 통합을 위한 타입 우회 구현
 
-## Testing
+## 테스트
 
-- [x] Manual Testing
-- [x] Integration Testing
+- [x] 수동 테스트
+- [x] 통합 테스트
 
-### Test Cases
+### 테스트 케이스
 
-1. Authentication Flow
+1. 인증 흐름
 
-   - Verify auth store hydration from localStorage
-   - Test auth state persistence
-   - Confirm proper error handling
+   - localStorage를 통한 인증 스토어 상태 유지 확인
+   - 인증 상태 지속성 테스트
+   - 적절한 에러 처리 확인
 
-2. Booth Operations
+2. 부스 작업
 
-   - Test booth list fetching with auth
-   - Verify booth deletion with auth
-   - Confirm booth creation flow
-   - Verify type assertions work correctly
+   - 인증이 포함된 부스 목록 조회 테스트
+   - 인증이 포함된 부스 삭제 확인
+   - 부스 생성 흐름 확인
+   - 타입 단언 정상 작동 확인
 
-3. State Management
-   - Verify store splitting works correctly
-   - Test state persistence across page navigation
-   - Confirm proper state updates
-   - Check type compatibility at runtime
+3. 상태 관리
+   - 스토어 분리 정상 작동 확인
+   - 페이지 이동 시 상태 유지 테스트
+   - 적절한 상태 업데이트 확인
+   - 런타임에서 타입 호환성 확인
 
-## Additional Notes
+## 추가 참고사항
 
-This refactoring improves our authentication system by:
+이번 리팩토링으로 개선된 인증 시스템의 특징:
 
-- Properly integrating auth with our API layer
-- Improving state management and persistence
-- Splitting stores for better separation of concerns
-- Removing development tools from production
+- API 레이어와 인증의 적절한 통합
+- 상태 관리 및 지속성 개선
+- 관심사 분리를 위한 스토어 분리
+- 프로덕션 환경에서 개발 도구 제거
 
-## Migration Notes
+## 마이그레이션 참고사항
 
-The changes are mostly internal improvements and shouldn't require any special migration steps.
-Note: Type assertions are temporary and will need to be replaced with proper type definitions in future updates.
+대부분 내부 개선사항이므로 특별한 마이그레이션 단계는 필요하지 않습니다.
+참고: 타입 단언은 임시 해결책이며, 추후 적절한 타입 정의로 교체될 예정입니다.
 
-## Checklist
+## 체크리스트
 
-- [x] My code follows the style guidelines of this project
-- [x] I have performed a self-review of my code
-- [x] Authentication works consistently across all features
-- [x] Development tools are properly configured for production
-- [x] All tests pass with the new authentication system
-- [x] Type assertions are documented and marked for future improvement
+- [x] 프로젝트의 스타일 가이드라인 준수
+- [x] 코드 자체 리뷰 완료
+- [x] 모든 기능에서 인증 일관성 확인
+- [x] 프로덕션용 개발 도구 설정 완료
+- [x] 새로운 인증 시스템으로 모든 테스트 통과
+- [x] 타입 단언 문서화 및 향후 개선 사항 표시
