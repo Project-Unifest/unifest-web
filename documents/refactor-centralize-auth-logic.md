@@ -26,12 +26,20 @@ This PR replaces raw `fetch()` calls with the Ky HTTP client to improve API comm
 - Megaphone functionality
 - Sign-in related APIs
 
+### Type System Updates
+
+- Added temporary type assertions for booth initialization
+- Fixed type compatibility issues between API responses and store states
+- Added type bypasses for interim compatibility
+- TODO: Properly align types between API responses and store states
+
 ## Testing Done
 
 - [x] All API endpoints work with new Ky client
 - [x] Auth token handling works correctly
 - [x] Error handling for failed requests
 - [x] State persistence across page reloads
+- [x] Type assertions working as expected
 
 ## Notes
 
@@ -42,12 +50,18 @@ This change improves our API layer by:
 - Simplifying auth token management
 - Making API calls more consistent
 
+Known Technical Debt:
+
+- Type assertions need to be replaced with proper type definitions
+- API response types need alignment with store state types
+
 No special migration steps needed as changes are internal.
 
 ## Type of Change
 
 - [x] Code refactoring (code improvements, no functional changes)
 - [x] Feature enhancement (improved API integration)
+- [x] Technical debt (temporary type solutions)
 
 ## Changes Made
 
@@ -70,11 +84,13 @@ No special migration steps needed as changes are internal.
      - `booth-draft-store` for booth creation
      - `booth-list-store` for managing booth lists
    - Improved state persistence and management
+   - Added temporary type assertions for store compatibility
 
 4. Component Updates
    - Updated booth list components to use new auth system
    - Enhanced booth management UI components
    - Added proper auth checks in booth operations
+   - Implemented type bypasses for smooth integration
 
 ## Testing
 
@@ -94,11 +110,13 @@ No special migration steps needed as changes are internal.
    - Test booth list fetching with auth
    - Verify booth deletion with auth
    - Confirm booth creation flow
+   - Verify type assertions work correctly
 
 3. State Management
    - Verify store splitting works correctly
    - Test state persistence across page navigation
    - Confirm proper state updates
+   - Check type compatibility at runtime
 
 ## Additional Notes
 
@@ -112,6 +130,7 @@ This refactoring improves our authentication system by:
 ## Migration Notes
 
 The changes are mostly internal improvements and shouldn't require any special migration steps.
+Note: Type assertions are temporary and will need to be replaced with proper type definitions in future updates.
 
 ## Checklist
 
@@ -120,3 +139,4 @@ The changes are mostly internal improvements and shouldn't require any special m
 - [x] Authentication works consistently across all features
 - [x] Development tools are properly configured for production
 - [x] All tests pass with the new authentication system
+- [x] Type assertions are documented and marked for future improvement
