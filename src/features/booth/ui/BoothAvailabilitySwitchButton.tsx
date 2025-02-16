@@ -1,6 +1,5 @@
 "use client";
 
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { Label } from "@/src/shared/ui/label";
 import { Switch } from "@/src/shared/ui/switch";
 import React, { useState } from "react";
@@ -17,15 +16,8 @@ export function BoothAvailabilitySwitchButton({
   )[0];
   const edit = useBoothListStore((state) => state.edit);
 
-  const updateAuthBoothOpened = useAuthFetch(updateBoothOpened);
-
   const toggleBoothOpened = async () => {
-    await updateAuthBoothOpened(
-      boothId,
-      !opened,
-      booth.latitude,
-      booth.longitude,
-    );
+    await updateBoothOpened(boothId, !opened, booth.latitude, booth.longitude);
     setIsOpened((currentOpened) => !currentOpened);
     edit({ ...booth, enabled: !opened });
   };
