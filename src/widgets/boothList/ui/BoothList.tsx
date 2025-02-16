@@ -7,7 +7,6 @@ import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
 import { Member } from "@/src/shared/lib/types";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
@@ -27,22 +26,20 @@ export function BoothList() {
     state.initialize,
   ]);
 
-  const getAuthBooth = useAuthFetch(getBoothList);
   const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
   useEffect(() => {
     const getBoothListEffect = async () => {
-      const data = await getAuthBooth();
+      const booths = await getBoothList();
 
-      if (data) {
-        const { booths: newBooths } = data as Member;
-        initializeBoothList(newBooths);
+      if (booths) {
+        initializeBoothList(booths);
       }
     };
     if (!isAuthLoading) {
       getBoothListEffect();
     }
-  }, [getAuthBooth, isAuthLoading, initializeBoothList]);
+  }, [isAuthLoading, initializeBoothList]);
 
   if (isAuthLoading) {
     return (

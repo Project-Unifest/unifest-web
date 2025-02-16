@@ -36,15 +36,14 @@ export function SetDescription() {
     editDescription(event.target.value);
   };
 
-  // FIXME remove thumbnail and location from the field when the backend has been fixed
   const handleSubmitButtonClick = async () => {
     const data = await addAuthBooth({
       name,
       category,
       description,
       thumbnail: "",
-      longitude: longitude,
-      latitude: latitude,
+      longitude,
+      latitude,
       festivalId: 2,
       location: "위",
       menus: [],
@@ -65,8 +64,8 @@ export function SetDescription() {
       category,
       description,
       thumbnail: "",
-      longitude: longitude,
-      latitude: latitude,
+      longitude,
+      latitude,
       festivalId: 2,
       location: "상세위치 지정 필요",
       menus: [],
