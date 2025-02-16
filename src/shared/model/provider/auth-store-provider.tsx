@@ -1,34 +1,51 @@
-"use client";
+// src/shared/model/store/auth-store.ts
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-import { AuthStore, createAuthStore } from "../store/auth-store";
-import React, { ReactNode, createContext, useContext, useRef } from "react";
-import { StoreApi, useStore } from "zustand";
-
-export const AuthStoreContext = createContext<StoreApi<AuthStore> | null>(null);
-
-export interface AuthStoreProviderProps {
-  children: ReactNode;
+interface AuthState {
+  accessToken: string;
+  refreshToken: string;
+  isHydrated: boolean;
 }
 
-export const AuthStoreProvider = ({ children }: AuthStoreProviderProps) => {
-  const storeRef = useRef<StoreApi<AuthStore>>();
-  if (!storeRef.current) {
-    storeRef.current = createAuthStore();
-  }
+interface AuthActions {
+  setCredentials: (credentials: {
+    accessToken: string;
+    refreshToken: string;
+  }) => void;
+  setAccessToken: (accessToken: string) => void;
+  signOut: () => void;
+  setHydrated: () => void;
+}
 
-  return (
-    <AuthStoreContext.Provider value={storeRef.current}>
-      {children}
-    </AuthStoreContext.Provider>
-  );
+const initialState: AuthState = {
+  accessToken: "",
+  refreshToken: "",
+  isHydrated: false,
 };
 
-export const useAuthStore = <T,>(selector: (store: AuthStore) => T): T => {
-  const authStoreContext = useContext(AuthStoreContext);
+export const useAuthStore = create<AuthState & AuthActions>()(
+  persist(
+    (set) => ({
+      ...initialState,
 
-  if (!authStoreContext) {
-    throw new Error(`useBoothStore must be used within BoothStoreProvider`);
-  }
+      setCredentials: (credentials) =>
+        set({
+          accessToken: credentials.accessToken,
+          refreshToken: credentials.refreshToken,
+        }),
 
-  return useStore(authStoreContext, selector);
-};
+      setAccessToken: (accessToken) => set({ accessToken }),
+
+      signOut: () => set(initialState),
+
+      setHydrated: () => set({ isHydrated: true }),
+    }),
+    {
+      name: "auth-storage",
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated();
+      },
+    },
+  ),
+);

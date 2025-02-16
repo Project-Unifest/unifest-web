@@ -10,7 +10,6 @@ import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
 import { makeMegaphone } from "@/src/features/megaphone/api/megaphone";
 import { Booth } from "@/src/shared/lib/types";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
@@ -51,12 +50,11 @@ export function Megaphone({ boothId }: { boothId: number }) {
     },
   });
   const router = useRouter();
-  const makeAuthMegaphone = useAuthFetch(makeMegaphone);
 
   const onSubmit = async (data: any) => {
     console.log(data);
     console.log(boothId);
-    await makeAuthMegaphone(boothId, data);
+    await makeMegaphone(boothId, data);
     router.push("/");
   };
 

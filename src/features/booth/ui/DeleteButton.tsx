@@ -1,6 +1,5 @@
 "use client";
 
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import { Button } from "@/src/shared/ui/button";
 import {
@@ -24,10 +23,9 @@ interface DeleteButtonPropsType {
 }
 
 export function DeleteButton({ boothId }: DeleteButtonPropsType) {
-  const deleteAuthBooth = useAuthFetch(deleteBooth);
   const deleteBoothFromStore = useBoothListStore((state) => state.delete);
   const handleDelete = async () => {
-    const data = await deleteAuthBooth(boothId);
+    const data = await deleteBooth(String(boothId));
     deleteBoothFromStore(boothId);
   };
 

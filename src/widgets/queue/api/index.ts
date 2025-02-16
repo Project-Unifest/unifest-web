@@ -1,15 +1,15 @@
-import {
-  API_URL,
-  getAuthorziationValue,
-  HTTPHeaderKey,
-} from "@/src/shared/api/config";
+import { client } from "@/src/shared/api/client";
+import { QueueGroup } from "@/src/shared/lib/types";
 
-export const fetchGroups = async (accessToken: string, boothId: string) => {
-  const response = await fetch(`${API_URL}/waiting/${boothId}/all`, {
-    headers: {
-      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
-    },
-  });
-  const data = await response.json();
-  return data;
+interface QueueResponse {
+  code: string;
+  message: string;
+  data: QueueGroup[];
+}
+
+export const fetchGroups = async (boothId: string): Promise<QueueGroup[]> => {
+  const response = await client
+    .get(`waiting/${boothId}/all`)
+    .json<QueueResponse>();
+  return response.data;
 };

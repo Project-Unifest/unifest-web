@@ -1,17 +1,23 @@
-import {
-  API_URL,
-  getAuthorziationValue,
-  HTTPHeaderKey,
-  HTTPMethod,
-} from "@/src/shared/api/config";
+import { client } from "@/src/shared/api/client";
 
-export const cancelGroup = async (accessToken: string, waitingId: string) => {
-  const response = await fetch(`${API_URL}/waiting/${waitingId}/noshow`, {
-    method: HTTPMethod.PUT,
-    headers: {
-      [HTTPHeaderKey.AUTHORIZATION]: getAuthorziationValue(accessToken),
-    },
-  });
-  const data = response.json();
-  return data;
+interface QueueResponse {
+  code: string;
+  message: string;
+  data: any;
+}
+
+export const cancelGroup = async (
+  waitingId: string,
+): Promise<QueueResponse> => {
+  return client.put(`waiting/${waitingId}/noshow`).json<QueueResponse>();
+};
+
+export const callGroup = async (waitingId: string): Promise<QueueResponse> => {
+  return client.put(`waiting/${waitingId}/call`).json<QueueResponse>();
+};
+
+export const completeGroup = async (
+  waitingId: string,
+): Promise<QueueResponse> => {
+  return client.put(`waiting/${waitingId}/complete`).json<QueueResponse>();
 };

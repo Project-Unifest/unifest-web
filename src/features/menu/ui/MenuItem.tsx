@@ -16,7 +16,6 @@ import Image from "next/image";
 import { uploadImage } from "../../booth/api/image";
 import { deleteMenuItem, uploadMenuItem } from "../model/menu";
 import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
 import { Product } from "@/src/shared/lib/types";
@@ -47,9 +46,6 @@ export function MenuCard({
   remove,
   edit,
 }: MenuItemPropsType) {
-  const uploadAuthMemuItem = useAuthFetch(uploadMenuItem);
-  const deleteAuthMemuItem = useAuthFetch(deleteMenuItem);
-
   const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
     if (!file) {
@@ -94,11 +90,7 @@ export function MenuCard({
             type="button"
             onClick={async () => {
               if (menuItemId) {
-                await deleteAuthMemuItem(menuItemId, {
-                  name,
-                  price,
-                  imgUrl,
-                });
+                await deleteMenuItem(menuItemId);
               }
               remove(menuItemId);
             }}

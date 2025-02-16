@@ -1,6 +1,5 @@
 "use client";
 
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { Label } from "@/src/shared/ui/label";
 import { Switch } from "@/src/shared/ui/switch";
 import React, { useState } from "react";
@@ -21,10 +20,8 @@ export function QueueAvailabilitySwitchButton({
   )[0];
   const edit = useBoothListStore((state) => state.edit);
 
-  const toggleAuthBoothQueueFeature = useAuthFetch(toggleBoothQueueFeature);
-
   const toggleBoothOpened = async () => {
-    await toggleAuthBoothQueueFeature(boothId, !isQueueAvailable);
+    await toggleBoothQueueFeature(boothId, !isQueueAvailable);
     setIsQueueAvailable((currentOpened) => !currentOpened);
     edit({ ...booth, waitingEnabled: !isQueueAvailable });
     router.refresh();

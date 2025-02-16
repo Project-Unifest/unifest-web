@@ -7,12 +7,11 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 import { addBooth } from "../model/add-booth";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
+import { Booth } from "@/src/shared/lib/types";
 
 export function SetDescription() {
   const [parent] = useAutoAnimate();
   const router = useRouter();
-  const addAuthBooth = useAuthFetch(addBooth);
 
   const { editDescription, name, category, description, latitude, longitude } =
     useBoothDraftStore((state) => ({
@@ -38,17 +37,17 @@ export function SetDescription() {
 
   // FIXME remove thumbnail and location from the field when the backend has been fixed
   const handleSubmitButtonClick = async () => {
-    const data = await addAuthBooth({
+    const data = await addBooth({
       name,
       category,
       description,
       thumbnail: "",
-      longitude: longitude,
-      latitude: latitude,
+      longitude,
+      latitude,
       festivalId: 2,
       location: "위",
       menus: [],
-    });
+    } as unknown as Booth);
 
     if (!data) {
       alert("에러가 발생했습니다.");
@@ -60,17 +59,17 @@ export function SetDescription() {
   };
 
   const handleSkipButtonClick = async () => {
-    const data = await addAuthBooth({
+    const data = await addBooth({
       name,
       category,
       description,
       thumbnail: "",
-      longitude: longitude,
-      latitude: latitude,
+      longitude,
+      latitude,
       festivalId: 2,
       location: "상세위치 지정 필요",
       menus: [],
-    });
+    } as unknown as Booth);
 
     if (!data) {
       alert("에러가 발생했습니다.");

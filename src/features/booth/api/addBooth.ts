@@ -1,12 +1,5 @@
-import {
-  API_URL,
-  getAuthorziationValue,
-  HTTPHeaderKey,
-  HTTPHeaderValue,
-  HTTPMethod,
-} from "@/src/shared/api/config";
+import { client } from "@/src/shared/api/client";
 import { Booth, BoothCategoryKeys } from "@/src/shared/lib/types";
-import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import { MenuStatus } from "../../menu/lib/types";
 
 const FESTIVAL_ID = 2;
@@ -35,7 +28,7 @@ interface BoothForCreate {
   closeTime: null | string;
 }
 // TODO add body
-export const addBooth = async (accessToken: string, booth: Booth) => {
+export const addBooth = async (booth: Booth) => {
   const { id, ...boothWithoutId } = booth as BoothForCreate;
   boothWithoutId.menus.forEach((item) => {
     delete item.menuStatus;
@@ -43,14 +36,10 @@ export const addBooth = async (accessToken: string, booth: Booth) => {
   });
   //너무 쌉 하드코딩임..
   boothWithoutId.festivalId = FESTIVAL_ID;
-  const response = await fetch(`${API_URL}/api/booths`, {
-    method: HTTPMethod.POST,
-    headers: {
-      [`${HTTPHeaderKey.CONTENT_TYPE}`]: HTTPHeaderValue.APPLICATION_JSON,
-      [`${HTTPHeaderKey.AUTHORIZATION}`]: getAuthorziationValue(accessToken),
-    },
-    body: JSON.stringify(boothWithoutId),
-  });
-  const data = await response.json();
-  return data;
+
+  return client
+    .post("api/booths", {
+      json: boothWithoutId,
+    })
+    .json();
 };

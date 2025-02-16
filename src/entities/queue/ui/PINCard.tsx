@@ -1,6 +1,5 @@
 "use client";
 import { API_URL } from "@/src/shared/api/config";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import React, { ReactNode, useEffect, useState } from "react";
 import { fetchPIN } from "../model/pin";
 import { setDefaultAutoSelectFamilyAttemptTimeout } from "net";

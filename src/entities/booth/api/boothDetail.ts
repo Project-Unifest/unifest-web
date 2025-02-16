@@ -1,4 +1,4 @@
-import { API_URL } from "@/src/shared/api/config";
+import { client } from "@/src/shared/api/client";
 import { Booth, BoothCategoryKeys, Product } from "@/src/shared/lib/types";
 
 export interface BoothDetail {
@@ -27,10 +27,9 @@ interface BoothDetailResponse {
 export const getBoothDetail = async (
   boothId: number,
 ): Promise<BoothDetailResponse> => {
-  const response = await fetch(`${API_URL}/api/booths/${boothId}`, {
-    cache: "no-store",
-  });
-  const body = await response.json();
-  console.log(body);
-  return body;
+  return client
+    .get(`api/booths/${boothId}`, {
+      cache: "no-store",
+    })
+    .json<BoothDetailResponse>();
 };
