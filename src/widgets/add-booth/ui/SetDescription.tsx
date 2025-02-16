@@ -7,12 +7,10 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 import { addBooth } from "../model/add-booth";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 
 export function SetDescription() {
   const [parent] = useAutoAnimate();
   const router = useRouter();
-  const addAuthBooth = useAuthFetch(addBooth);
 
   const { editDescription, name, category, description, latitude, longitude } =
     useBoothDraftStore((state) => ({
@@ -36,8 +34,9 @@ export function SetDescription() {
     editDescription(event.target.value);
   };
 
+  // FIXME remove thumbnail and location from the field when the backend has been fixed
   const handleSubmitButtonClick = async () => {
-    const data = await addAuthBooth({
+    const data = await addBooth({
       name,
       category,
       description,
@@ -59,7 +58,7 @@ export function SetDescription() {
   };
 
   const handleSkipButtonClick = async () => {
-    const data = await addAuthBooth({
+    const data = await addBooth({
       name,
       category,
       description,
