@@ -36,7 +36,6 @@ import useRequireAuth, {
 } from "@/src/shared/model/auth/useRequireAuth";
 import { BoothCategory } from "@/src/shared/lib/types";
 import { MenuItemForm } from "@/src/features/menu";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { editBooth } from "@/src/features/booth/api/booth";
 import { useRouter } from "next/navigation";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
@@ -99,7 +98,6 @@ export function Add({ boothId }: { boothId: number }) {
   const [menuItemParent] = useAutoAnimate();
   useRequireAuth(AuthType.MEMBER);
 
-  const addAuthBooth = useAuthFetch(addBooth);
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
     defaultValues: {
@@ -127,7 +125,7 @@ export function Add({ boothId }: { boothId: number }) {
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    await addAuthBooth({ id: boothId, thumbnail, ...data, menus: menuList });
+    await addBooth({ id: boothId, thumbnail, ...data, menus: menuList });
     router.push("/");
   };
 
