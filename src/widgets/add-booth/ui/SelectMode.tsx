@@ -7,7 +7,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { addBooth } from "../model/add-booth";
-import { BoothCategory } from "@/src/shared/lib/types";
+import { Booth, BoothCategory } from "@/src/shared/lib/types";
 import { useRouter } from "next/navigation";
 import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
 
@@ -100,9 +100,9 @@ export function SelectMode() {
                 location: "위치를 설정해주세요",
                 latitude: 0,
                 longitude: 0,
-              });
+              } as unknown as Booth);
               setField({
-                id,
+                id: id as number,
                 name: "이름",
                 category: BoothCategory.BAR,
                 description: "",

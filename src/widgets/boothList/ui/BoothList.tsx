@@ -6,7 +6,7 @@ import { AddBoothButton, BoothSwitchButton } from "@/src/features/booth";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
-import { Member } from "@/src/shared/lib/types";
+import { Booth, Member } from "@/src/shared/lib/types";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
@@ -33,7 +33,7 @@ export function BoothList() {
       const booths = await getBoothList();
 
       if (booths) {
-        initializeBoothList(booths);
+        initializeBoothList(booths as any);
       }
     };
     if (!isAuthLoading) {

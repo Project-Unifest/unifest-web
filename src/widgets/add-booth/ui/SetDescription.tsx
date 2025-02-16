@@ -7,6 +7,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 import { addBooth } from "../model/add-booth";
+import { Booth } from "@/src/shared/lib/types";
 
 export function SetDescription() {
   const [parent] = useAutoAnimate();
@@ -46,7 +47,7 @@ export function SetDescription() {
       festivalId: 2,
       location: "위",
       menus: [],
-    });
+    } as unknown as Booth);
 
     if (!data) {
       alert("에러가 발생했습니다.");
@@ -68,7 +69,7 @@ export function SetDescription() {
       festivalId: 2,
       location: "상세위치 지정 필요",
       menus: [],
-    });
+    } as unknown as Booth);
 
     if (!data) {
       alert("에러가 발생했습니다.");
