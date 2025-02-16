@@ -10,7 +10,6 @@ import { API_URL, HTTPMethod, StatusCode } from "@/src/shared/api/config";
 import { QueueGroup } from "@/src/shared/lib/types";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
 import { fetchGroups } from "../api";
 import {
   cancelGroup,
