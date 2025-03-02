@@ -90,7 +90,7 @@ export function MenuCard({
             type="button"
             onClick={async () => {
               if (menuItemId) {
-                await deleteMenuItem(menuItemId);
+                const { data } = await deleteMenuItem(menuItemId);
               }
               remove(menuItemId);
             }}

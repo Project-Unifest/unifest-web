@@ -137,9 +137,9 @@ export function Edit({ boothId }: { boothId: number }) {
       ...data,
     });
     menuList.forEach(async (menuItem) => {
-      const res = await editMenu(menuItem);
+      const { data: res } = await editMenu(menuItem);
       if (res === null) {
-        await uploadMenuItem(boothId, menuItem);
+        const { data } = await uploadMenuItem(boothId, menuItem);
       }
     });
     router.push("/");
