@@ -30,7 +30,7 @@ export function BoothList() {
 
   useEffect(() => {
     const getBoothListEffect = async () => {
-      const booths = await getBoothList();
+      const { data: booths } = await getBoothList();
 
       if (booths) {
         initializeBoothList(booths as any);

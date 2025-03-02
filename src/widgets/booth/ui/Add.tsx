@@ -125,7 +125,12 @@ export function Add({ boothId }: { boothId: number }) {
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    await addBooth({ id: boothId, thumbnail, ...data, menus: menuList });
+    const { data: newBooth } = await addBooth({
+      id: boothId,
+      thumbnail,
+      ...data,
+      menus: menuList,
+    });
     router.push("/");
   };
 

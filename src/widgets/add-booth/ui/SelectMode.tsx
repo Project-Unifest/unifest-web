@@ -10,6 +10,7 @@ import { addBooth } from "../model/add-booth";
 import { Booth, BoothCategory } from "@/src/shared/lib/types";
 import { useRouter } from "next/navigation";
 import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
+import { ApiResponse } from "@/src/shared/api/types";
 
 export function SelectMode() {
   const [selectedOption, setSelectedOption] = useState<string>("");
@@ -91,7 +92,7 @@ export function SelectMode() {
             className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
             type="button"
             onClick={async () => {
-              const id = await addBooth({
+              const { data: id } = await addBooth({
                 name: "이름",
                 category: BoothCategory.BAR,
                 description: "",

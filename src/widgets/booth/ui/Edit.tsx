@@ -130,7 +130,12 @@ export function Edit({ boothId }: { boothId: number }) {
   const [parent] = useAutoAnimate();
 
   const onSubmit = async (data: any) => {
-    await editBooth({ id: boothId, thumbnail, enabled, ...data });
+    const { data: editedBooth } = await editBooth({
+      id: boothId,
+      thumbnail,
+      enabled,
+      ...data,
+    });
     menuList.forEach(async (menuItem) => {
       const res = await editMenu(menuItem);
       if (res === null) {

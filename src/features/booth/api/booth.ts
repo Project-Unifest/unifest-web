@@ -1,8 +1,9 @@
 import { client } from "@/src/shared/api/client";
 import { Booth } from "@/src/shared/lib/types";
+import { ApiResponse } from "@/src/shared/api/types";
 
 export const deleteBooth = async (id: string) => {
-  return client.delete(`api/booths/${id}`).json<void>();
+  return client.delete(`api/booths/${id}`).json<ApiResponse<void>>();
 };
 
 export const editBooth = async (
@@ -13,7 +14,7 @@ export const editBooth = async (
     .patch(`api/booths/${id}`, {
       json: boothWithoutId,
     })
-    .json<Booth>();
+    .json<ApiResponse<Booth>>();
 };
 
 export const updateBoothOpened = async (
@@ -26,7 +27,7 @@ export const updateBoothOpened = async (
     .patch(`api/booths/${boothId}`, {
       json: { enabled: opened },
     })
-    .json<Booth>();
+    .json<ApiResponse<Booth>>();
 };
 
 export const toggleBoothQueueFeature = async (
@@ -37,5 +38,5 @@ export const toggleBoothQueueFeature = async (
     .patch(`api/booths/${boothId}`, {
       json: { waitingEnabled: isQueueFeatureEnabled },
     })
-    .json<Booth>();
+    .json<ApiResponse<Booth>>();
 };

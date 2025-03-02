@@ -25,7 +25,7 @@ interface DeleteButtonPropsType {
 export function DeleteButton({ boothId }: DeleteButtonPropsType) {
   const deleteBoothFromStore = useBoothListStore((state) => state.delete);
   const handleDelete = async () => {
-    const data = await deleteBooth(String(boothId));
+    const { data } = await deleteBooth(String(boothId));
     deleteBoothFromStore(boothId);
   };
 

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 import { addBooth } from "../model/add-booth";
 import { Booth } from "@/src/shared/lib/types";
+import { ApiResponse } from "@/src/shared/api/types";
 
 export function SetDescription() {
   const [parent] = useAutoAnimate();
@@ -37,7 +38,7 @@ export function SetDescription() {
 
   // FIXME remove thumbnail and location from the field when the backend has been fixed
   const handleSubmitButtonClick = async () => {
-    const data = await addBooth({
+    const { data } = await addBooth({
       name,
       category,
       description,
@@ -59,7 +60,7 @@ export function SetDescription() {
   };
 
   const handleSkipButtonClick = async () => {
-    const data = await addBooth({
+    const { data } = await addBooth({
       name,
       category,
       description,

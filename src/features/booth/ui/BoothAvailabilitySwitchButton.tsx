@@ -17,7 +17,12 @@ export function BoothAvailabilitySwitchButton({
   const edit = useBoothListStore((state) => state.edit);
 
   const toggleBoothOpened = async () => {
-    await updateBoothOpened(boothId, !opened, booth.latitude, booth.longitude);
+    const { data } = await updateBoothOpened(
+      boothId,
+      !opened,
+      booth.latitude,
+      booth.longitude,
+    );
     setIsOpened((currentOpened) => !currentOpened);
     edit({ ...booth, enabled: !opened });
   };

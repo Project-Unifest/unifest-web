@@ -1,5 +1,6 @@
 import { client } from "@/src/shared/api/client";
 import { Booth, BoothCategoryKeys } from "@/src/shared/lib/types";
+import { ApiResponse } from "@/src/shared/api/types";
 import { MenuStatus } from "../../menu/lib/types";
 
 const FESTIVAL_ID = 2;
@@ -28,7 +29,7 @@ interface BoothForCreate {
   closeTime: null | string;
 }
 // TODO add body
-export const addBooth = async (booth: Booth) => {
+export const addBooth = async (booth: Booth): Promise<ApiResponse<number>> => {
   const { id, ...boothWithoutId } = booth as BoothForCreate;
   boothWithoutId.menus.forEach((item) => {
     delete item.menuStatus;
@@ -41,5 +42,5 @@ export const addBooth = async (booth: Booth) => {
     .post("api/booths", {
       json: boothWithoutId,
     })
-    .json();
+    .json<ApiResponse<number>>();
 };
