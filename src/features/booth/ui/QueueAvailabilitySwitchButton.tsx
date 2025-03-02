@@ -21,7 +21,7 @@ export function QueueAvailabilitySwitchButton({
   const edit = useBoothListStore((state) => state.edit);
 
   const toggleBoothOpened = async () => {
-    await toggleBoothQueueFeature(boothId, !isQueueAvailable);
+    const { data } = await toggleBoothQueueFeature(boothId, !isQueueAvailable);
     setIsQueueAvailable((currentOpened) => !currentOpened);
     edit({ ...booth, waitingEnabled: !isQueueAvailable });
     router.refresh();

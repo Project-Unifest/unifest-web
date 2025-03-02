@@ -1,15 +1,10 @@
 import { client } from "@/src/shared/api/client";
 import { QueueGroup } from "@/src/shared/lib/types";
-
-interface QueueResponse {
-  code: string;
-  message: string;
-  data: QueueGroup[];
-}
+import { ApiResponse } from "@/src/shared/api/types";
 
 export const fetchGroups = async (boothId: string): Promise<QueueGroup[]> => {
-  const response = await client
+  const { data } = await client
     .get(`waiting/${boothId}/all`)
-    .json<QueueResponse>();
-  return response.data;
+    .json<ApiResponse<QueueGroup[]>>();
+  return data;
 };

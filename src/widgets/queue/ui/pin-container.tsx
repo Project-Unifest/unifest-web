@@ -13,13 +13,13 @@ export default function PINContainer({ boothId }: PINContainerPropsType) {
   const [PIN, setPIN] = useState<string>("");
 
   const handleRefresh = async () => {
-    const newPIN = await reissuePIN(boothId);
-    setPIN(newPIN);
+    const { data } = await reissuePIN(boothId);
+    setPIN(data);
   };
 
   useEffect(() => {
     const asyncEffect = async () => {
-      const data = await fetchPIN(boothId);
+      const { data } = await fetchPIN(boothId);
       setPIN(data);
     };
     asyncEffect();

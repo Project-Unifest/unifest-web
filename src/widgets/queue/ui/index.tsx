@@ -77,7 +77,7 @@ export default function Queue() {
               <CancelButton
                 onCancel={async () => {
                   try {
-                    const { code } = await cancelGroup(String(waitingId));
+                    const { data, code } = await cancelGroup(String(waitingId));
                     if (code === StatusCode.NotFound.toString()) {
                       alert("손님이 이미 취소한 웨이팅이에요.");
                     }
@@ -91,7 +91,7 @@ export default function Queue() {
                 <NotifyButton
                   onNotify={async () => {
                     try {
-                      const { code } = await callGroup(String(waitingId));
+                      const { data, code } = await callGroup(String(waitingId));
                       if (code === StatusCode.NotFound.toString()) {
                         alert("손님이 이미 취소한 웨이팅이에요.");
                         return;
@@ -107,7 +107,9 @@ export default function Queue() {
                 <EnterButton
                   onEnter={async () => {
                     try {
-                      const { code } = await completeGroup(String(waitingId));
+                      const { data, code } = await completeGroup(
+                        String(waitingId),
+                      );
                       if (code === StatusCode.NotFound.toString()) {
                         alert("손님이 이미 취소한 웨이팅이에요.");
                         return;
