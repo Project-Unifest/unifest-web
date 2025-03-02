@@ -40,7 +40,7 @@ export function SignUp() {
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    await signUp(data);
+    const { data: signUpResult } = await signUp(data);
     router.push("/sign-in");
   };
 

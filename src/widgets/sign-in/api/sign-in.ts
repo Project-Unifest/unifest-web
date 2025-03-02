@@ -1,12 +1,18 @@
 import { publicClient } from "@/src/shared/api/client";
 import { HTTPHeaderKey } from "@/src/shared/api/config";
+import { ApiResponse } from "@/src/shared/api/types";
 
 interface Credentials {
   id: string;
   password: string;
 }
 
-export const signIn = async (credentials: Credentials) => {
+interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export const signIn = async (credentials: Credentials): Promise<AuthTokens> => {
   const response = await publicClient.post("login", {
     json: credentials,
   });
