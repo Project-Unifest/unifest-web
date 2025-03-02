@@ -54,7 +54,7 @@ export function Megaphone({ boothId }: { boothId: number }) {
   const onSubmit = async (data: any) => {
     console.log(data);
     console.log(boothId);
-    await makeMegaphone(boothId, data);
+    const { data: megaphoneResult } = await makeMegaphone(boothId, data);
     router.push("/");
   };
 
