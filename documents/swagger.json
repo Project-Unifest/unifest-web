@@ -1,0 +1,3337 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "유니페스(unifest) 백엔드 API 명세",
+    "description": "springdoc을 이용한 Swagger API 문서입니다.",
+    "contact": {
+      "name": "springdoc 공식문서",
+      "url": "https://springdoc.org/"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Default Server URL"
+    }
+  ],
+  "paths": {
+    "/waiting": {
+      "put": {
+        "tags": ["waiting-controller"],
+        "summary": "사용자 측의 웨이팅 취소",
+        "operationId": "cancelWaiting",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelWaitingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["waiting-controller"],
+        "summary": "웨이팅 추가",
+        "operationId": "addWaiting",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWaitingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/{waitingId}/noshow": {
+      "put": {
+        "tags": ["waiting-controller"],
+        "summary": "관리자가 예약 부재 처리",
+        "operationId": "noshowWaiting",
+        "parameters": [
+          {
+            "name": "waitingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/{waitingId}/complete": {
+      "put": {
+        "tags": ["waiting-controller"],
+        "summary": "관리자의 입장 처리 완료",
+        "operationId": "completeWaiting",
+        "parameters": [
+          {
+            "name": "waitingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/{waitingId}/call": {
+      "put": {
+        "tags": ["waiting-controller"],
+        "summary": "관리자가 예약 호출",
+        "operationId": "callWaiting",
+        "parameters": [
+          {
+            "name": "waitingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fcm-token": {
+      "put": {
+        "tags": ["fcm-controller"],
+        "operationId": "saveOrUpdateFcmToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostFcmRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/menus/{menu-id}/status": {
+      "put": {
+        "tags": ["menu-controller"],
+        "summary": "메뉴 재고 상태 변경",
+        "operationId": "changeMenuStatus",
+        "parameters": [
+          {
+            "name": "menu-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuStatusChangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/waiting/{boothId}/waitingEnabled": {
+      "post": {
+        "tags": ["waiting-controller"],
+        "summary": "부스 웨이팅 불/가 변경",
+        "operationId": "changeBoothWaitingEnabled",
+        "parameters": [
+          {
+            "name": "boothId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseBoolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/tokenTest": {
+      "get": {
+        "tags": ["waiting-controller"],
+        "summary": "토큰 테스트",
+        "operationId": "tokenTest2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["waiting-controller"],
+        "summary": "토큰 테스트",
+        "operationId": "tokenTest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostTokenTestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/pin/{booth-id}": {
+      "get": {
+        "tags": ["waiting-controller"],
+        "summary": "Pin 번호 받기",
+        "operationId": "getPin",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["waiting-controller"],
+        "summary": "Pin 발급/재발급",
+        "operationId": "createPin",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/waiting/pin/check": {
+      "post": {
+        "tags": ["waiting-controller"],
+        "summary": "Pin 번호 확인",
+        "operationId": "checkPin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckPinRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/star": {
+      "get": {
+        "tags": ["star-controller"],
+        "summary": "모든 star 목록 조회",
+        "operationId": "findAllStars",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListStarInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["star-controller"],
+        "summary": "Star 정보 생성",
+        "operationId": "createStar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostStarRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stamps": {
+      "get": {
+        "tags": ["stamp-controller"],
+        "summary": "Stamp 조회 (deviceId별)",
+        "operationId": "getStamp",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListStampRecordResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["stamp-controller"],
+        "summary": "Stamp 추가",
+        "operationId": "addStamp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StampRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stamps/booth": {
+      "post": {
+        "tags": ["stamp-controller"],
+        "summary": "부스 스탬프 정보 생성",
+        "operationId": "createStampInfo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StampInfoCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/school": {
+      "post": {
+        "tags": ["school-controller"],
+        "operationId": "createSchool",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostSchoolRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members": {
+      "get": {
+        "tags": ["member-controller"],
+        "summary": "role 별 멤버 목록 조회 (parameter 생략 시 멤버 전부 조회)",
+        "operationId": "getMembers",
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["DEV", "ADMIN", "PENDING", "VERIFIED", "DENIED"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListMemberDetailResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["member-controller"],
+        "summary": "회원가입",
+        "operationId": "postMember",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberSignUpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/megaphone": {
+      "post": {
+        "tags": ["megaphone-controller"],
+        "summary": "확성기 공지 메세지 등록",
+        "operationId": "postAnnouncement",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddMegaphoneRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images": {
+      "post": {
+        "tags": ["file-controller"],
+        "operationId": "uploadFile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/festival": {
+      "get": {
+        "tags": ["festival-controller"],
+        "summary": "학교명 검색",
+        "operationId": "getFestivalByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListFestivalSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["festival-controller"],
+        "summary": "축제 등록",
+        "operationId": "postFestival",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostFestivalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/festival/{festival-id}/interest": {
+      "post": {
+        "tags": ["interest-controller"],
+        "summary": "관심 축제 등록",
+        "operationId": "postInterest",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["interest-controller"],
+        "summary": "관심 축제 해제",
+        "operationId": "deleteInterest",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enroll": {
+      "post": {
+        "tags": ["enroll-controller"],
+        "summary": "festival:star enroll 정보 생성",
+        "operationId": "createEnroll",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEnrollRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/menus/{booth-id}": {
+      "post": {
+        "tags": ["menu-controller"],
+        "summary": "메뉴 추가",
+        "operationId": "createMenu",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/likes": {
+      "get": {
+        "tags": ["likes-controller"],
+        "summary": "특정 사용자가 좋아요한 부스 목록 조회",
+        "operationId": "getLikedBooths",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListLikedBoothResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["likes-controller"],
+        "summary": "좋아요 생성",
+        "operationId": "postLike",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostLikesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booths": {
+      "get": {
+        "tags": ["booth-controller"],
+        "summary": "상위 5개 부스 확인",
+        "operationId": "getLikes",
+        "parameters": [
+          {
+            "name": "festivalId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListBoothResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["booth-controller"],
+        "summary": "부스 생성",
+        "operationId": "postBooth",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoothCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/admin/booth/{booth_id}": {
+      "post": {
+        "tags": ["admin-controller"],
+        "summary": "부스 주인 변경",
+        "operationId": "changeBoothOwner",
+        "parameters": [
+          {
+            "name": "booth_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "new",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/stamps/{booth-id}/stampEnabled": {
+      "patch": {
+        "tags": ["stamp-controller"],
+        "summary": "Booth StampEnabled 바꾸기",
+        "operationId": "switchStampEnabled",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StampEnabledRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseBoolean"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/members/{member-id}": {
+      "get": {
+        "tags": ["member-controller"],
+        "summary": "member id로 회원 정보 조회",
+        "operationId": "getMember",
+        "parameters": [
+          {
+            "name": "member-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["member-controller"],
+        "summary": "관리자가 회원 삭제",
+        "operationId": "withDrawMember",
+        "parameters": [
+          {
+            "name": "member-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["member-controller"],
+        "summary": "회원역할 변경",
+        "operationId": "patchMemberRole",
+        "parameters": [
+          {
+            "name": "member-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["DEV", "ADMIN", "PENDING", "VERIFIED", "DENIED"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/menus/{menu-id}": {
+      "delete": {
+        "tags": ["menu-controller"],
+        "summary": "메뉴 삭제",
+        "operationId": "deleteMenu",
+        "parameters": [
+          {
+            "name": "menu-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["menu-controller"],
+        "summary": "메뉴 수정",
+        "operationId": "patchMenu",
+        "parameters": [
+          {
+            "name": "menu-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuPatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/booths/{booth-id}": {
+      "get": {
+        "tags": ["booth-controller"],
+        "summary": "특정부스 조회",
+        "operationId": "getBooth",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["booth-controller"],
+        "summary": "부스 삭제",
+        "operationId": "deleteBooth_1",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["booth-controller"],
+        "summary": "부스 정보 수정",
+        "operationId": "patchBooth",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoothPatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/booths/{booth-id}/schedule": {
+      "patch": {
+        "tags": ["booth-controller"],
+        "summary": "부스 스케쥴 수정",
+        "operationId": "patchBoothSchedule",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoothSchedulePatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/waiting/{boothId}/reserved": {
+      "get": {
+        "tags": ["waiting-controller"],
+        "summary": "예약된 대기열 조회",
+        "operationId": "getWaitingList",
+        "parameters": [
+          {
+            "name": "boothId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/{boothId}/count": {
+      "get": {
+        "tags": ["waiting-controller"],
+        "summary": "대기중인 팀의 수 조회",
+        "operationId": "getWaitingCount",
+        "parameters": [
+          {
+            "name": "boothId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/{boothId}/all": {
+      "get": {
+        "tags": ["waiting-controller"],
+        "summary": "완료 포함 전체 웨이팅 조회(관리자용, 디버깅용)",
+        "operationId": "getAllWaitingList",
+        "parameters": [
+          {
+            "name": "boothId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/waiting/me/{deviceId}": {
+      "get": {
+        "tags": ["waiting-controller"],
+        "summary": "내 RESERVED, CALLED, NOSHOW, COMPLETED 웨이팅 조회(device ID 기준으로!)",
+        "operationId": "getMyWaitingList",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/star/{starId}": {
+      "get": {
+        "tags": ["star-controller"],
+        "summary": "특정 star 조회",
+        "operationId": "findStarById",
+        "parameters": [
+          {
+            "name": "starId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseStarInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["star-controller"],
+        "summary": "특정 star 삭제",
+        "operationId": "deleteStar",
+        "parameters": [
+          {
+            "name": "starId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/star/search/{name}": {
+      "get": {
+        "tags": ["star-controller"],
+        "summary": "name 기반 star 검색",
+        "operationId": "searchStarByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListStarInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stamps/{festival-id}": {
+      "get": {
+        "tags": ["stamp-controller"],
+        "summary": "Stamp 기능이 있는 부스 조회 (festivalId별)",
+        "operationId": "getStampBooths",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListStampInfoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reissue": {
+      "get": {
+        "tags": ["auth-controller"],
+        "summary": "액세스토큰 재발급",
+        "operationId": "reissue",
+        "parameters": [
+          {
+            "name": "RefreshToken",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/members/my": {
+      "get": {
+        "tags": ["member-controller"],
+        "summary": "본인 정보 조회",
+        "operationId": "getMyMember",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/logout": {
+      "get": {
+        "tags": ["auth-controller"],
+        "summary": "사용자 로그아웃 로그인 : /login",
+        "operationId": "logout",
+        "parameters": [
+          {
+            "name": "RefreshToken",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/festival/today": {
+      "get": {
+        "tags": ["festival-controller"],
+        "summary": "오늘의 축제일정",
+        "operationId": "getFestivalByDate",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListTodayFestivalInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/festival/region": {
+      "get": {
+        "tags": ["festival-controller"],
+        "summary": "지역별 검색",
+        "operationId": "getFestivalByRegion",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListFestivalSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/festival/interest": {
+      "get": {
+        "tags": ["interest-controller"],
+        "summary": "관심 축제 목록 조회",
+        "operationId": "getInterestList",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/festival/all": {
+      "get": {
+        "tags": ["festival-controller"],
+        "summary": "전체 검색",
+        "operationId": "getAllFestival",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListFestivalSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/festival/after": {
+      "get": {
+        "tags": ["festival-controller"],
+        "summary": "다가오는 축제일정",
+        "operationId": "getAfterFestival",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListFestivalSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enroll/festival/{festivalId}": {
+      "get": {
+        "tags": ["enroll-controller"],
+        "summary": "festival 기준 festival:star 등록정보 조회",
+        "operationId": "getEnrollmentsByFestival",
+        "parameters": [
+          {
+            "name": "festivalId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListEnrollInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/likes/{booth-id}": {
+      "get": {
+        "tags": ["likes-controller"],
+        "summary": "특정 부스의 좋아요 개수 조회",
+        "operationId": "getLike",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booths/{festival-id}/booths": {
+      "get": {
+        "tags": ["booth-controller"],
+        "summary": "해당축제 영업 중인 부스 전체조회",
+        "operationId": "getBooths",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/booth/{festival-id}/booths": {
+      "get": {
+        "tags": ["admin-controller"],
+        "summary": "해당축제 부스 전체조회",
+        "operationId": "getEveryBooths",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListBoothResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/admin/booth/{booth-id}": {
+      "get": {
+        "tags": ["admin-controller"],
+        "summary": "특정부스 조회",
+        "operationId": "getBooth_1",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseBoothDetailResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/waiting/{waitingId}": {
+      "delete": {
+        "tags": ["waiting-controller"],
+        "summary": "관리자가 직접 웨이팅 삭제",
+        "operationId": "removeWaiting",
+        "parameters": [
+          {
+            "name": "waitingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stamps/booth/{booth-id}": {
+      "delete": {
+        "tags": ["stamp-controller"],
+        "summary": "부스 스탬프 정보 삭제",
+        "operationId": "deleteStampInfo",
+        "parameters": [
+          {
+            "name": "booth-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/festival/{festival-id}": {
+      "delete": {
+        "tags": ["festival-controller"],
+        "summary": "축제 삭제",
+        "operationId": "deleteBooth",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/enroll/{enrollId}": {
+      "delete": {
+        "tags": ["enroll-controller"],
+        "summary": "축제에 등록된 enroll 제거",
+        "operationId": "removeEnroll",
+        "parameters": [
+          {
+            "name": "enrollId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CancelWaitingRequest": {
+        "type": "object",
+        "properties": {
+          "waitingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceId": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseWaitingInfo": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/WaitingInfo"
+          }
+        }
+      },
+      "WaitingInfo": {
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "waitingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "partySize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tel": {
+            "type": "string"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "waitingOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothName": {
+            "type": "string"
+          }
+        }
+      },
+      "PostFcmRequest": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string"
+          },
+          "fcmToken": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseString": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          }
+        }
+      },
+      "MenuStatusChangeRequest": {
+        "type": "object",
+        "properties": {
+          "menuStatus": {
+            "type": "string",
+            "description": "메뉴 재고 상태",
+            "example": "충분함 : ENOUGH(기본값), 50개 이하 : UNDER_50, 10개 이하 : UNDER_10, 품절 : SOLD_OUT",
+            "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
+          }
+        }
+      },
+      "Response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "PostWaitingRequest": {
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tel": {
+            "type": "string"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "partySize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pinNumber": {
+            "type": "string"
+          },
+          "fcmToken": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseBoolean": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PostTokenTestRequest": {
+        "type": "object",
+        "properties": {
+          "fcmToken": {
+            "type": "string"
+          }
+        }
+      },
+      "CheckPinRequest": {
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pinNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseLong": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PostStarRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "imgUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "StampRequest": {
+        "required": ["boothId", "deviceId"],
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "StampInfoCreateRequest": {
+        "required": ["boothId", "defaultImgUrl", "festivalId", "usedImgUrl"],
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "defaultImgUrl": {
+            "type": "string"
+          },
+          "usedImgUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "PostSchoolRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "thumbnail": {
+            "type": "string"
+          }
+        }
+      },
+      "MemberSignUpRequest": {
+        "required": ["email", "password", "phoneNum", "schoolId"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phoneNum": {
+            "type": "string"
+          }
+        }
+      },
+      "AddMegaphoneRequest": {
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "msgBody": {
+            "type": "string"
+          }
+        }
+      },
+      "FileResponse": {
+        "type": "object",
+        "properties": {
+          "imgUrl": {
+            "type": "string"
+          },
+          "imgName": {
+            "type": "string"
+          }
+        }
+      },
+      "PostFestivalRequest": {
+        "type": "object",
+        "properties": {
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "beginDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          }
+        }
+      },
+      "InterestRequest": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string"
+          }
+        }
+      },
+      "PostEnrollRequest": {
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "starId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "visitDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "MenuCreateRequest": {
+        "required": ["name", "price"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imgUrl": {
+            "type": "string"
+          },
+          "menuStatus": {
+            "type": "string",
+            "description": "메뉴 재고 상태",
+            "example": "충분함 : ENOUGH(기본값), 50개 이하 : UNDER_50, 10개 이하 : UNDER_10, 품절 : SOLD_OUT",
+            "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
+          }
+        }
+      },
+      "PostLikesRequest": {
+        "required": ["boothId", "token"],
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "BoothCreateRequest": {
+        "required": ["category", "latitude", "location", "longitude", "name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "warning": {
+            "type": "string"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "menus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuCreateRequest"
+            }
+          },
+          "location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "boothSchedules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothScheduleCreateRequest"
+            }
+          }
+        }
+      },
+      "BoothScheduleCreateRequest": {
+        "required": ["closeTime", "date", "openTime"],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "openTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "closeTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          }
+        }
+      },
+      "LocalTime": {
+        "type": "object",
+        "properties": {
+          "hour": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "second": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nano": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "StampEnabledRequest": {
+        "required": ["stampEnabled"],
+        "type": "object",
+        "properties": {
+          "stampEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MenuPatchRequest": {
+        "required": ["name", "price"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imgUrl": {
+            "type": "string"
+          },
+          "menuStatus": {
+            "type": "string",
+            "description": "메뉴 재고 상태",
+            "example": "충분함 : ENOUGH(기본값), 50개 이하 : UNDER_50, 10개 이하 : UNDER_10, 품절 : SOLD_OUT",
+            "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
+          }
+        }
+      },
+      "BoothPatchRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "warning": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "waitingEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BoothSchedulePatchRequest": {
+        "type": "object",
+        "properties": {
+          "scheduleList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothScheduleCreateRequest"
+            }
+          }
+        }
+      },
+      "ResponseListWaitingInfo": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WaitingInfo"
+            }
+          }
+        }
+      },
+      "ResponseListStarInfo": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarInfo"
+            }
+          }
+        }
+      },
+      "StarInfo": {
+        "type": "object",
+        "properties": {
+          "starId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "imgUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseStarInfo": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/StarInfo"
+          }
+        }
+      },
+      "ResponseListStampRecordResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StampRecordResponse"
+            }
+          }
+        }
+      },
+      "StampRecordResponse": {
+        "type": "object",
+        "properties": {
+          "stampRecordId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "stampInfoId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceId": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseListStampInfoResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StampInfoResponse"
+            }
+          }
+        }
+      },
+      "StampInfoResponse": {
+        "type": "object",
+        "properties": {
+          "stampInfoId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "defaultImgUrl": {
+            "type": "string"
+          },
+          "usedImgUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "BoothDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "warning": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "menus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuResponse"
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "waitingEnabled": {
+            "type": "boolean"
+          },
+          "scheduleList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothScheduleResponse"
+            }
+          },
+          "stampEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BoothScheduleResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "openTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "closeTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          }
+        }
+      },
+      "MemberDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
+          "booths": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothDetailResponse"
+            }
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phoneNum": {
+            "type": "string"
+          },
+          "memberRole": {
+            "type": "string",
+            "enum": ["DEV", "ADMIN", "PENDING", "VERIFIED", "DENIED"]
+          }
+        }
+      },
+      "MenuResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imgUrl": {
+            "type": "string"
+          },
+          "menuStatus": {
+            "type": "string",
+            "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
+          }
+        }
+      },
+      "ResponseListMemberDetailResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberDetailResponse"
+            }
+          }
+        }
+      },
+      "FestivalSearchResponse": {
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "schoolName": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "festivalName": {
+            "type": "string"
+          },
+          "beginDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ResponseListFestivalSearchResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalSearchResponse"
+            }
+          }
+        }
+      },
+      "ResponseListTodayFestivalInfo": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TodayFestivalInfo"
+            }
+          }
+        }
+      },
+      "TodayFestivalInfo": {
+        "type": "object",
+        "properties": {
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "schoolName": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "festivalName": {
+            "type": "string"
+          },
+          "beginDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "starList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarInfo"
+            }
+          }
+        }
+      },
+      "EnrollInfo": {
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "starId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "starName": {
+            "type": "string"
+          },
+          "imgUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseListEnrollInfo": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnrollInfo"
+            }
+          }
+        }
+      },
+      "LikedBoothResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "warning": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseListLikedBoothResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LikedBoothResponse"
+            }
+          }
+        }
+      },
+      "BoothResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "waitingEnabled": {
+            "type": "boolean"
+          },
+          "openTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "closeTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "stampEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ResponseListBoothResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothResponse"
+            }
+          }
+        }
+      },
+      "ResponseBoothDetailResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BoothDetailResponse"
+          }
+        }
+      },
+      "ResponseVoid": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
