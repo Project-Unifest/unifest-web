@@ -10,6 +10,7 @@ import { BoothDetailsDraftStoreProvider } from "@/src/shared/model/provider/boot
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { GlobalErrorFallback } from "@/src/app/ui/global-error-fallback";
 import { ErrorBoundary } from "react-error-boundary";
+import { QueryProvider } from "@/src/shared/model/provider/query-provider";
 
 export const metadata: Metadata = {
   title: "Unifest",
@@ -25,22 +26,24 @@ export default function RootLayout({
     <html lang="kr" className={pretendard.className}>
       <body>
         <MSWProvider>
-          <ErrorBoundary FallbackComponent={GlobalErrorFallback}>
-            <BoothDetailsDraftStoreProvider>
-              <BoothEditStoreProvider>
-                <BoothDraftStoreProvider>
-                  <BoothListStoreProvider>
-                    <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
-                      <Header />
-                      <div className="flex flex-auto flex-col items-stretch justify-start px-5">
-                        {children}
+          <QueryProvider>
+            <ErrorBoundary FallbackComponent={GlobalErrorFallback}>
+              <BoothDetailsDraftStoreProvider>
+                <BoothEditStoreProvider>
+                  <BoothDraftStoreProvider>
+                    <BoothListStoreProvider>
+                      <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
+                        <Header />
+                        <div className="flex flex-auto flex-col items-stretch justify-start px-5">
+                          {children}
+                        </div>
                       </div>
-                    </div>
-                  </BoothListStoreProvider>
-                </BoothDraftStoreProvider>
-              </BoothEditStoreProvider>
-            </BoothDetailsDraftStoreProvider>
-          </ErrorBoundary>
+                    </BoothListStoreProvider>
+                  </BoothDraftStoreProvider>
+                </BoothEditStoreProvider>
+              </BoothDetailsDraftStoreProvider>
+            </ErrorBoundary>
+          </QueryProvider>
         </MSWProvider>
       </body>
       <GoogleAnalytics gaId="G-7WTXSFSS6M" />
