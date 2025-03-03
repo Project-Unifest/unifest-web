@@ -1,6 +1,23 @@
-import ky, { HTTPError, KyInstance, Options as KyOptions } from "ky";
+import ky, {
+  HTTPError,
+  KyInstance,
+  Options as KyOptions,
+  TimeoutError,
+} from "ky";
 import { API_URL, getAccessToken, HTTPHeaderKey } from "./config";
 import { useAuthStore } from "../model/provider/auth-store-provider";
+import {
+  BadRequestError,
+  ConflictError,
+  ForbiddenError,
+  NetworkError,
+  NotFoundError,
+  ServerError,
+  ServiceUnavailableError,
+  UnauthorizedError,
+  ValidationError,
+} from "./errors";
+import { match, P } from "ts-pattern";
 
 const defaultConfig: KyOptions = {
   prefixUrl: API_URL,
@@ -18,6 +35,22 @@ const refreshClient = ky.create({
   ...defaultConfig,
   retry: 0,
 });
+
+const handleHttpError = async ({
+  request,
+  response,
+  options,
+}: HTTPError): Promise<HTTPError> => {
+  throw match(response.status)
+    .with(401, () => new UnauthorizedError(response, request, options))
+    .with(403, () => new ForbiddenError(response, request, options))
+    .with(404, () => new NotFoundError(response, request, options))
+    .with(409, () => new ConflictError(response, request, options))
+    .with(400, () => new BadRequestError(response, request, options))
+    .with(422, () => new ValidationError(response, request, options))
+    .with(503, () => new ServiceUnavailableError(response, request, options))
+    .otherwise(() => new ServerError(response, request, options));
+};
 
 const refreshAccessToken = async (refreshToken: string): Promise<string> => {
   const response = await refreshClient.post("reissue", {
@@ -65,5 +98,6 @@ export const client = ky.create({
         }
       },
     ],
+    beforeError: [handleHttpError],
   },
 });
