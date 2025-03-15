@@ -308,24 +308,18 @@ export function Add({ boothId }: { boothId: number }) {
             <CardHeader>
               <CardTitle>운영시간</CardTitle>
               <BoothTimeForm
-                operatingTimes={
-                  openTime && closeTime
-                    ? [
-                        {
-                          date: new Date().toISOString().split("T")[0], // 오늘 날짜
-                          openTime: openTime,
-                          closeTime: closeTime,
-                        },
-                      ]
-                    : []
-                }
+                operatingTimes={[]}
                 onOperatingTimesChange={(times) => {
                   if (times.length > 0) {
+                    // 첫 번째 날짜의 시간 정보만 사용 (기존 호환성 유지)
                     const firstTime = times[0];
                     editOpenTime(firstTime.openTime || "");
                     editCloseTime(firstTime.closeTime || "");
                     changeOpenTimeInForm(firstTime.openTime);
                     changeCloseTimeInForm(firstTime.closeTime);
+
+                    // 여러 날짜 지원을 위해 전체 times 배열을 저장할 수 있는 로직 추가 필요
+                    // 예: state.setOperatingTimes(times);
                   } else {
                     resetBoothTime();
                     changeOpenTimeInForm(null);

@@ -14,7 +14,7 @@ interface BoothTimeProps {
 }
 
 export function BoothTimeForm({
-  operatingTimes,
+  operatingTimes: initialOperatingTimes,
   onOperatingTimesChange,
   resetBoothTime,
 }: BoothTimeProps) {
@@ -22,18 +22,26 @@ export function BoothTimeForm({
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [currentYear] = useState(new Date().getFullYear());
+  const [showOperatingTimes, setShowOperatingTimes] = useState(true);
+  const [operatingTimes, setOperatingTimes] = useState<OperatingTime[]>([]);
 
   const openTimeInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const closeTimeInputRefs = useRef<Record<string, HTMLInputElement | null>>(
     {},
   );
 
+  // 초기 operatingTimes 설정 - 컴포넌트 마운트 시 한 번만 실행
   useEffect(() => {
-    // 기존 운영시간이 있으면 선택된 날짜로 설정
-    if (operatingTimes.length > 0) {
-      setSelectedDates(operatingTimes.map((time) => time.date));
+    if (initialOperatingTimes.length > 0) {
+      setOperatingTimes(initialOperatingTimes);
+      setSelectedDates(initialOperatingTimes.map((time) => time.date));
+      setShowOperatingTimes(true);
+    } else {
+      setOperatingTimes([]);
+      setSelectedDates([]);
+      setShowOperatingTimes(false);
     }
-  }, [operatingTimes]);
+  }, []); // 의존성 배열을 비워서 마운트 시 한 번만 실행
 
   // 인풋 태그를 클릭했을 때 focus 이벤트를 트리거
   const handleInputClick = (ref: HTMLInputElement | null) => {
@@ -63,21 +71,30 @@ export function BoothTimeForm({
 
     if (isSelected) {
       // 이미 선택된 날짜라면 제거
-      setSelectedDates((prev) => prev.filter((d) => d !== date));
+      const newSelectedDates = selectedDates.filter((d) => d !== date);
+      setSelectedDates(newSelectedDates);
 
       // 운영시간에서도 제거
-      onOperatingTimesChange(
-        operatingTimes.filter((time) => time.date !== date),
+      const newOperatingTimes = operatingTimes.filter(
+        (time) => time.date !== date,
       );
+      setOperatingTimes(newOperatingTimes);
+      onOperatingTimesChange(newOperatingTimes);
     } else {
       // 새로운 날짜 추가
-      setSelectedDates((prev) => [...prev, date]);
+      const newSelectedDates = [...selectedDates, date];
+      setSelectedDates(newSelectedDates);
 
-      // 운영시간에 추가 (기본값 설정)
-      onOperatingTimesChange([
-        ...operatingTimes,
-        { date, openTime: "18:00:00", closeTime: "24:00:00" },
-      ]);
+      // 운영시간에 추가 (시작시간과 종료시간 모두 비워두기)
+      const newDate = {
+        date,
+        openTime: null,
+        closeTime: null,
+      };
+
+      const newOperatingTimes = [...operatingTimes, newDate];
+      setOperatingTimes(newOperatingTimes);
+      onOperatingTimesChange(newOperatingTimes);
     }
   };
 
@@ -97,12 +114,23 @@ export function BoothTimeForm({
       return time;
     });
 
+    setOperatingTimes(updatedTimes);
     onOperatingTimesChange(updatedTimes);
   };
 
   const handleRemoveDate = (date: string) => {
-    setSelectedDates((prev) => prev.filter((d) => d !== date));
-    onOperatingTimesChange(operatingTimes.filter((time) => time.date !== date));
+    const newSelectedDates = selectedDates.filter((d) => d !== date);
+    setSelectedDates(newSelectedDates);
+
+    const newOperatingTimes = operatingTimes.filter(
+      (time) => time.date !== date,
+    );
+    setOperatingTimes(newOperatingTimes);
+    onOperatingTimesChange(newOperatingTimes);
+
+    if (newOperatingTimes.length === 0) {
+      setShowOperatingTimes(false);
+    }
   };
 
   const getDaysInMonth = (year: number, month: number) => {
@@ -140,7 +168,10 @@ export function BoothTimeForm({
     for (let i = 0; i < firstDay; i++) {
       const prevMonthDate = new Date(currentYear, selectedMonth - 1, 0 - i);
       prevMonthDays.unshift(
-        <div key={`prev-${i}`} className="text-gray-300 p-2 text-center">
+        <div
+          key={`prev-${i}`}
+          className="text-gray-300 flex h-10 items-center justify-center opacity-50"
+        >
           {prevMonthDate.getDate()}
         </div>,
       );
@@ -155,12 +186,17 @@ export function BoothTimeForm({
       currentMonthDays.push(
         <div
           key={`current-${i}`}
-          className={`cursor-pointer rounded-full p-2 text-center ${
-            isSelected ? "bg-pink-500 text-white" : "hover:bg-gray-100"
-          }`}
+          className="relative flex h-10 cursor-pointer items-center justify-center"
           onClick={() => handleDateSelect(dateStr)}
         >
-          {i}
+          {isSelected ? (
+            <>
+              <div className="absolute h-8 w-8 rounded-full bg-[#FF4785]"></div>
+              <span className="relative z-10 font-bold text-white">{i}</span>
+            </>
+          ) : (
+            <span>{i}</span>
+          )}
         </div>,
       );
     }
@@ -173,7 +209,10 @@ export function BoothTimeForm({
 
     for (let i = 1; i <= remainingCells; i++) {
       nextMonthDays.push(
-        <div key={`next-${i}`} className="text-gray-300 p-2 text-center">
+        <div
+          key={`next-${i}`}
+          className="text-gray-300 flex h-10 items-center justify-center opacity-50"
+        >
           {i}
         </div>,
       );
@@ -188,6 +227,13 @@ export function BoothTimeForm({
 
     return (
       <div className="calendar">
+        <Button
+          type="button"
+          className="mb-4 w-full text-xs font-normal"
+          onClick={toggleDatePicker}
+        >
+          운영일 추가하기 ∧
+        </Button>
         <div className="mb-4 flex items-center justify-between">
           <button
             onClick={() =>
@@ -234,13 +280,23 @@ export function BoothTimeForm({
       closeTimeInputRefs.current[date] = el;
     };
 
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
+    if (showDatePicker && operatingTimes.length === 0) {
+      setShowOperatingTimes(false);
+    }
+  };
+
   return (
     <div className="booth-time-form">
-      {operatingTimes.length === 0 ? (
+      {!showOperatingTimes ? (
         <Button
           type="button"
           className="w-full"
-          onClick={() => setShowDatePicker(true)}
+          onClick={() => {
+            setShowDatePicker(true);
+            setShowOperatingTimes(true);
+          }}
         >
           운영일 추가하기
         </Button>
@@ -277,9 +333,7 @@ export function BoothTimeForm({
                     onClick={() =>
                       handleInputClick(openTimeInputRefs.current[time.date])
                     }
-                    value={
-                      time.openTime ? convertToHHMM(time.openTime) : "18:00"
-                    }
+                    value={time.openTime ? convertToHHMM(time.openTime) : ""}
                     placeholder="시작시간"
                   />
                   <span className="mx-2">~</span>
@@ -296,23 +350,13 @@ export function BoothTimeForm({
                     onClick={() =>
                       handleInputClick(closeTimeInputRefs.current[time.date])
                     }
-                    value={
-                      time.closeTime ? convertToHHMM(time.closeTime) : "24:00"
-                    }
+                    value={time.closeTime ? convertToHHMM(time.closeTime) : ""}
                     placeholder="종료시간"
                   />
                 </div>
               </div>
             ))}
           </div>
-
-          <Button
-            type="button"
-            className="mt-4 w-full"
-            onClick={() => setShowDatePicker(true)}
-          >
-            운영일 추가하기 ∧
-          </Button>
         </>
       )}
 
@@ -322,12 +366,22 @@ export function BoothTimeForm({
           {renderCalendar()}
           <Button
             type="button"
-            className="mt-4 w-full"
+            className="mt-2 w-full"
             onClick={() => setShowDatePicker(false)}
           >
             완료
           </Button>
         </div>
+      )}
+
+      {!showDatePicker && showOperatingTimes && (
+        <Button
+          type="button"
+          className="mt-4 w-full"
+          onClick={() => setShowDatePicker(true)}
+        >
+          운영일 추가하기
+        </Button>
       )}
     </div>
   );
