@@ -308,12 +308,30 @@ export function Add({ boothId }: { boothId: number }) {
             <CardHeader>
               <CardTitle>운영시간</CardTitle>
               <BoothTimeForm
-                openTime={openTime}
-                closeTime={closeTime}
-                changeOpenTimeInForm={changeOpenTimeInForm}
-                changeCloseTimeInForm={changeCloseTimeInForm}
-                editOpenTime={editOpenTime}
-                editCloseTime={editCloseTime}
+                operatingTimes={
+                  openTime && closeTime
+                    ? [
+                        {
+                          date: new Date().toISOString().split("T")[0], // 오늘 날짜
+                          openTime: openTime,
+                          closeTime: closeTime,
+                        },
+                      ]
+                    : []
+                }
+                onOperatingTimesChange={(times) => {
+                  if (times.length > 0) {
+                    const firstTime = times[0];
+                    editOpenTime(firstTime.openTime || "");
+                    editCloseTime(firstTime.closeTime || "");
+                    changeOpenTimeInForm(firstTime.openTime);
+                    changeCloseTimeInForm(firstTime.closeTime);
+                  } else {
+                    resetBoothTime();
+                    changeOpenTimeInForm(null);
+                    changeCloseTimeInForm(null);
+                  }
+                }}
                 resetBoothTime={resetBoothTime}
               />
             </CardHeader>
