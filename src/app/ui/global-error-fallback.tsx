@@ -1,3 +1,5 @@
+"use client";
+
 import { match, P } from "ts-pattern";
 import {
   UnauthorizedError,
@@ -10,12 +12,14 @@ import {
 } from "@/src/shared/api/errors";
 import { FallbackProps } from "react-error-boundary";
 import { useEffect } from "react";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 export const GlobalErrorFallback = ({
   error,
   resetErrorBoundary,
 }: FallbackProps) => {
+  const router = useRouter();
+
   const handleClick = () => {
     const resetOptions = (error as { resetOptions?: ResetOptions })
       .resetOptions || {
@@ -32,7 +36,7 @@ export const GlobalErrorFallback = ({
       .with(P.instanceOf(NetworkError), () => {
         router.push("/sign-in");
       });
-  }, [error]);
+  }, [error, router]);
 
   const { icon, title, message, action } = match(error)
     .with(P.instanceOf(UnauthorizedError), () => ({
