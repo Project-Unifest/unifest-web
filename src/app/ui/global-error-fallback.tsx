@@ -33,7 +33,11 @@ export const GlobalErrorFallback = ({
     match(error)
       .with(P.instanceOf(UnauthorizedError), () => {
         router.push("/sign-in");
-        resetErrorBoundary();
+
+        // Fixme: 동기적으로 코드 작성시 NotFoundErrorBoundary에서 무한 오류 발생
+        setTimeout(() => {
+          resetErrorBoundary();
+        }, 500);
       })
       .with(P.instanceOf(NetworkError), () => {
         router.push("/sign-in");
