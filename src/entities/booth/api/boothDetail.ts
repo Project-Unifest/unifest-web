@@ -1,7 +1,4 @@
-import { client } from "@/src/shared/api/client";
-import { Booth, BoothCategoryKeys, Product } from "@/src/shared/lib/types";
-import { ApiResponse } from "@/src/shared/api/types";
-
+import { BoothCategoryKeys, Product } from "@/src/shared/lib/types";
 interface LocalTime {
   hour: number;
   minute: number;
@@ -34,13 +31,3 @@ export interface BoothDetailResponse {
   scheduleList: BoothScheduleResponse[];
   stampeEnabled: boolean;
 }
-
-export const getBoothDetail = async (
-  boothId: number,
-): Promise<ApiResponse<BoothDetailResponse>> => {
-  return client
-    .get(`api/booths/${boothId}`, {
-      cache: "no-store",
-    })
-    .json<ApiResponse<BoothDetailResponse>>();
-};
