@@ -29,14 +29,16 @@ export const GlobalErrorFallback = ({
   };
 
   useEffect(() => {
+    console.log(error);
     match(error)
       .with(P.instanceOf(UnauthorizedError), () => {
         router.push("/sign-in");
+        resetErrorBoundary();
       })
       .with(P.instanceOf(NetworkError), () => {
         router.push("/sign-in");
       });
-  }, [error, router]);
+  }, [error, resetErrorBoundary, router]);
 
   const { icon, title, message, action } = match(error)
     .with(P.instanceOf(UnauthorizedError), () => ({

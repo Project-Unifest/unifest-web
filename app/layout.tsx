@@ -8,9 +8,8 @@ import { BoothListStoreProvider } from "@/src/shared/model/provider/booth-list-s
 import { BoothEditStoreProvider } from "@/src/shared/model/provider/booth-edit-store.provider";
 import { BoothDetailsDraftStoreProvider } from "@/src/shared/model/provider/booth-details-draft-store-provider";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { GlobalErrorFallback } from "@/src/app/ui/global-error-fallback";
-import { ErrorBoundary } from "react-error-boundary";
 import { QueryProvider } from "@/src/shared/model/provider/query-provider";
+import GlobalFallbackProvider from "@/src/app/ui/global-fallback-provider";
 
 export const metadata: Metadata = {
   title: "Unifest",
@@ -27,7 +26,7 @@ export default function RootLayout({
       <body>
         <MSWProvider>
           <QueryProvider>
-            <ErrorBoundary FallbackComponent={GlobalErrorFallback}>
+            <GlobalFallbackProvider>
               <BoothDetailsDraftStoreProvider>
                 <BoothEditStoreProvider>
                   <BoothDraftStoreProvider>
@@ -42,7 +41,7 @@ export default function RootLayout({
                   </BoothDraftStoreProvider>
                 </BoothEditStoreProvider>
               </BoothDetailsDraftStoreProvider>
-            </ErrorBoundary>
+            </GlobalFallbackProvider>
           </QueryProvider>
         </MSWProvider>
       </body>
