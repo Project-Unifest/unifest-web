@@ -1,3 +1,5 @@
+"use client";
+
 import { EditMap } from "@/src/widgets/booth/ui/EditMap";
 import React from "react";
 

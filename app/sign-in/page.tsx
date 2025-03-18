@@ -1,3 +1,5 @@
+"use client";
+
 import { SignInForm } from "@/src/widgets/sign-in";
 import React from "react";
 

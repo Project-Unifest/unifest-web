@@ -1,3 +1,5 @@
+"use client";
+
 import { OverviewBoothMap } from "@/src/widgets/add-booth";
 import React from "react";
 

@@ -1,7 +1,12 @@
+"use client";
+
 import { BoothEditBox } from "@/src/widgets/booth";
 import React from "react";
-export default function EditBoothPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+import { useParams } from "next/navigation";
+
+export default function EditBoothPage() {
+  const { id: idStr } = useParams<{ id: string }>()!;
+  const id = Number(idStr);
 
   return (
     <>

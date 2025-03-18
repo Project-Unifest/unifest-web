@@ -1,3 +1,5 @@
+"use client";
+
 import { AddMap } from "@/src/widgets/booth";
 import React from "react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { SelectMode } from "@/src/widgets/add-booth";
 import React from "react";
 
