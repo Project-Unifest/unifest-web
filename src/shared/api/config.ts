@@ -55,7 +55,7 @@ export enum HTTPMethod {
 export enum HTTPHeaderKey {
   CONTENT_TYPE = "content-type",
   AUTHORIZATION = "authorization",
-  REFRESH_TOKEN = "Refreshtoken",
+  REFRESH_TOKEN = "RefreshToken",
 }
 
 export enum HTTPHeaderValue {
