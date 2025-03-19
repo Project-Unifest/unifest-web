@@ -9,12 +9,8 @@
     },
     "version": "1.0"
   },
-  "servers": [
-    {
-      "url": "/",
-      "description": "Default Server URL"
-    }
-  ],
+  "servers": [{ "url": "/", "description": "Default Server URL" }],
+  "tags": [{ "name": "인증", "description": "로그인 관련 API" }],
   "paths": {
     "/waiting": {
       "put": {
@@ -24,9 +20,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CancelWaitingRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/CancelWaitingRequest" }
             }
           },
           "required": true
@@ -36,9 +30,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseWaitingInfo"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
               }
             }
           }
@@ -51,9 +43,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostWaitingRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostWaitingRequest" }
             }
           },
           "required": true
@@ -63,9 +53,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseWaitingInfo"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
               }
             }
           }
@@ -82,10 +70,7 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -93,9 +78,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseWaitingInfo"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
               }
             }
           }
@@ -112,10 +95,7 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -123,9 +103,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseWaitingInfo"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
               }
             }
           }
@@ -142,10 +120,7 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -153,9 +128,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseWaitingInfo"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
               }
             }
           }
@@ -169,9 +142,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostFcmRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostFcmRequest" }
             }
           },
           "required": true
@@ -181,9 +152,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseString"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseString" }
               }
             }
           }
@@ -200,10 +169,7 @@
             "name": "menu-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
@@ -221,18 +187,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/waiting/{boothId}/waitingEnabled": {
@@ -245,10 +205,7 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -256,9 +213,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseBoolean"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseBoolean" }
               }
             }
           }
@@ -275,9 +230,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseString"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseString" }
               }
             }
           }
@@ -290,9 +243,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostTokenTestRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostTokenTestRequest" }
             }
           },
           "required": true
@@ -302,9 +253,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseString"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseString" }
               }
             }
           }
@@ -321,10 +270,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -332,18 +278,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseString"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseString" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       },
       "post": {
         "tags": ["waiting-controller"],
@@ -354,10 +294,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -365,18 +302,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseString"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseString" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/waiting/pin/check": {
@@ -387,9 +318,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CheckPinRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/CheckPinRequest" }
             }
           },
           "required": true
@@ -399,9 +328,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -433,9 +360,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostStarRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostStarRequest" }
             }
           },
           "required": true
@@ -445,9 +370,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -464,9 +387,7 @@
             "name": "deviceId",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -489,9 +410,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StampRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/StampRequest" }
             }
           },
           "required": true
@@ -501,9 +420,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -530,18 +447,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/school": {
@@ -551,9 +462,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostSchoolRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostSchoolRequest" }
             }
           },
           "required": true
@@ -563,9 +472,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -600,11 +507,7 @@
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       },
       "post": {
         "tags": ["member-controller"],
@@ -613,9 +516,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MemberSignUpRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/MemberSignUpRequest" }
             }
           },
           "required": true
@@ -625,9 +526,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -642,9 +541,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddMegaphoneRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AddMegaphoneRequest" }
             }
           },
           "required": true
@@ -654,9 +551,34 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["인증"],
+        "summary": "로그인",
+        "description": "이메일과 비밀번호로 로그인합니다.",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": { "description": "인증 실패" },
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TokenResponse" }
               }
             }
           }
@@ -673,10 +595,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
+                  "file": { "type": "string", "format": "binary" }
                 }
               }
             },
@@ -684,10 +603,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
+                  "file": { "type": "string", "format": "binary" }
                 }
               }
             }
@@ -698,9 +614,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/FileResponse" }
               }
             }
           }
@@ -717,9 +631,7 @@
             "name": "name",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -742,9 +654,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostFestivalRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostFestivalRequest" }
             }
           },
           "required": true
@@ -754,9 +664,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -773,18 +681,13 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/InterestRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/InterestRequest" }
             }
           },
           "required": true
@@ -794,9 +697,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
@@ -811,18 +712,13 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/InterestRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/InterestRequest" }
             }
           },
           "required": true
@@ -832,9 +728,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
@@ -849,9 +743,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostEnrollRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostEnrollRequest" }
             }
           },
           "required": true
@@ -861,9 +753,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -880,18 +770,13 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MenuCreateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/MenuCreateRequest" }
             }
           },
           "required": true
@@ -901,18 +786,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/api/likes": {
@@ -925,9 +804,7 @@
             "name": "token",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -950,9 +827,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostLikesRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/PostLikesRequest" }
             }
           },
           "required": true
@@ -962,9 +837,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -981,10 +854,7 @@
             "name": "festivalId",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1007,9 +877,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BoothCreateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/BoothCreateRequest" }
             }
           },
           "required": true
@@ -1019,18 +887,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/admin/booth/{booth_id}": {
@@ -1043,19 +905,13 @@
             "name": "booth_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           },
           {
             "name": "new",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1063,18 +919,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/stamps/{booth-id}/stampEnabled": {
@@ -1087,18 +937,13 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StampEnabledRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/StampEnabledRequest" }
             }
           },
           "required": true
@@ -1108,18 +953,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseBoolean"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseBoolean" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/members/{member-id}": {
@@ -1132,10 +971,7 @@
             "name": "member-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1144,17 +980,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response"
+                  "$ref": "#/components/schemas/ResponseMemberDetailResponse"
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       },
       "delete": {
         "tags": ["member-controller"],
@@ -1165,10 +997,7 @@
             "name": "member-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1176,18 +1005,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       },
       "patch": {
         "tags": ["member-controller"],
@@ -1198,10 +1021,7 @@
             "name": "member-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           },
           {
             "name": "role",
@@ -1218,18 +1038,38 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
+        "security": [{ "JWT": [] }]
+      }
+    },
+    "/members/my/password": {
+      "patch": {
+        "tags": ["member-controller"],
+        "summary": "본인 비밀번호 수정",
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PasswordChangeRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+              }
+            }
           }
-        ]
+        },
+        "security": [{ "JWT": [] }]
       }
     },
     "/api/menus/{menu-id}": {
@@ -1242,10 +1082,7 @@
             "name": "menu-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1253,18 +1090,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       },
       "patch": {
         "tags": ["menu-controller"],
@@ -1275,18 +1106,13 @@
             "name": "menu-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MenuPatchRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/MenuPatchRequest" }
             }
           },
           "required": true
@@ -1296,18 +1122,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/api/booths/{booth-id}": {
@@ -1320,10 +1140,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1332,7 +1149,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response"
+                  "$ref": "#/components/schemas/ResponseBoothDetailResponse"
                 }
               }
             }
@@ -1348,10 +1165,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1359,18 +1173,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       },
       "patch": {
         "tags": ["booth-controller"],
@@ -1381,18 +1189,13 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BoothPatchRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/BoothPatchRequest" }
             }
           },
           "required": true
@@ -1402,18 +1205,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/api/booths/{booth-id}/schedule": {
@@ -1426,10 +1223,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "requestBody": {
@@ -1447,18 +1241,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/waiting/{boothId}/reserved": {
@@ -1471,10 +1259,7 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1501,10 +1286,7 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1512,9 +1294,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -1531,10 +1311,7 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1561,9 +1338,7 @@
             "name": "deviceId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1590,10 +1365,7 @@
             "name": "starId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1601,9 +1373,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseStarInfo"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseStarInfo" }
               }
             }
           }
@@ -1618,10 +1388,7 @@
             "name": "starId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1629,9 +1396,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseVoid"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
@@ -1648,9 +1413,7 @@
             "name": "name",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1677,10 +1440,7 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1699,7 +1459,7 @@
     },
     "/reissue": {
       "get": {
-        "tags": ["auth-controller"],
+        "tags": ["인증"],
         "summary": "액세스토큰 재발급",
         "operationId": "reissue",
         "parameters": [
@@ -1707,16 +1467,10 @@
             "name": "RefreshToken",
             "in": "header",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/members/my": {
@@ -1730,32 +1484,42 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response"
+                  "$ref": "#/components/schemas/ResponseMemberDetailResponse"
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
+        "security": [{ "JWT": [] }]
+      },
+      "delete": {
+        "tags": ["member-controller"],
+        "summary": "회원 탈퇴",
+        "operationId": "withDrawMe",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+              }
+            }
           }
-        ]
+        },
+        "security": [{ "JWT": [] }]
       }
     },
     "/logout": {
       "get": {
-        "tags": ["auth-controller"],
-        "summary": "사용자 로그아웃 로그인 : /login",
+        "tags": ["인증"],
+        "summary": "사용자 로그아웃",
         "operationId": "logout",
         "parameters": [
           {
             "name": "RefreshToken",
             "in": "header",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1763,9 +1527,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
@@ -1782,10 +1544,7 @@
             "name": "date",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
+            "schema": { "type": "string", "format": "date" }
           }
         ],
         "responses": {
@@ -1812,9 +1571,7 @@
             "name": "region",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1841,9 +1598,7 @@
             "name": "deviceId",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1851,9 +1606,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseListLong" }
               }
             }
           }
@@ -1908,10 +1661,7 @@
             "name": "festivalId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1938,10 +1688,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1949,9 +1696,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
@@ -1968,10 +1713,7 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -1980,7 +1722,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response"
+                  "$ref": "#/components/schemas/ResponseListBoothResponse"
                 }
               }
             }
@@ -1998,10 +1740,7 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -2016,11 +1755,7 @@
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/admin/booth/{booth-id}": {
@@ -2033,10 +1768,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -2051,11 +1783,7 @@
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/waiting/{waitingId}": {
@@ -2068,10 +1796,7 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -2079,9 +1804,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseWaitingInfo"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
               }
             }
           }
@@ -2098,10 +1821,7 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -2109,18 +1829,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseLong"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseLong" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/festival/{festival-id}": {
@@ -2133,10 +1847,7 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -2144,18 +1855,12 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
         },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        "security": [{ "JWT": [] }]
       }
     },
     "/enroll/{enrollId}": {
@@ -2168,10 +1873,7 @@
             "name": "enrollId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "integer", "format": "int64" }
           }
         ],
         "responses": {
@@ -2179,9 +1881,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseVoid"
-                }
+                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
               }
             }
           }
@@ -2194,93 +1894,46 @@
       "CancelWaitingRequest": {
         "type": "object",
         "properties": {
-          "waitingId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "deviceId": {
-            "type": "string"
-          }
+          "waitingId": { "type": "integer", "format": "int64" },
+          "deviceId": { "type": "string" }
         }
       },
       "ResponseWaitingInfo": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "$ref": "#/components/schemas/WaitingInfo"
-          }
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "$ref": "#/components/schemas/WaitingInfo" }
         }
       },
       "WaitingInfo": {
         "type": "object",
         "properties": {
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "waitingId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "partySize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tel": {
-            "type": "string"
-          },
-          "deviceId": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string"
-          },
-          "waitingOrder": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "boothName": {
-            "type": "string"
-          }
+          "boothId": { "type": "integer", "format": "int64" },
+          "waitingId": { "type": "integer", "format": "int64" },
+          "partySize": { "type": "integer", "format": "int32" },
+          "tel": { "type": "string" },
+          "deviceId": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" },
+          "status": { "type": "string" },
+          "waitingOrder": { "type": "integer", "format": "int32" },
+          "boothName": { "type": "string" }
         }
       },
       "PostFcmRequest": {
         "type": "object",
         "properties": {
-          "deviceId": {
-            "type": "string"
-          },
-          "fcmToken": {
-            "type": "string"
-          }
+          "deviceId": { "type": "string" },
+          "fcmToken": { "type": "string" }
         }
       },
       "ResponseString": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "type": "string"
-          }
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "type": "string" }
         }
       },
       "MenuStatusChangeRequest": {
@@ -2294,270 +1947,618 @@
           }
         }
       },
-      "Response": {
+      "ResponseVoid": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "type": "object"
-          }
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "type": "object" }
         }
       },
       "PostWaitingRequest": {
         "type": "object",
         "properties": {
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "tel": {
-            "type": "string"
-          },
-          "deviceId": {
-            "type": "string"
-          },
-          "partySize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pinNumber": {
-            "type": "string"
-          },
-          "fcmToken": {
-            "type": "string"
-          }
+          "boothId": { "type": "integer", "format": "int64" },
+          "tel": { "type": "string" },
+          "deviceId": { "type": "string" },
+          "partySize": { "type": "integer", "format": "int32" },
+          "pinNumber": { "type": "string" },
+          "fcmToken": { "type": "string" }
         }
       },
       "ResponseBoolean": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "type": "boolean"
-          }
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "type": "boolean" }
         }
       },
       "PostTokenTestRequest": {
         "type": "object",
-        "properties": {
-          "fcmToken": {
-            "type": "string"
-          }
-        }
+        "properties": { "fcmToken": { "type": "string" } }
       },
       "CheckPinRequest": {
         "type": "object",
         "properties": {
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "pinNumber": {
-            "type": "string"
-          }
+          "boothId": { "type": "integer", "format": "int64" },
+          "pinNumber": { "type": "string" }
         }
       },
       "ResponseLong": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "type": "integer",
-            "format": "int64"
-          }
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "type": "integer", "format": "int64" }
         }
       },
       "PostStarRequest": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "imgUrl": {
-            "type": "string"
-          }
+          "name": { "type": "string" },
+          "imgUrl": { "type": "string" }
         }
       },
       "StampRequest": {
         "required": ["boothId", "deviceId"],
         "type": "object",
         "properties": {
-          "deviceId": {
-            "type": "string"
-          },
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          }
+          "deviceId": { "type": "string" },
+          "boothId": { "type": "integer", "format": "int64" }
         }
       },
       "StampInfoCreateRequest": {
         "required": ["boothId", "defaultImgUrl", "festivalId", "usedImgUrl"],
         "type": "object",
         "properties": {
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "festivalId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "defaultImgUrl": {
-            "type": "string"
-          },
-          "usedImgUrl": {
-            "type": "string"
-          }
+          "boothId": { "type": "integer", "format": "int64" },
+          "festivalId": { "type": "integer", "format": "int64" },
+          "defaultImgUrl": { "type": "string" },
+          "usedImgUrl": { "type": "string" }
         }
       },
       "PostSchoolRequest": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "region": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "thumbnail": {
-            "type": "string"
-          }
+          "name": { "type": "string" },
+          "region": { "type": "string" },
+          "address": { "type": "string" },
+          "latitude": { "type": "number", "format": "double" },
+          "longitude": { "type": "number", "format": "double" },
+          "thumbnail": { "type": "string" }
         }
       },
       "MemberSignUpRequest": {
         "required": ["email", "password", "phoneNum", "schoolId"],
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "schoolId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "phoneNum": {
-            "type": "string"
-          }
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "schoolId": { "type": "integer", "format": "int64" },
+          "phoneNum": { "type": "string" }
         }
       },
       "AddMegaphoneRequest": {
         "type": "object",
         "properties": {
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "msgBody": {
-            "type": "string"
+          "boothId": { "type": "integer", "format": "int64" },
+          "msgBody": { "type": "string" }
+        }
+      },
+      "LoginRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "ClassInfo": {
+        "type": "object",
+        "properties": {
+          "ignoreCase": { "type": "boolean" },
+          "names": { "type": "array", "items": { "type": "string" } },
+          "enum": { "type": "boolean" },
+          "fieldInfos": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FieldInfo" }
           }
         }
+      },
+      "FieldInfo": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "modifiers": { "type": "integer", "format": "int32" },
+              "synthetic": { "type": "boolean" },
+              "declaredAnnotations": {
+                "type": "array",
+                "items": { "type": "object" }
+              },
+              "accessible": { "type": "boolean", "deprecated": true },
+              "genericType": {
+                "type": "object",
+                "properties": { "typeName": { "type": "string" } }
+              },
+              "enumConstant": { "type": "boolean" },
+              "annotatedType": {
+                "type": "object",
+                "properties": {
+                  "annotations": {
+                    "type": "array",
+                    "items": { "type": "object" }
+                  },
+                  "declaredAnnotations": {
+                    "type": "array",
+                    "items": { "type": "object" }
+                  },
+                  "type": {
+                    "type": "object",
+                    "properties": { "typeName": { "type": "string" } }
+                  }
+                }
+              },
+              "annotations": { "type": "array", "items": { "type": "object" } }
+            }
+          },
+          "name": { "type": "string" },
+          "primitive": { "type": "boolean" },
+          "genericType": {
+            "type": "object",
+            "properties": { "typeName": { "type": "string" } }
+          },
+          "final": { "type": "boolean" },
+          "classInfo": { "$ref": "#/components/schemas/ClassInfo" },
+          "tersMethodForField": {
+            "type": "array",
+            "writeOnly": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "modifiers": { "type": "integer", "format": "int32" },
+                "typeParameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "bounds": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": { "typeName": { "type": "string" } }
+                        }
+                      },
+                      "annotatedBounds": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "annotations": {
+                              "type": "array",
+                              "items": { "type": "object" }
+                            },
+                            "declaredAnnotations": {
+                              "type": "array",
+                              "items": { "type": "object" }
+                            },
+                            "type": {
+                              "type": "object",
+                              "properties": { "typeName": { "type": "string" } }
+                            }
+                          }
+                        }
+                      },
+                      "typeName": { "type": "string" },
+                      "annotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      }
+                    }
+                  }
+                },
+                "synthetic": { "type": "boolean" },
+                "declaredAnnotations": {
+                  "type": "array",
+                  "items": { "type": "object" }
+                },
+                "accessible": { "type": "boolean", "deprecated": true },
+                "varArgs": { "type": "boolean" },
+                "parameterCount": { "type": "integer", "format": "int32" },
+                "parameterAnnotations": {
+                  "type": "array",
+                  "items": { "type": "array", "items": { "type": "object" } }
+                },
+                "genericParameterTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": { "typeName": { "type": "string" } }
+                  }
+                },
+                "genericExceptionTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": { "typeName": { "type": "string" } }
+                  }
+                },
+                "default": { "type": "boolean" },
+                "genericReturnType": {
+                  "type": "object",
+                  "properties": { "typeName": { "type": "string" } }
+                },
+                "bridge": { "type": "boolean" },
+                "defaultValue": { "type": "object" },
+                "annotatedReturnType": {
+                  "type": "object",
+                  "properties": {
+                    "annotations": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    },
+                    "declaredAnnotations": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    },
+                    "type": {
+                      "type": "object",
+                      "properties": { "typeName": { "type": "string" } }
+                    }
+                  }
+                },
+                "annotatedParameterTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "annotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      },
+                      "type": {
+                        "type": "object",
+                        "properties": { "typeName": { "type": "string" } }
+                      }
+                    }
+                  }
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "modifiers": { "type": "integer", "format": "int32" },
+                      "synthetic": { "type": "boolean" },
+                      "annotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      },
+                      "annotatedType": {
+                        "type": "object",
+                        "properties": {
+                          "annotations": {
+                            "type": "array",
+                            "items": { "type": "object" }
+                          },
+                          "declaredAnnotations": {
+                            "type": "array",
+                            "items": { "type": "object" }
+                          },
+                          "type": {
+                            "type": "object",
+                            "properties": { "typeName": { "type": "string" } }
+                          }
+                        }
+                      },
+                      "parameterizedType": {
+                        "type": "object",
+                        "properties": { "typeName": { "type": "string" } }
+                      },
+                      "varArgs": { "type": "boolean" },
+                      "namePresent": { "type": "boolean" },
+                      "declaringExecutable": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "modifiers": { "type": "integer", "format": "int32" },
+                          "typeParameters": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": { "type": "string" },
+                                "bounds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "typeName": { "type": "string" }
+                                    }
+                                  }
+                                },
+                                "genericDeclaration": { "type": "object" },
+                                "annotatedBounds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "annotations": {
+                                        "type": "array",
+                                        "items": { "type": "object" }
+                                      },
+                                      "declaredAnnotations": {
+                                        "type": "array",
+                                        "items": { "type": "object" }
+                                      },
+                                      "type": {
+                                        "type": "object",
+                                        "properties": {
+                                          "typeName": { "type": "string" }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "typeName": { "type": "string" },
+                                "annotations": {
+                                  "type": "array",
+                                  "items": { "type": "object" }
+                                },
+                                "declaredAnnotations": {
+                                  "type": "array",
+                                  "items": { "type": "object" }
+                                }
+                              }
+                            }
+                          },
+                          "synthetic": { "type": "boolean" },
+                          "declaredAnnotations": {
+                            "type": "array",
+                            "items": { "type": "object" }
+                          },
+                          "varArgs": { "type": "boolean" },
+                          "annotatedParameterTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "annotations": {
+                                  "type": "array",
+                                  "items": { "type": "object" }
+                                },
+                                "declaredAnnotations": {
+                                  "type": "array",
+                                  "items": { "type": "object" }
+                                },
+                                "type": {
+                                  "type": "object",
+                                  "properties": {
+                                    "typeName": { "type": "string" }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "parameterCount": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "parameterAnnotations": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "items": { "type": "object" }
+                            }
+                          },
+                          "genericParameterTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": { "typeName": { "type": "string" } }
+                            }
+                          },
+                          "genericExceptionTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": { "typeName": { "type": "string" } }
+                            }
+                          },
+                          "annotatedReturnType": {
+                            "type": "object",
+                            "properties": {
+                              "annotations": {
+                                "type": "array",
+                                "items": { "type": "object" }
+                              },
+                              "declaredAnnotations": {
+                                "type": "array",
+                                "items": { "type": "object" }
+                              },
+                              "type": {
+                                "type": "object",
+                                "properties": {
+                                  "typeName": { "type": "string" }
+                                }
+                              }
+                            }
+                          },
+                          "annotatedReceiverType": {
+                            "type": "object",
+                            "properties": {
+                              "annotations": {
+                                "type": "array",
+                                "items": { "type": "object" }
+                              },
+                              "declaredAnnotations": {
+                                "type": "array",
+                                "items": { "type": "object" }
+                              },
+                              "type": {
+                                "type": "object",
+                                "properties": {
+                                  "typeName": { "type": "string" }
+                                }
+                              }
+                            }
+                          },
+                          "annotatedExceptionTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "annotations": {
+                                  "type": "array",
+                                  "items": { "type": "object" }
+                                },
+                                "declaredAnnotations": {
+                                  "type": "array",
+                                  "items": { "type": "object" }
+                                },
+                                "type": {
+                                  "type": "object",
+                                  "properties": {
+                                    "typeName": { "type": "string" }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "annotations": {
+                            "type": "array",
+                            "items": { "type": "object" }
+                          },
+                          "accessible": {
+                            "type": "boolean",
+                            "deprecated": true
+                          }
+                        }
+                      },
+                      "implicit": { "type": "boolean" }
+                    }
+                  }
+                },
+                "annotatedReceiverType": {
+                  "type": "object",
+                  "properties": {
+                    "annotations": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    },
+                    "declaredAnnotations": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    },
+                    "type": {
+                      "type": "object",
+                      "properties": { "typeName": { "type": "string" } }
+                    }
+                  }
+                },
+                "annotatedExceptionTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "annotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      },
+                      "declaredAnnotations": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      },
+                      "type": {
+                        "type": "object",
+                        "properties": { "typeName": { "type": "string" } }
+                      }
+                    }
+                  }
+                },
+                "annotations": {
+                  "type": "array",
+                  "items": { "type": "object" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "JsonFactory": { "type": "object" },
+      "TokenResponse": {
+        "type": "object",
+        "properties": {
+          "classInfo": { "$ref": "#/components/schemas/ClassInfo" },
+          "accessToken": { "type": "string" },
+          "tokenType": { "type": "string" },
+          "expiresInSeconds": { "type": "integer", "format": "int64" },
+          "refreshToken": { "type": "string" },
+          "scope": { "type": "string" },
+          "factory": { "$ref": "#/components/schemas/JsonFactory" },
+          "unknownKeys": {
+            "type": "object",
+            "additionalProperties": { "type": "object" }
+          },
+          "empty": { "type": "boolean" }
+        },
+        "additionalProperties": { "type": "object" }
       },
       "FileResponse": {
         "type": "object",
         "properties": {
-          "imgUrl": {
-            "type": "string"
-          },
-          "imgName": {
-            "type": "string"
-          }
+          "imgUrl": { "type": "string" },
+          "imgName": { "type": "string" }
         }
       },
       "PostFestivalRequest": {
         "type": "object",
         "properties": {
-          "schoolId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "beginDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          }
+          "schoolId": { "type": "integer", "format": "int64" },
+          "beginDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "thumbnail": { "type": "string" }
         }
       },
       "InterestRequest": {
         "type": "object",
-        "properties": {
-          "deviceId": {
-            "type": "string"
-          }
-        }
+        "properties": { "deviceId": { "type": "string" } }
       },
       "PostEnrollRequest": {
         "type": "object",
         "properties": {
-          "festivalId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "starId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "visitDate": {
-            "type": "string",
-            "format": "date"
-          }
+          "festivalId": { "type": "integer", "format": "int64" },
+          "starId": { "type": "integer", "format": "int64" },
+          "visitDate": { "type": "string", "format": "date" }
         }
       },
       "MenuCreateRequest": {
         "required": ["name", "price"],
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "price": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "imgUrl": {
-            "type": "string"
-          },
+          "name": { "type": "string" },
+          "price": { "type": "integer", "format": "int32" },
+          "imgUrl": { "type": "string" },
           "menuStatus": {
             "type": "string",
             "description": "메뉴 재고 상태",
@@ -2570,59 +2571,31 @@
         "required": ["boothId", "token"],
         "type": "object",
         "properties": {
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "token": {
-            "type": "string"
-          }
+          "boothId": { "type": "integer", "format": "int64" },
+          "token": { "type": "string" }
         }
       },
       "BoothCreateRequest": {
         "required": ["category", "latitude", "location", "longitude", "name"],
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
+          "name": { "type": "string" },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": {
-            "type": "string"
-          },
-          "detail": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "warning": {
-            "type": "string"
-          },
-          "festivalId": {
-            "type": "integer",
-            "format": "int64"
-          },
+          "description": { "type": "string" },
+          "detail": { "type": "string" },
+          "thumbnail": { "type": "string" },
+          "warning": { "type": "string" },
+          "festivalId": { "type": "integer", "format": "int64" },
           "menus": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MenuCreateRequest"
-            }
+            "items": { "$ref": "#/components/schemas/MenuCreateRequest" }
           },
-          "location": {
-            "type": "string"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
-          },
+          "location": { "type": "string" },
+          "latitude": { "type": "number", "format": "double" },
+          "longitude": { "type": "number", "format": "double" },
           "boothSchedules": {
             "type": "array",
             "items": {
@@ -2635,62 +2608,41 @@
         "required": ["closeTime", "date", "openTime"],
         "type": "object",
         "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "openTime": {
-            "$ref": "#/components/schemas/LocalTime"
-          },
-          "closeTime": {
-            "$ref": "#/components/schemas/LocalTime"
-          }
+          "date": { "type": "string", "format": "date" },
+          "openTime": { "$ref": "#/components/schemas/LocalTime" },
+          "closeTime": { "$ref": "#/components/schemas/LocalTime" }
         }
       },
       "LocalTime": {
         "type": "object",
         "properties": {
-          "hour": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "minute": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "second": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nano": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
+          "hour": { "type": "integer", "format": "int32" },
+          "minute": { "type": "integer", "format": "int32" },
+          "second": { "type": "integer", "format": "int32" },
+          "nano": { "type": "integer", "format": "int32" }
+        },
+        "example": "HH:mm:ss"
       },
       "StampEnabledRequest": {
         "required": ["stampEnabled"],
         "type": "object",
+        "properties": { "stampEnabled": { "type": "boolean" } }
+      },
+      "PasswordChangeRequest": {
+        "required": ["currentPassword", "newPassword"],
+        "type": "object",
         "properties": {
-          "stampEnabled": {
-            "type": "boolean"
-          }
+          "currentPassword": { "type": "string" },
+          "newPassword": { "type": "string" }
         }
       },
       "MenuPatchRequest": {
         "required": ["name", "price"],
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "price": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "imgUrl": {
-            "type": "string"
-          },
+          "name": { "type": "string" },
+          "price": { "type": "integer", "format": "int32" },
+          "imgUrl": { "type": "string" },
           "menuStatus": {
             "type": "string",
             "description": "메뉴 재고 상태",
@@ -2702,42 +2654,20 @@
       "BoothPatchRequest": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
+          "name": { "type": "string" },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": {
-            "type": "string"
-          },
-          "detail": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "warning": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "waitingEnabled": {
-            "type": "boolean"
-          }
+          "description": { "type": "string" },
+          "detail": { "type": "string" },
+          "thumbnail": { "type": "string" },
+          "warning": { "type": "string" },
+          "location": { "type": "string" },
+          "enabled": { "type": "boolean" },
+          "latitude": { "type": "number", "format": "double" },
+          "longitude": { "type": "number", "format": "double" },
+          "waitingEnabled": { "type": "boolean" }
         }
       },
       "BoothSchedulePatchRequest": {
@@ -2754,238 +2684,129 @@
       "ResponseListWaitingInfo": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WaitingInfo"
-            }
+            "items": { "$ref": "#/components/schemas/WaitingInfo" }
           }
         }
       },
       "ResponseListStarInfo": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StarInfo"
-            }
+            "items": { "$ref": "#/components/schemas/StarInfo" }
           }
         }
       },
       "StarInfo": {
         "type": "object",
         "properties": {
-          "starId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
-          "imgUrl": {
-            "type": "string"
-          }
+          "starId": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "imgUrl": { "type": "string" }
         }
       },
       "ResponseStarInfo": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "$ref": "#/components/schemas/StarInfo"
-          }
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "$ref": "#/components/schemas/StarInfo" }
         }
       },
       "ResponseListStampRecordResponse": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StampRecordResponse"
-            }
+            "items": { "$ref": "#/components/schemas/StampRecordResponse" }
           }
         }
       },
       "StampRecordResponse": {
         "type": "object",
         "properties": {
-          "stampRecordId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "stampInfoId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "deviceId": {
-            "type": "string"
-          }
+          "stampRecordId": { "type": "integer", "format": "int64" },
+          "stampInfoId": { "type": "integer", "format": "int64" },
+          "deviceId": { "type": "string" }
         }
       },
       "ResponseListStampInfoResponse": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StampInfoResponse"
-            }
+            "items": { "$ref": "#/components/schemas/StampInfoResponse" }
           }
         }
       },
       "StampInfoResponse": {
         "type": "object",
         "properties": {
-          "stampInfoId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "festivalId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "boothId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "defaultImgUrl": {
-            "type": "string"
-          },
-          "usedImgUrl": {
-            "type": "string"
-          }
+          "stampInfoId": { "type": "integer", "format": "int64" },
+          "festivalId": { "type": "integer", "format": "int64" },
+          "boothId": { "type": "integer", "format": "int64" },
+          "defaultImgUrl": { "type": "string" },
+          "usedImgUrl": { "type": "string" }
         }
       },
       "BoothDetailResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
+          "id": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "warning": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
-          },
+          "description": { "type": "string" },
+          "thumbnail": { "type": "string" },
+          "warning": { "type": "string" },
+          "location": { "type": "string" },
+          "latitude": { "type": "number", "format": "double" },
+          "longitude": { "type": "number", "format": "double" },
           "menus": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MenuResponse"
-            }
+            "items": { "$ref": "#/components/schemas/MenuResponse" }
           },
-          "enabled": {
-            "type": "boolean"
-          },
-          "waitingEnabled": {
-            "type": "boolean"
-          },
+          "enabled": { "type": "boolean" },
+          "waitingEnabled": { "type": "boolean" },
           "scheduleList": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BoothScheduleResponse"
-            }
+            "items": { "$ref": "#/components/schemas/BoothScheduleResponse" }
           },
-          "stampEnabled": {
-            "type": "boolean"
-          }
+          "stampEnabled": { "type": "boolean" }
         }
       },
       "BoothScheduleResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "openTime": {
-            "$ref": "#/components/schemas/LocalTime"
-          },
-          "closeTime": {
-            "$ref": "#/components/schemas/LocalTime"
-          }
+          "id": { "type": "integer", "format": "int64" },
+          "date": { "type": "string", "format": "date" },
+          "openTime": { "$ref": "#/components/schemas/LocalTime" },
+          "closeTime": { "$ref": "#/components/schemas/LocalTime" }
         }
       },
       "MemberDetailResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "email": {
-            "type": "string"
-          },
+          "id": { "type": "integer", "format": "int64" },
+          "email": { "type": "string" },
           "booths": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BoothDetailResponse"
-            }
+            "items": { "$ref": "#/components/schemas/BoothDetailResponse" }
           },
-          "schoolId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "phoneNum": {
-            "type": "string"
-          },
+          "schoolId": { "type": "integer", "format": "int64" },
+          "phoneNum": { "type": "string" },
           "memberRole": {
             "type": "string",
             "enum": ["DEV", "ADMIN", "PENDING", "VERIFIED", "DENIED"]
@@ -2995,20 +2816,10 @@
       "MenuResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
-          "price": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "imgUrl": {
-            "type": "string"
-          },
+          "id": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "price": { "type": "integer", "format": "int32" },
+          "imgUrl": { "type": "string" },
           "menuStatus": {
             "type": "string",
             "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
@@ -3018,320 +2829,177 @@
       "ResponseListMemberDetailResponse": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MemberDetailResponse"
-            }
+            "items": { "$ref": "#/components/schemas/MemberDetailResponse" }
           }
+        }
+      },
+      "ResponseMemberDetailResponse": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "$ref": "#/components/schemas/MemberDetailResponse" }
         }
       },
       "FestivalSearchResponse": {
         "type": "object",
         "properties": {
-          "festivalId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "schoolId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "schoolName": {
-            "type": "string"
-          },
-          "region": {
-            "type": "string"
-          },
-          "festivalName": {
-            "type": "string"
-          },
-          "beginDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
-          }
+          "festivalId": { "type": "integer", "format": "int64" },
+          "schoolId": { "type": "integer", "format": "int64" },
+          "thumbnail": { "type": "string" },
+          "schoolName": { "type": "string" },
+          "region": { "type": "string" },
+          "festivalName": { "type": "string" },
+          "beginDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
+          "latitude": { "type": "number", "format": "double" },
+          "longitude": { "type": "number", "format": "double" }
         }
       },
       "ResponseListFestivalSearchResponse": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FestivalSearchResponse"
-            }
+            "items": { "$ref": "#/components/schemas/FestivalSearchResponse" }
           }
         }
       },
       "ResponseListTodayFestivalInfo": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TodayFestivalInfo"
-            }
+            "items": { "$ref": "#/components/schemas/TodayFestivalInfo" }
           }
         }
       },
       "TodayFestivalInfo": {
         "type": "object",
         "properties": {
-          "schoolId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "schoolName": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "festivalId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "festivalName": {
-            "type": "string"
-          },
-          "beginDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date"
-          },
+          "schoolId": { "type": "integer", "format": "int64" },
+          "schoolName": { "type": "string" },
+          "thumbnail": { "type": "string" },
+          "festivalId": { "type": "integer", "format": "int64" },
+          "festivalName": { "type": "string" },
+          "beginDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
           "starList": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StarInfo"
-            }
+            "items": { "$ref": "#/components/schemas/StarInfo" }
+          }
+        }
+      },
+      "ResponseListLong": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": {
+            "type": "array",
+            "items": { "type": "integer", "format": "int64" }
           }
         }
       },
       "EnrollInfo": {
         "type": "object",
         "properties": {
-          "festivalId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "starId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "starName": {
-            "type": "string"
-          },
-          "imgUrl": {
-            "type": "string"
-          }
+          "festivalId": { "type": "integer", "format": "int64" },
+          "starId": { "type": "integer", "format": "int64" },
+          "starName": { "type": "string" },
+          "imgUrl": { "type": "string" }
         }
       },
       "ResponseListEnrollInfo": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EnrollInfo"
-            }
+            "items": { "$ref": "#/components/schemas/EnrollInfo" }
           }
         }
       },
       "LikedBoothResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
+          "id": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "warning": {
-            "type": "string"
-          }
+          "description": { "type": "string" },
+          "thumbnail": { "type": "string" },
+          "location": { "type": "string" },
+          "latitude": { "type": "number", "format": "double" },
+          "longitude": { "type": "number", "format": "double" },
+          "warning": { "type": "string" }
         }
       },
       "ResponseListLikedBoothResponse": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LikedBoothResponse"
-            }
+            "items": { "$ref": "#/components/schemas/LikedBoothResponse" }
           }
         }
       },
       "BoothResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
+          "id": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "waitingEnabled": {
-            "type": "boolean"
-          },
-          "openTime": {
-            "$ref": "#/components/schemas/LocalTime"
-          },
-          "closeTime": {
-            "$ref": "#/components/schemas/LocalTime"
-          },
-          "stampEnabled": {
-            "type": "boolean"
-          }
+          "description": { "type": "string" },
+          "thumbnail": { "type": "string" },
+          "location": { "type": "string" },
+          "latitude": { "type": "number", "format": "double" },
+          "longitude": { "type": "number", "format": "double" },
+          "enabled": { "type": "boolean" },
+          "waitingEnabled": { "type": "boolean" },
+          "openTime": { "$ref": "#/components/schemas/LocalTime" },
+          "closeTime": { "$ref": "#/components/schemas/LocalTime" },
+          "stampEnabled": { "type": "boolean" }
         }
       },
       "ResponseListBoothResponse": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
           "data": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BoothResponse"
-            }
+            "items": { "$ref": "#/components/schemas/BoothResponse" }
           }
         }
       },
       "ResponseBoothDetailResponse": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "$ref": "#/components/schemas/BoothDetailResponse"
-          }
-        }
-      },
-      "ResponseVoid": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "type": "object"
-          }
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "data": { "$ref": "#/components/schemas/BoothDetailResponse" }
         }
       }
     },
     "securitySchemes": {
-      "JWT": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
+      "JWT": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
     }
   }
 }
