@@ -17,8 +17,6 @@ export const Default: Story = {
     name: "abcd",
     price: 1000,
     menuStatus: MenuStatus.Enough,
-
-    add: () => {},
     remove: () => {},
     edit: () => {},
   },

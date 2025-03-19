@@ -51,7 +51,7 @@ export const QueueToggleSlot: Story = {
     editButton: <BoothEditButton boothId={0} />,
     deleteButton: <BoothDeleteButton boothId={0} />,
     switchButton: (
-      <QueueAvailabilitySwitchButton boothId={0} initialOpened={false} />
+      <QueueAvailabilitySwitchButton boothId={0} initialEnabled={false} />
     ),
   },
 };
