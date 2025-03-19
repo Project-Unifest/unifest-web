@@ -1,26 +1,23 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import QueueTabsContainer from "@/src/entities/queue/ui/QueueTabsContainer";
 import QueueTabs from "@/src/features/queue/ui/QueueTabs";
 import NotifyButton from "@/src/features/queue/ui/NotifyButton";
 import CancelButton from "@/src/features/queue/ui/CancelButton";
 import GroupItem from "@/src/entities/queue/ui/GroupItem";
 import { useParams } from "next/navigation";
-import { API_URL, HTTPMethod, StatusCode } from "@/src/shared/api/config";
-import { QueueGroup } from "@/src/shared/lib/types";
+import { StatusCode } from "@/src/shared/api/config";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
 import { formatDateString } from "../lib/formatDateString";
-import { fetchGroups } from "../api";
 import {
-  cancelGroup,
-  callGroup,
-  completeGroup,
-} from "@/src/features/queue/api/queue";
+  useQueueGroupsQuery,
+  useCancelGroupMutation,
+  useCallGroupMutation,
+  useCompleteGroupMutation,
+} from "@/src/features/queue/api";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
-import useImmediateInterval from "../model/useImmediateInterval";
-import { HTTPError } from "ky";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -31,26 +28,22 @@ export default function Queue() {
 
   const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
-  const fetchGroupsAfterAuth = useCallback(async () => {
-    if (!isAuthLoading) {
-      const data = await fetchGroups(String(boothId));
-      return data;
-    }
-  }, [boothId, isAuthLoading]);
-
   const {
-    payload: groups,
-    load: loadGroups,
-    resetInterval: resetLoadingGroupsInterval,
-  } = useImmediateInterval<QueueGroup[] | undefined>(
-    fetchGroupsAfterAuth,
-    10000,
-    !isAuthLoading,
-  );
+    data: groups,
+    isLoading: isGroupsLoading,
+    refetch: refetchGroups,
+  } = useQueueGroupsQuery(boothId);
 
-  if (!groups || isAuthLoading) {
+  const { mutateAsync: cancelGroupMutation } = useCancelGroupMutation();
+  const { mutateAsync: callGroupMutation } = useCallGroupMutation();
+  const { mutateAsync: completeGroupMutation } = useCompleteGroupMutation();
+
+  if (isGroupsLoading || isAuthLoading || !groups) {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
   }
+
+  console.log(groups);
+  console.log(isGroupsLoading);
 
   const activatedGroups = groups.filter(({ status }) => {
     if (activatedTab === "active") {
@@ -77,11 +70,13 @@ export default function Queue() {
               <CancelButton
                 onCancel={async () => {
                   try {
-                    const { data, code } = await cancelGroup(String(waitingId));
+                    const { code } = await cancelGroupMutation({
+                      waitingId,
+                    });
                     if (code === StatusCode.NotFound.toString()) {
                       alert("손님이 이미 취소한 웨이팅이에요.");
                     }
-                    await loadGroups();
+                    await refetchGroups();
                   } catch (error) {
                     alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                   }
@@ -91,12 +86,14 @@ export default function Queue() {
                 <NotifyButton
                   onNotify={async () => {
                     try {
-                      const { data, code } = await callGroup(String(waitingId));
+                      const { code } = await callGroupMutation({
+                        waitingId,
+                      });
                       if (code === StatusCode.NotFound.toString()) {
                         alert("손님이 이미 취소한 웨이팅이에요.");
                         return;
                       }
-                      await loadGroups();
+                      await refetchGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }
@@ -107,14 +104,14 @@ export default function Queue() {
                 <EnterButton
                   onEnter={async () => {
                     try {
-                      const { data, code } = await completeGroup(
-                        String(waitingId),
-                      );
+                      const { code } = await completeGroupMutation({
+                        waitingId,
+                      });
                       if (code === StatusCode.NotFound.toString()) {
                         alert("손님이 이미 취소한 웨이팅이에요.");
                         return;
                       }
-                      await loadGroups();
+                      await refetchGroups();
                     } catch (error) {
                       alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요.");
                     }

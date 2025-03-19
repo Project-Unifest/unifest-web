@@ -1,7 +1,6 @@
 "use client";
 
 import { EditImageBox } from "@/src/features/booth/ui/EditImageBox";
-import { CampusPosition } from "@/src/shared/model/store/booth-draft-store";
 import {
   Form,
   FormControl,
@@ -17,34 +16,25 @@ import { Input } from "@/src/shared/ui/input";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { z } from "zod";
 import { Button } from "@/src/shared/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/src/shared/ui/card";
-import { Label } from "@/src/shared/ui/label";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/src/shared/ui/card";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
-import { getBoothDetail } from "@/src/entities/booth/api/boothDetail";
-import { useEffect, useState } from "react";
-import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
 import useRequireAuth, {
   AuthType,
 } from "@/src/shared/model/auth/useRequireAuth";
 import { BoothCategory } from "@/src/shared/lib/types";
 import { MenuItemForm } from "@/src/features/menu";
-import { editBooth } from "@/src/features/booth/api/booth";
 import { useRouter } from "next/navigation";
-import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
+import useBoothEditStore, {
+  MenuItemState,
+} from "@/src/shared/model/store/booth-edit-store";
 import { BoothTimeForm } from "@/src/features/booth";
+import { useUpdateBooth } from "@/src/features/booth/api";
 import {
-  uploadMenuItem,
-  deleteMenuItem,
-  editMenu,
-} from "@/src/features/menu/model/menu";
+  useCreateMenuItem,
+  useDeleteMenuItem,
+  useUpdateMenuItem,
+} from "@/src/features/menu/api";
 
 interface MenuItem {
   id: number;
@@ -75,7 +65,6 @@ export function Edit({ boothId }: { boothId: number }) {
     addMenuItem,
     editMenuItem,
     removeMemuItem,
-    enabled,
   ] = useBoothEditStore((state) => [
     state.name,
     state.category,
@@ -96,7 +85,6 @@ export function Edit({ boothId }: { boothId: number }) {
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
-    state.enabled,
   ]);
 
   const [menuItemParent] = useAutoAnimate();
@@ -129,17 +117,27 @@ export function Edit({ boothId }: { boothId: number }) {
 
   const [parent] = useAutoAnimate();
 
+  const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
+  const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId, {
+    onCreate: () => {
+      router.push("/");
+    },
+  });
+  const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
+
   const onSubmit = async (data: any) => {
-    const { data: editedBooth } = await editBooth({
-      id: boothId,
+    const { data: editedBooth } = await updateBooth({
       thumbnail,
-      enabled,
       ...data,
     });
     menuList.forEach(async (menuItem) => {
-      const { data: res } = await editMenu(menuItem);
+      const { data: res } = await updateMenuItem({
+        menuId: menuItem.id,
+        menuData: menuItem,
+      });
       if (res === null) {
-        const { data } = await uploadMenuItem(boothId, menuItem);
+        const { data: id } = await createMenuItem(menuItem);
+        id;
       }
     });
     router.push("/");
@@ -340,7 +338,6 @@ export function Edit({ boothId }: { boothId: number }) {
               <MenuItemForm
                 key={menuItem.id}
                 boothId={boothId}
-                add={addMenuItem}
                 remove={removeMemuItem}
                 edit={editMenuItem}
                 {...menuItem}
