@@ -22,7 +22,7 @@ export const defaultInitState = {
   isHydrated: false,
 } satisfies AuthState;
 
-export const createAuthStore =
+export const useAuthStore =
   process.env.NODE_ENV === "development"
     ? (initState: AuthState = defaultInitState) => {
         return createStore<AuthStore>()(
