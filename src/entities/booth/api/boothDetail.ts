@@ -1,16 +1,9 @@
 import { BoothCategoryKeys, Product } from "@/src/shared/lib/types";
-interface LocalTime {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
-}
-
 interface BoothScheduleResponse {
   id: number;
   date: string;
-  openTime: LocalTime;
-  closeTime: LocalTime;
+  openTime: string;
+  closeTime: string;
 }
 
 export interface BoothDetailResponse {
@@ -26,8 +19,6 @@ export interface BoothDetailResponse {
   menus: Product[];
   enabled: boolean;
   waitingEnabled: boolean;
-  openTime: null | string;
-  closeTime: null | string;
   scheduleList: BoothScheduleResponse[];
   stampeEnabled: boolean;
 }
