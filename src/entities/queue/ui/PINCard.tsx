@@ -1,9 +1,5 @@
 "use client";
-import { API_URL } from "@/src/shared/api/config";
-import React, { ReactNode, useEffect, useState } from "react";
-import { fetchPIN } from "../model/pin";
-import { setDefaultAutoSelectFamilyAttemptTimeout } from "net";
-import RefreshIcon from "@/src/shared/ui/RefreshIcon";
+import { ReactNode } from "react";
 
 interface PINCardPropsType {
   slot?: ReactNode;
