@@ -1,22 +1,10 @@
 "use client";
 
 import { BoothItem } from "@/src/entities/booth";
-import {
-  getBoothList,
-  useGetBoothList,
-} from "@/src/entities/booth/api/boothList";
 import { AddBoothButton, BoothSwitchButton } from "@/src/features/booth";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
-import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
-import { Booth, Member } from "@/src/shared/lib/types";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
-import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
 import Link from "next/link";
-import { useEffect } from "react";
 import { Button } from "@/src/shared/ui/button";
 import ClockIcon from "@/src/shared/ui/ClockIcon";
 import PlusIcon from "@/src/shared/ui/PlusIcon";
