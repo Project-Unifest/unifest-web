@@ -93,7 +93,7 @@ export const client = ky.create({
             request.headers.set("Authorization", `Bearer ${newAccessToken}`);
             return client(request);
           } catch (error) {
-            throw new HTTPError(response, request, options);
+            throw new UnauthorizedError(response, request, options);
           }
         }
       },
