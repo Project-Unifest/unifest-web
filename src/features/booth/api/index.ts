@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { client, publicClient } from "@/src/shared/api/client";
 import { API_URL } from "@/src/shared/api/config";
 import { ApiResponse } from "@/src/shared/api/types";
@@ -6,13 +11,7 @@ import { Booth, BoothCategoryKeys } from "@/src/shared/lib/types";
 import { MenuStatus } from "../../menu/lib/types";
 import { BoothDetailResponse } from "@/src/entities/booth/api/boothDetail";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { members } from "@/src/entities/members/api";
-
-export const booths = createQueryKeys("booths", {
-  all: null,
-  list: ["list"],
-  detail: (params: { boothId: number }) => [params],
-});
+import { MemberDetailResponse, memberKeys } from "@/src/entities/members/api";
 
 interface ProductForCreate {
   menuStatus?: MenuStatus;
@@ -71,7 +70,7 @@ interface BoothScheduleCreateRequest {
   closeTime: LocalTime;
 }
 
-interface BoothCreateRequest {
+export interface BoothCreateRequest {
   name: string;
   category: BoothCategoryKeys;
   description: string;
@@ -101,8 +100,8 @@ interface BoothPatchRequest {
 }
 const FESTIVAL_ID = 2;
 
-// API functions
 const getBoothList = async (): Promise<Booth[]> => {
+  // FIXME: special endpoint for admin web
   const response = await fetch(`${API_URL}/api/booths`);
   const result = (await response.json()) as ApiResponse<Booth[]>;
   return result.data;
@@ -111,10 +110,18 @@ const getBoothList = async (): Promise<Booth[]> => {
 const getBoothDetail = async (
   boothId: number,
 ): Promise<BoothDetailResponse> => {
-  const response = await client
-    .get(`api/booths/${boothId}`)
-    .json<ApiResponse<BoothDetailResponse>>();
-  return response.data;
+  const { booths } = (
+    await client.get(`api/members/my`).json<ApiResponse<MemberDetailResponse>>()
+  ).data;
+  console.log(" booths", booths);
+  const booth = booths.find((booth) => booth.id === boothId)!;
+  return booth;
+
+  // FIXME: special endpoint for admin web
+  // const response = await client
+  //   .get(`api/booths/${boothId}`)
+  //   .json<ApiResponse<BoothDetailResponse>>();
+  // return response.data;
 };
 
 const createBooth = async (boothData: BoothCreateRequest): Promise<number> => {
@@ -166,30 +173,36 @@ const uploadImage = async (image: File): Promise<{ imgUrl: string }> => {
     .json<{ imgUrl: string }>();
 };
 
-// React Query hooks
+export const boothKeys = createQueryKeys("booths", {
+  list: null,
+  detail: (params: { boothId: number }) => [params],
+});
+
 export const useBoothListQuery = () => {
-  return useQuery({
-    queryKey: booths.list.queryKey,
+  return useSuspenseQuery({
+    // queryKey: boothKeys.list.queryKey,
+    queryKey: memberKeys.me.queryKey,
     queryFn: getBoothList,
   });
 };
 
 export const useBoothDetailQuery = (boothId: number) => {
-  return useQuery({
-    queryKey: booths.detail({ boothId }).queryKey,
+  return useSuspenseQuery({
+    // queryKey: boothKeys.detail({ boothId }).queryKey,
+    queryKey: memberKeys.me.queryKey,
     queryFn: () => getBoothDetail(boothId),
   });
 };
 
-export const useCreateBooth = (options: { onCreate?: () => void }) => {
+export const useCreateBooth = (options?: { onCreate?: () => void }) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (booth: BoothCreateRequest) => createBooth(booth),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: members.me.queryKey });
-      queryClient.invalidateQueries({ queryKey: booths.list.queryKey });
-      options.onCreate?.();
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
+      queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
+      options?.onCreate?.();
     },
   });
 };
@@ -203,8 +216,8 @@ export const useDeleteBooth = (
   return useMutation({
     mutationFn: () => deleteBooth(boothId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: members.me.queryKey });
-      queryClient.invalidateQueries({ queryKey: booths.list.queryKey });
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
+      queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
       options.onDelete?.();
     },
   });
@@ -212,7 +225,7 @@ export const useDeleteBooth = (
 
 export const useUpdateBooth = (
   boothId: number,
-  options: { onUpdate?: () => void },
+  options?: { onUpdate?: () => void },
 ) => {
   const queryClient = useQueryClient();
 
@@ -220,9 +233,9 @@ export const useUpdateBooth = (
     mutationFn: (boothData: BoothPatchRequest) =>
       updateBooth(boothId, boothData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: members.me.queryKey });
-      queryClient.invalidateQueries({ queryKey: booths.list.queryKey });
-      options.onUpdate?.();
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
+      queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
+      options?.onUpdate?.();
     },
   });
 };
@@ -235,8 +248,8 @@ export const useToggleQueue = (
   return useMutation({
     mutationFn: (enabled: boolean) => toggleQueue(boothId, enabled),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: members.me.queryKey });
-      queryClient.invalidateQueries({ queryKey: booths.list.queryKey });
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
+      queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
       options.onToggle?.();
     },
   });
@@ -246,14 +259,4 @@ export const useUploadImage = () => {
   return useMutation({
     mutationFn: uploadImage,
   });
-};
-
-// Legacy exports for backward compatibility
-export {
-  getBoothList,
-  getBoothDetail,
-  createBooth,
-  deleteBooth,
-  toggleQueue,
-  uploadImage,
 };

@@ -3,6 +3,7 @@ import { client } from "@/src/shared/api/client";
 import { ApiResponse } from "@/src/shared/api/types";
 import { MenuStatus } from "../lib/types";
 import { Product } from "@/src/shared/lib/types";
+import { createQueryKeys } from "@lukemorales/query-key-factory";
 
 export interface MenuStatusRequest {
   menuId: number;
@@ -85,28 +86,26 @@ export const useCreateMenuItem = (
   });
 };
 
-export const useUpdateMenuItem = (
-  menuId: number,
-  options?: { onUpdate?: () => void },
-) => {
+export const useUpdateMenuItem = (options?: { onUpdate?: () => void }) => {
   return useMutation({
-    mutationFn: (menuData: Product) => updateMenuItem(menuId, menuData),
+    mutationFn: ({
+      menuId,
+      menuData,
+    }: {
+      menuId: number;
+      menuData: MenuPatchRequest;
+    }) => updateMenuItem(menuId, menuData),
     onSuccess: () => {
       options?.onUpdate?.();
     },
   });
 };
 
-export const useDeleteMenuItem = (
-  menuId: number,
-  options?: { onDelete?: () => void },
-) => {
+export const useDeleteMenuItem = (options?: { onDelete?: () => void }) => {
   return useMutation({
-    mutationFn: () => deleteMenuItem(menuId),
+    mutationFn: (menuId: number) => deleteMenuItem(menuId),
     onSuccess: () => {
       options?.onDelete?.();
     },
   });
 };
-
-export { updateMenuStatus };

@@ -1,24 +1,25 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/src/shared/api/client";
 import { ApiResponse } from "@/src/shared/api/types";
 import { QueueGroup } from "@/src/shared/lib/types";
+import { createQueryKeys } from "@lukemorales/query-key-factory";
 
 export interface PinRequest {
   boothId: number;
 }
 
 export interface QueueGroupAction {
-  waitingId: string;
+  waitingId: number;
 }
 
-const fetchGroups = async (boothId: string): Promise<QueueGroup[]> => {
+const getGroups = async (boothId: number): Promise<QueueGroup[]> => {
   const { data } = await client
     .get(`waiting/${boothId}/all`)
     .json<ApiResponse<QueueGroup[]>>();
   return data;
 };
 
-const fetchPIN = async (boothId: number): Promise<ApiResponse<string>> => {
+const getPIN = async (boothId: number): Promise<ApiResponse<string>> => {
   return client.get(`waiting/pin/${boothId}`).json<ApiResponse<string>>();
 };
 
@@ -26,66 +27,85 @@ const reissuePIN = async (boothId: number): Promise<ApiResponse<string>> => {
   return client.post(`waiting/pin/${boothId}`).json<ApiResponse<string>>();
 };
 
-const cancelGroup = async (waitingId: string): Promise<ApiResponse<void>> => {
+const cancelGroup = async (waitingId: number): Promise<ApiResponse<void>> => {
   return client.put(`waiting/${waitingId}/noshow`).json<ApiResponse<void>>();
 };
 
-const callGroup = async (waitingId: string): Promise<ApiResponse<void>> => {
+const callGroup = async (waitingId: number): Promise<ApiResponse<void>> => {
   return client.put(`waiting/${waitingId}/call`).json<ApiResponse<void>>();
 };
 
-const completeGroup = async (waitingId: string): Promise<ApiResponse<void>> => {
+const completeGroup = async (waitingId: number): Promise<ApiResponse<void>> => {
   return client.put(`waiting/${waitingId}/complete`).json<ApiResponse<void>>();
 };
 
+const queueKeys = createQueryKeys("queue", {
+  list: (boothId: number) => [boothId],
+  detail: (waitingId: number) => [waitingId],
+  pin: (boothId: number) => [boothId],
+});
+
 export const useQueueGroupsQuery = (
-  boothId: string,
+  boothId: number,
   enabled: boolean = true,
 ) => {
   return useQuery({
-    queryKey: ["queue", "groups", boothId],
-    queryFn: () => fetchGroups(boothId),
-    // refetchInterval: 5000,
-    enabled,
+    queryKey: queueKeys.list(boothId).queryKey,
+    queryFn: () => getGroups(boothId),
   });
 };
 
-export const useFetchPINQuery = (boothId: number) => {
+export const useGetPinQuery = (boothId: number) => {
   return useQuery({
-    queryKey: ["queue", "pin", boothId],
-    queryFn: () => fetchPIN(boothId),
+    queryKey: queueKeys.pin(boothId).queryKey,
+    queryFn: () => getPIN(boothId),
   });
 };
 
-export const useReissuePINMutation = () => {
+export const useReissuePINMutation = (boothId: number) => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ boothId }: PinRequest) => reissuePIN(boothId),
+    mutationFn: () => reissuePIN(boothId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queueKeys.list(boothId).queryKey,
+      });
+    },
   });
 };
 
 export const useCancelGroupMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ waitingId }: QueueGroupAction) => cancelGroup(waitingId),
+    onSuccess: (_, { waitingId }) => {
+      queryClient.invalidateQueries({
+        queryKey: queueKeys.detail(waitingId).queryKey,
+      });
+    },
   });
 };
 
 export const useCallGroupMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ waitingId }: QueueGroupAction) => callGroup(waitingId),
+    onSuccess: (_, { waitingId }) => {
+      queryClient.invalidateQueries({
+        queryKey: queueKeys.detail(waitingId).queryKey,
+      });
+    },
   });
 };
 
 export const useCompleteGroupMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ waitingId }: QueueGroupAction) => completeGroup(waitingId),
+    onSuccess: (_, { waitingId }) => {
+      queryClient.invalidateQueries({
+        queryKey: queueKeys.detail(waitingId).queryKey,
+      });
+    },
   });
-};
-
-export {
-  fetchGroups,
-  fetchPIN,
-  reissuePIN,
-  cancelGroup,
-  callGroup,
-  completeGroup,
 };

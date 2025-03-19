@@ -1,8 +1,8 @@
 import { client } from "@/src/shared/api/client";
 import { ApiResponse } from "@/src/shared/api/types";
-import { Booth, Member } from "@/src/shared/lib/types";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { BoothDetailResponse } from "../../booth/api/boothDetail";
+import { createQueryKeys } from "@lukemorales/query-key-factory";
 
 type MemberRole = "DEV" | "ADMIN" | "PENDING" | "VERIFIED" | "DENIED";
 
@@ -15,6 +15,10 @@ export interface MemberDetailResponse {
   memberRole: MemberRole;
 }
 
+export const memberKeys = createQueryKeys("members", {
+  me: null,
+});
+
 export const getMyProfile = async () => {
   return (
     await client.get("members/my").json<ApiResponse<MemberDetailResponse>>()
@@ -23,7 +27,7 @@ export const getMyProfile = async () => {
 
 export const useGetMyProfile = () => {
   return useSuspenseQuery({
-    queryKey: ["myProfile"],
+    queryKey: memberKeys.me.queryKey,
     queryFn: getMyProfile,
   });
 };
