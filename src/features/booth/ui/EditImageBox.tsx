@@ -1,10 +1,9 @@
 import { Input } from "@/src/shared/ui/input";
 import { Label } from "@/src/shared/ui/label";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
-import React, { ChangeEvent, useState } from "react";
-import { uploadImage } from "../api/image";
-import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
+import { ChangeEvent, useState } from "react";
 import Image from "next/image";
+import { uploadImage } from "@/src/shared/api/image";
 
 interface ImageBoxPropsType {
   thumbnail: string;
