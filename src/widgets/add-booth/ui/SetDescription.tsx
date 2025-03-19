@@ -1,14 +1,12 @@
 "use client";
 
-import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { Button } from "@/src/shared/ui/button";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
-import { addBooth } from "../model/add-booth";
-import { Booth } from "@/src/shared/lib/types";
-import { ApiResponse } from "@/src/shared/api/types";
+import { useCreateBooth } from "@/src/features/booth/api";
+import useBoothDraftStore from "@/src/shared/model/store/booth-draft-store";
 
 export function SetDescription() {
   const [parent] = useAutoAnimate();
@@ -36,49 +34,45 @@ export function SetDescription() {
     editDescription(event.target.value);
   };
 
+  const { mutateAsync: createBooth } = useCreateBooth({
+    onCreate: () => {
+      router.push("/");
+    },
+  });
+
   // FIXME remove thumbnail and location from the field when the backend has been fixed
   const handleSubmitButtonClick = async () => {
-    const { data } = await addBooth({
+    const id = await createBooth({
       name,
       category,
-      description,
+      description: description || "",
+      detail: "",
+      warning: "",
       thumbnail: "",
       longitude,
       latitude,
       festivalId: 2,
-      location: "위",
+      location: "위치 지정 필요",
       menus: [],
-    } as unknown as Booth);
-
-    if (!data) {
-      alert("에러가 발생했습니다.");
-      router.push("/");
-      return;
-    }
-
-    router.push("/");
+      boothSchedules: [],
+    });
   };
 
   const handleSkipButtonClick = async () => {
-    const { data } = await addBooth({
+    const id = await createBooth({
       name,
       category,
-      description,
+      description: description || "",
+      detail: "",
+      warning: "",
       thumbnail: "",
       longitude,
       latitude,
       festivalId: 2,
       location: "상세위치 지정 필요",
       menus: [],
-    } as unknown as Booth);
-
-    if (!data) {
-      alert("에러가 발생했습니다.");
-      router.push("/");
-      return;
-    }
-
-    router.push("/");
+      boothSchedules: [],
+    });
   };
 
   return (
@@ -86,7 +80,7 @@ export function SetDescription() {
       <div className="mb-16  flex flex-col items-center justify-start space-y-3">
         <h2 className="text-lg font-semibold">부스 간단 소개를 입력해주세요</h2>
         <p className="text-xs font-normal text-[#848484]">
-          이후 부스 편집을 통해 언제는 수정 가능합니다.
+          이후 부스 편집을 통해 언제든 수정 가능합니다.
         </p>
       </div>
       <Textarea

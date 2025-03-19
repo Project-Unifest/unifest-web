@@ -2,29 +2,28 @@
 
 import { Label } from "@/src/shared/ui/label";
 import { Switch } from "@/src/shared/ui/switch";
-import React, { useState } from "react";
-import { toggleBoothQueueFeature } from "../api/booth";
-import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useToggleQueue } from "../api";
+import useBoothListStore from "@/src/shared/model/store/booth-list-store";
 
 export function QueueAvailabilitySwitchButton({
   boothId,
-  initialOpened,
-}: Readonly<{ boothId: number; initialOpened?: boolean }>) {
-  const router = useRouter();
-  const [isQueueAvailable, setIsQueueAvailable] = useState<boolean>(
-    Boolean(initialOpened),
-  );
+  initialEnabled,
+}: Readonly<{ boothId: number; initialEnabled?: boolean }>) {
+  const [enabled, setEnabled] = useState<boolean>(Boolean(initialEnabled));
   const booth = useBoothListStore((state) =>
     state.booths.filter((booth) => booth.id === boothId),
   )[0];
   const edit = useBoothListStore((state) => state.edit);
+  const { mutate: toggleQueue, isPending } = useToggleQueue(boothId, {
+    onToggle: () => {
+      setEnabled((current) => !current);
+      edit({ ...booth, waitingEnabled: !enabled });
+    },
+  });
 
-  const toggleBoothOpened = async () => {
-    const { data } = await toggleBoothQueueFeature(boothId, !isQueueAvailable);
-    setIsQueueAvailable((currentOpened) => !currentOpened);
-    edit({ ...booth, waitingEnabled: !isQueueAvailable });
-    router.refresh();
+  const handleCheckedChange = async () => {
+    toggleQueue(!enabled);
   };
 
   return (
@@ -32,9 +31,10 @@ export function QueueAvailabilitySwitchButton({
       <Label htmlFor="queue-availability">웨이팅 기능</Label>
       <Switch
         id="queue-availability"
-        checked={isQueueAvailable}
-        onCheckedChange={toggleBoothOpened}
+        checked={enabled}
+        onCheckedChange={handleCheckedChange}
         color="secondary"
+        disabled={isPending}
       />
     </div>
   );

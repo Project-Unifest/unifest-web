@@ -5,18 +5,17 @@ import { Label } from "@/src/shared/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
-import React, { useState } from "react";
-import { addBooth } from "../model/add-booth";
-import { Booth, BoothCategory } from "@/src/shared/lib/types";
+import { useState } from "react";
+import { BoothCategory } from "@/src/shared/lib/types";
 import { useRouter } from "next/navigation";
-import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
-import { ApiResponse } from "@/src/shared/api/types";
+import { useCreateBooth } from "@/src/features/booth/api";
+import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-draft-store";
 
 export function SelectMode() {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [parent] = useAutoAnimate();
   const router = useRouter();
-  const setField = useBoothDetailsDraftStore((state) => state.setField);
+  const { mutateAsync: createBooth } = useCreateBooth();
 
   return (
     <>
@@ -92,25 +91,19 @@ export function SelectMode() {
             className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
             type="button"
             onClick={async () => {
-              const { data: id } = await addBooth({
+              const id = await createBooth({
                 name: "이름",
                 category: BoothCategory.BAR,
                 description: "",
                 thumbnail: "",
+                warning: "",
+                detail: "",
                 festivalId: 2,
                 location: "위치를 설정해주세요",
                 latitude: 0,
                 longitude: 0,
-              } as unknown as Booth);
-              setField({
-                id: id as number,
-                name: "이름",
-                category: BoothCategory.BAR,
-                description: "",
-                thumbnail: "",
-                location: "위치를 설정해주세요",
-                latitude: 0,
-                longitude: 0,
+                menus: [],
+                boothSchedules: [],
               });
               router.push(`/add-booth/details/set-position/${id}`);
             }}

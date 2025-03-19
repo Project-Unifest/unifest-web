@@ -3,8 +3,8 @@
 import { Label } from "@/src/shared/ui/label";
 import { Switch } from "@/src/shared/ui/switch";
 import React, { useState } from "react";
-import { updateBoothOpened } from "../api/booth";
-import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
+import { useUpdateBooth } from "../api";
+import useBoothListStore from "@/src/shared/model/store/booth-list-store";
 
 export function BoothAvailabilitySwitchButton({
   boothId,
@@ -15,16 +15,18 @@ export function BoothAvailabilitySwitchButton({
     state.booths.filter((booth) => booth.id === boothId),
   )[0];
   const edit = useBoothListStore((state) => state.edit);
+  const { mutate: updateBooth, isPending } = useUpdateBooth(boothId, {
+    onUpdate: () => {
+      edit({ ...booth, enabled: !opened });
+      setIsOpened((currentOpened) => !currentOpened);
+      edit({ ...booth, enabled: !opened });
+    },
+  });
 
   const toggleBoothOpened = async () => {
-    const { data } = await updateBoothOpened(
-      boothId,
-      !opened,
-      booth.latitude,
-      booth.longitude,
-    );
-    setIsOpened((currentOpened) => !currentOpened);
-    edit({ ...booth, enabled: !opened });
+    updateBooth({
+      enabled: !opened,
+    });
   };
 
   return (
@@ -35,6 +37,7 @@ export function BoothAvailabilitySwitchButton({
         checked={opened}
         onCheckedChange={toggleBoothOpened}
         color="primary"
+        disabled={isPending}
       />
     </div>
   );
