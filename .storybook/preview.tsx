@@ -3,10 +3,7 @@ import type { Preview } from "@storybook/react";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import "../app/globals.css";
 import "./preview.css";
-import { BoothEditStoreProvider } from "../src/shared/model/provider/booth-edit-store.provider";
-import { BoothDraftStoreProvider } from "../src/shared/model/provider/booth-draft-store-provider";
-import { BoothListStoreProvider } from "../src/shared/model/provider/booth-list-store-provider";
-import { AuthStoreProvider } from "../src/shared/model/provider/auth-store-provider";
+
 import handlers from "../mocks/api/handlers";
 
 initialize();
@@ -18,17 +15,9 @@ const preview: Preview = {
   decorators: [
     (Story) => {
       return (
-        <AuthStoreProvider>
-          <BoothEditStoreProvider>
-            <BoothDraftStoreProvider>
-              <BoothListStoreProvider>
-                <div style={{ fontFamily: "Pretendard, sans-serif" }}>
-                  <Story />
-                </div>
-              </BoothListStoreProvider>
-            </BoothDraftStoreProvider>
-          </BoothEditStoreProvider>
-        </AuthStoreProvider>
+        <div style={{ fontFamily: "Pretendard, sans-serif" }}>
+          <Story />
+        </div>
       );
     },
   ],
