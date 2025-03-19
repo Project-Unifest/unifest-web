@@ -9,16 +9,18 @@ import {
   TimeoutError,
   ValidationError,
   ResetOptions,
+  ForbiddenError,
 } from "@/src/shared/api/errors";
 import { FallbackProps } from "react-error-boundary";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { usePathname } from "next/navigation";
 export const GlobalErrorFallback = ({
   error,
   resetErrorBoundary,
 }: FallbackProps) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleClick = () => {
     const resetOptions = (error as { resetOptions?: ResetOptions })
@@ -30,9 +32,10 @@ export const GlobalErrorFallback = ({
 
   useEffect(() => {
     console.log(error);
+
     match(error)
       .with(P.instanceOf(UnauthorizedError), () => {
-        router.push("/sign-in");
+        router.push("/sign-in?redirect=" + pathname);
 
         // Fixme: 동기적으로 코드 작성시 NotFoundErrorBoundary에서 무한 오류 발생
         setTimeout(() => {
@@ -42,7 +45,7 @@ export const GlobalErrorFallback = ({
       .with(P.instanceOf(NetworkError), () => {
         router.push("/sign-in");
       });
-  }, [error, resetErrorBoundary, router]);
+  }, [error, pathname, resetErrorBoundary, router]);
 
   const { icon, title, message, action } = match(error)
     .with(P.instanceOf(UnauthorizedError), () => ({
@@ -91,6 +94,31 @@ export const GlobalErrorFallback = ({
       message: error.message,
       action: {
         label: "확인",
+        onClick: handleClick,
+      },
+    }))
+    .with(P.instanceOf(ForbiddenError), () => ({
+      icon: "🔒",
+      title: "로그인이 필요해요",
+      message: error.message,
+      action: {
+        label: "확인",
+        onClick: () => {
+          router.push("/sign-in?redirect=" + pathname);
+
+          // Fixme: 동기적으로 코드 작성시 NotFoundErrorBoundary에서 무한 오류 발생
+          setTimeout(() => {
+            resetErrorBoundary();
+          }, 500);
+        },
+      },
+    }))
+    .with(P.instanceOf(TimeoutError), () => ({
+      icon: "⏳",
+      title: "요청 시간 초과",
+      message: error.message,
+      action: {
+        label: "새로고침",
         onClick: handleClick,
       },
     }))
