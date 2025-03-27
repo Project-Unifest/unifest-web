@@ -25,8 +25,12 @@ export function BoothTimeForm({
   // 초기 operatingTimes 설정 - 컴포넌트 마운트 시 한 번만 실행
   useEffect(() => {
     if (initialOperatingTimes.length > 0) {
-      setOperatingTimes(initialOperatingTimes);
-      setSelectedDates(initialOperatingTimes.map((time) => time.date));
+      const sortedTimes = [...initialOperatingTimes].sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
+
+      setOperatingTimes(sortedTimes);
+      setSelectedDates(sortedTimes.map((time) => time.date).sort());
       setShowOperatingTimes(true);
     } else {
       setOperatingTimes([]);
@@ -52,7 +56,7 @@ export function BoothTimeForm({
       onOperatingTimesChange(newOperatingTimes);
     } else {
       // 새로운 날짜 추가
-      const newSelectedDates = [...selectedDates, date];
+      const newSelectedDates = [...selectedDates, date].sort();
       setSelectedDates(newSelectedDates);
 
       // 운영시간에 추가 (시작시간과 종료시간 모두 비워두기)
@@ -62,7 +66,10 @@ export function BoothTimeForm({
         closeTime: null,
       };
 
-      const newOperatingTimes = [...operatingTimes, newDate];
+      const newOperatingTimes = [...operatingTimes, newDate].sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
+
       setOperatingTimes(newOperatingTimes);
       onOperatingTimesChange(newOperatingTimes);
     }

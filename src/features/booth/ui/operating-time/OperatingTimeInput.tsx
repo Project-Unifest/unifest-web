@@ -39,9 +39,14 @@ export function OperatingTimeInput({
       closeTimeInputRefs.current[date] = el;
     };
 
+  // 날짜 순서대로 정렬
+  const sortedOperatingTimes = [...operatingTimes].sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  });
+
   return (
     <div className="space-y-3">
-      {operatingTimes.map((time) => (
+      {sortedOperatingTimes.map((time) => (
         <div key={time.date} className="flex items-center">
           <div className="mr-3 flex items-center">
             <button
