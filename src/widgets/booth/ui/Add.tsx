@@ -65,12 +65,12 @@ export function Add({ boothId }: { boothId: number }) {
     longitude,
     menuList,
     thumbnail,
-    openTime,
-    closeTime,
+    scheduleList,
     editThumbnail,
-    editOpenTime,
-    editCloseTime,
-    resetBoothTime,
+    updateScheduleList,
+    addSchedule,
+    removeSchedule,
+    resetSchedules,
     addMenuItem,
     editMenuItem,
     removeMemuItem,
@@ -85,12 +85,12 @@ export function Add({ boothId }: { boothId: number }) {
     state.longitude,
     state.menus,
     state.thumbnail,
-    state.openTime,
-    state.closeTime,
+    state.scheduleList,
     state.editThumbnail,
-    state.editOpenTime,
-    state.editCloseTime,
-    state.resetBoothTime,
+    state.updateScheduleList,
+    state.addSchedule,
+    state.removeSchedule,
+    state.resetSchedules,
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
@@ -110,16 +110,14 @@ export function Add({ boothId }: { boothId: number }) {
       description,
       latitude,
       longitude,
-      openTime,
-      closeTime,
+      scheduleList,
     },
   });
 
-  const changeOpenTimeInForm = (openTime: string | null) => {
-    form.setValue("openTime", openTime);
-  };
-  const changeCloseTimeInForm = (closeTime: string | null) => {
-    form.setValue("closeTime", closeTime);
+  const updateScheduleListInForm = (
+    newScheduleList: { date: string; openTime: string; closeTime: string }[],
+  ) => {
+    form.setValue("scheduleList", newScheduleList);
   };
 
   const [parent] = useAutoAnimate();
@@ -308,25 +306,33 @@ export function Add({ boothId }: { boothId: number }) {
             <CardHeader>
               <CardTitle>운영시간</CardTitle>
               <BoothTimeForm
-                operatingTimes={[]}
+                operatingTimes={scheduleList.map((schedule) => ({
+                  date: schedule.date,
+                  openTime: schedule.openTime,
+                  closeTime: schedule.closeTime,
+                }))}
                 onOperatingTimesChange={(times) => {
                   if (times.length > 0) {
-                    // 첫 번째 날짜의 시간 정보만 사용 (기존 호환성 유지)
-                    const firstTime = times[0];
-                    editOpenTime(firstTime.openTime || "");
-                    editCloseTime(firstTime.closeTime || "");
-                    changeOpenTimeInForm(firstTime.openTime);
-                    changeCloseTimeInForm(firstTime.closeTime);
+                    // 모든 운영 시간을 scheduleList로 변환하여 저장
+                    const newScheduleList = times
+                      .filter(
+                        (time) =>
+                          time.openTime !== null && time.closeTime !== null,
+                      )
+                      .map((time) => ({
+                        date: time.date,
+                        openTime: time.openTime as string,
+                        closeTime: time.closeTime as string,
+                      }));
 
-                    // 여러 날짜 지원을 위해 전체 times 배열을 저장할 수 있는 로직 추가 필요
-                    // 예: state.setOperatingTimes(times);
+                    updateScheduleList(newScheduleList);
+                    updateScheduleListInForm(newScheduleList);
                   } else {
-                    resetBoothTime();
-                    changeOpenTimeInForm(null);
-                    changeCloseTimeInForm(null);
+                    resetSchedules();
+                    updateScheduleListInForm([]);
                   }
                 }}
-                resetBoothTime={resetBoothTime}
+                resetBoothTime={resetSchedules}
               />
             </CardHeader>
           </Card>

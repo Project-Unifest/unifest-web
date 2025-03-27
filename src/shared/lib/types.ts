@@ -9,6 +9,12 @@ export interface Product {
   imgUrl?: string;
 }
 
+export interface BoothSchedule {
+  date: string;
+  openTime: string;
+  closeTime: string;
+}
+
 export interface Booth {
   id?: number;
   name: string;
@@ -22,8 +28,7 @@ export interface Booth {
   longitude: number;
   menus: Product[];
   enabled?: boolean;
-  openTime: string | null;
-  closeTime: string | null;
+  scheduleList: BoothSchedule[];
   waitingEnabled?: boolean;
 }
 

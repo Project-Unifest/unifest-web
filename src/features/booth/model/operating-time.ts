@@ -28,3 +28,16 @@ export const formatDateDisplay = (dateStr: string): string => {
 
   return `${month}월 ${day}일 (${weekday})`;
 };
+
+// BoothSchedule 형식으로 변환하는 함수
+export const convertToBoothScheduleList = (
+  operatingTimes: OperatingTime[],
+): { date: string; openTime: string; closeTime: string }[] => {
+  return operatingTimes
+    .filter((time) => time.openTime && time.closeTime) // null이 아닌 값만 필터링
+    .map((time) => ({
+      date: time.date,
+      openTime: time.openTime as string,
+      closeTime: time.closeTime as string,
+    }));
+};

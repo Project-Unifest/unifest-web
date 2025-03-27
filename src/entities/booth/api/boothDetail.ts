@@ -1,5 +1,10 @@
 import { API_URL } from "@/src/shared/api/config";
-import { Booth, BoothCategoryKeys, Product } from "@/src/shared/lib/types";
+import {
+  Booth,
+  BoothCategoryKeys,
+  BoothSchedule,
+  Product,
+} from "@/src/shared/lib/types";
 
 export interface BoothDetail {
   id: number;
@@ -14,8 +19,7 @@ export interface BoothDetail {
   menus: Product[];
   enabled: boolean;
   waitingEnabled: boolean;
-  openTime: null | string;
-  closeTime: null | string;
+  scheduleList: BoothSchedule[];
 }
 
 interface BoothDetailResponse {
@@ -31,6 +35,28 @@ export const getBoothDetail = async (
     cache: "no-store",
   });
   const body = await response.json();
+
+  // 백엔드 API가 아직 scheduleList를 지원하지 않는 경우를 위한 처리
+  if (body.data && "openTime" in body.data && "closeTime" in body.data) {
+    const { openTime, closeTime, ...rest } = body.data;
+    const today = new Date().toISOString().split("T")[0];
+
+    // openTime과 closeTime이 모두 있는 경우에만 scheduleList에 추가
+    body.data = {
+      ...rest,
+      scheduleList:
+        openTime && closeTime
+          ? [
+              {
+                date: today,
+                openTime,
+                closeTime,
+              },
+            ]
+          : [],
+    };
+  }
+
   console.log(body);
   return body;
 };
