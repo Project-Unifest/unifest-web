@@ -6,15 +6,44 @@ import { z } from "zod";
 const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
 
 // 부스 일정 스키마
-const scheduleSchema = z.object({
-  date: z.string(),
-  openTime: z
-    .string()
-    .regex(timeRegex, getMessage("시간은 HH:mm:ss 형식이어야 합니다")),
-  closeTime: z
-    .string()
-    .regex(timeRegex, getMessage("시간은 HH:mm:ss 형식이어야 합니다")),
-});
+const scheduleSchema = z
+  .object({
+    date: z.string(),
+    openTime: z
+      .string()
+      .regex(timeRegex, getMessage("시간은 HH:mm:ss 형식이어야 합니다")),
+    closeTime: z
+      .string()
+      .regex(timeRegex, getMessage("시간은 HH:mm:ss 형식이어야 합니다")),
+  })
+  .refine(
+    (schedule) => {
+      // 둘 다 설정되지 않았거나 비어있으면 검증 통과 (다른 refine에서 처리)
+      if (
+        !schedule.openTime ||
+        !schedule.closeTime ||
+        schedule.openTime === "" ||
+        schedule.closeTime === ""
+      ) {
+        return true;
+      }
+
+      // 시간 검증 로직 디버깅
+      console.log(
+        `Validating time: ${schedule.date}, open: ${schedule.openTime}, close: ${schedule.closeTime}`,
+      );
+      console.log(
+        `Time comparison result: ${schedule.openTime < schedule.closeTime}`,
+      );
+
+      // 시작 시간과 종료 시간 비교
+      return schedule.openTime < schedule.closeTime;
+    },
+    {
+      message: "시작 시간은 종료 시간보다 빨라야 합니다",
+      path: ["closeTime"], // 종료 시간에 오류 표시
+    },
+  );
 
 export const boothEditSchema = z.object({
   category: z.nativeEnum(BoothCategory, getMessage("올바른 선택지가 아닙니다")),

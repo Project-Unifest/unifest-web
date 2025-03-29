@@ -8,12 +8,14 @@ interface BoothTimeProps {
   operatingTimes: OperatingTime[];
   onOperatingTimesChange: (times: OperatingTime[]) => void;
   resetBoothTime: () => void;
+  errors?: any; // 폼 오류를 전달받을 수 있도록 props 추가
 }
 
 export function BoothTimeForm({
   operatingTimes: initialOperatingTimes,
   onOperatingTimesChange,
   resetBoothTime,
+  errors,
 }: BoothTimeProps) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
@@ -21,6 +23,7 @@ export function BoothTimeForm({
   const [currentYear] = useState(new Date().getFullYear());
   const [showOperatingTimes, setShowOperatingTimes] = useState(true);
   const [operatingTimes, setOperatingTimes] = useState<OperatingTime[]>([]);
+  const [timeErrors, setTimeErrors] = useState<Record<string, string>>({});
 
   // 초기 operatingTimes 설정 - 컴포넌트 마운트 시 한 번만 실행
   useEffect(() => {
@@ -38,6 +41,47 @@ export function BoothTimeForm({
       setShowOperatingTimes(false);
     }
   }, []); // 의존성 배열을 비워서 마운트 시 한 번만 실행
+
+  // 오류 상태 업데이트
+  useEffect(() => {
+    if (errors && errors.scheduleList) {
+      // 스케줄 리스트에 오류가 있을 경우 처리
+      const newErrors: Record<string, string> = {};
+
+      if (Array.isArray(errors.scheduleList)) {
+        // 개별 스케줄 오류 처리
+        errors.scheduleList.forEach((error: any, index: number) => {
+          if (error && operatingTimes[index]) {
+            if (error.openTime) {
+              newErrors[operatingTimes[index].date] = error.openTime.message;
+            } else if (error.closeTime) {
+              newErrors[operatingTimes[index].date] = error.closeTime.message;
+            }
+          }
+        });
+      }
+
+      setTimeErrors(newErrors);
+    } else {
+      setTimeErrors({});
+    }
+  }, [errors, operatingTimes]);
+
+  // 시간 검증 로직
+  const validateTimes = (times: OperatingTime[]): boolean => {
+    let isValid = true;
+    const validationErrors: Record<string, string> = {};
+
+    times.forEach((time) => {
+      if (time.openTime && time.closeTime && time.openTime >= time.closeTime) {
+        isValid = false;
+        validationErrors[time.date] = "시작 시간은 종료 시간보다 빨라야 합니다";
+      }
+    });
+
+    setTimeErrors(validationErrors);
+    return isValid;
+  };
 
   const handleDateSelect = (date: string) => {
     // 이미 선택된 날짜인지 확인
@@ -83,13 +127,17 @@ export function BoothTimeForm({
     const newTime = convertToHHMMSS(value);
     const updatedTimes = operatingTimes.map((time) => {
       if (time.date === date) {
-        return {
+        const updatedTime = {
           ...time,
           [type === "open" ? "openTime" : "closeTime"]: newTime,
         };
+        return updatedTime;
       }
       return time;
     });
+
+    // 유효성 검사 진행
+    validateTimes(updatedTimes);
 
     setOperatingTimes(updatedTimes);
     onOperatingTimesChange(updatedTimes);
@@ -102,6 +150,12 @@ export function BoothTimeForm({
     const newOperatingTimes = operatingTimes.filter(
       (time) => time.date !== date,
     );
+
+    // 날짜를 제거하면 관련 오류도 제거
+    const newErrors = { ...timeErrors };
+    delete newErrors[date];
+    setTimeErrors(newErrors);
+
     setOperatingTimes(newOperatingTimes);
     onOperatingTimesChange(newOperatingTimes);
 
@@ -137,6 +191,7 @@ export function BoothTimeForm({
             operatingTimes={operatingTimes}
             onTimeChange={handleTimeChange}
             onRemoveDate={handleRemoveDate}
+            errors={timeErrors}
           />
         </>
       )}

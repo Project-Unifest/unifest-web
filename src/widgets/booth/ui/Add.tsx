@@ -335,13 +335,15 @@ export function Add({ boothId }: { boothId: number }) {
                           }
                         }}
                         resetBoothTime={resetSchedules}
+                        errors={form.formState.errors}
                       />
                     </FormControl>
-                    {form.formState.errors.scheduleList && (
-                      <div className="mt-3 rounded-md bg-red-50 p-2 text-sm font-semibold text-red-500">
-                        {form.formState.errors.scheduleList.message}
-                      </div>
-                    )}
+                    {form.formState.errors.scheduleList &&
+                      form.formState.errors.scheduleList.message && (
+                        <div className="mt-3 rounded-md bg-red-50 p-2 text-sm font-semibold text-red-500">
+                          {form.formState.errors.scheduleList.message}
+                        </div>
+                      )}
                   </FormItem>
                 )}
               />
