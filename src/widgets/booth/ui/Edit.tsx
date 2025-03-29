@@ -122,12 +122,6 @@ export function Edit({ boothId }: { boothId: number }) {
     },
   });
 
-  const updateScheduleListInForm = (
-    newScheduleList: { date: string; openTime: string; closeTime: string }[],
-  ) => {
-    form.setValue("scheduleList", newScheduleList);
-  };
-
   const { reset } = form;
 
   const [parent] = useAutoAnimate();
@@ -146,6 +140,13 @@ export function Edit({ boothId }: { boothId: number }) {
     });
     router.push("/");
   };
+
+  // 디버깅을 위한 오류 상태 로깅
+  useEffect(() => {
+    if (form.formState.isSubmitting) {
+      console.log("Form errors:", form.formState.errors);
+    }
+  }, [form.formState.isSubmitting, form.formState.errors]);
 
   return (
     <>
@@ -323,34 +324,44 @@ export function Edit({ boothId }: { boothId: number }) {
           <Card className="mb-4">
             <CardHeader>
               <CardTitle>운영시간</CardTitle>
-              <BoothTimeForm
-                operatingTimes={scheduleList.map((schedule) => ({
-                  date: schedule.date,
-                  openTime: schedule.openTime,
-                  closeTime: schedule.closeTime,
-                }))}
-                onOperatingTimesChange={(times) => {
-                  if (times.length > 0) {
-                    // 모든 운영 시간을 scheduleList로 변환하여 저장
-                    const newScheduleList = times
-                      .filter(
-                        (time) =>
-                          time.openTime !== null && time.closeTime !== null,
-                      )
-                      .map((time) => ({
-                        date: time.date,
-                        openTime: time.openTime as string,
-                        closeTime: time.closeTime as string,
-                      }));
+              <FormField
+                name="scheduleList"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormControl>
+                      <BoothTimeForm
+                        operatingTimes={scheduleList.map((schedule) => ({
+                          date: schedule.date,
+                          openTime: schedule.openTime,
+                          closeTime: schedule.closeTime,
+                        }))}
+                        onOperatingTimesChange={(times) => {
+                          if (times.length > 0) {
+                            // 모든 일정 정보를 scheduleList에 저장 (시간이 설정되지 않은 것도 포함)
+                            const allOperatingTimes = times.map((time) => ({
+                              date: time.date,
+                              openTime: time.openTime || "",
+                              closeTime: time.closeTime || "",
+                            }));
 
-                    updateScheduleList(newScheduleList);
-                    updateScheduleListInForm(newScheduleList);
-                  } else {
-                    resetSchedules();
-                    updateScheduleListInForm([]);
-                  }
-                }}
-                resetBoothTime={resetSchedules}
+                            updateScheduleList(allOperatingTimes);
+                            field.onChange(allOperatingTimes);
+                          } else {
+                            resetSchedules();
+                            field.onChange([]);
+                          }
+                        }}
+                        resetBoothTime={resetSchedules}
+                      />
+                    </FormControl>
+                    {form.formState.errors.scheduleList && (
+                      <div className="mt-3 rounded-md bg-red-50 p-2 text-sm font-semibold text-red-500">
+                        {form.formState.errors.scheduleList.message}
+                      </div>
+                    )}
+                  </FormItem>
+                )}
               />
             </CardHeader>
           </Card>

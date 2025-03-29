@@ -46,56 +46,75 @@ export function OperatingTimeInput({
 
   return (
     <div className="space-y-3">
-      {sortedOperatingTimes.map((time) => (
-        <div key={time.date} className="flex items-center">
-          <div className="mr-3 flex items-center">
-            <button
-              onClick={() => onRemoveDate(time.date)}
-              className="text-gray-500 hover:text-gray-700 mr-2"
-              type="button"
-            >
-              ⊗
-            </button>
-            <span className="font-medium">{formatDateDisplay(time.date)}</span>
-          </div>
+      {sortedOperatingTimes.map((time) => {
+        const isMissingOpenTime = !time.openTime || time.openTime === "";
+        const isMissingCloseTime = !time.closeTime || time.closeTime === "";
 
-          <div className="flex flex-1 items-center justify-end">
-            <input
-              className="no-calendar-indicator w-24 rounded-[12px] border px-[20px] py-[7px] text-[16px] font-bold"
-              aria-label="시작 시간"
-              type="time"
-              ref={setOpenTimeInputRef(time.date)}
-              onChange={(e) => {
-                if (e.target.value) {
-                  onTimeChange(time.date, "open", e.target.value);
+        return (
+          <div key={time.date} className="flex items-center">
+            <div className="mr-3 flex items-center">
+              <button
+                onClick={() => onRemoveDate(time.date)}
+                className="text-gray-500 hover:text-gray-700 mr-2"
+                type="button"
+              >
+                ⊗
+              </button>
+              <span className="font-medium">
+                {formatDateDisplay(time.date)}
+              </span>
+            </div>
+
+            <div className="flex flex-1 items-center justify-end">
+              <input
+                className={`no-calendar-indicator w-32 rounded-[12px] border px-[15px] py-[7px] text-[16px] font-bold ${
+                  isMissingOpenTime ? "border-red-500" : ""
+                }`}
+                aria-label="시작 시간"
+                type="time"
+                ref={setOpenTimeInputRef(time.date)}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    onTimeChange(time.date, "open", e.target.value);
+                  }
+                }}
+                onClick={() =>
+                  handleInputClick(openTimeInputRefs.current[time.date])
                 }
-              }}
-              onClick={() =>
-                handleInputClick(openTimeInputRefs.current[time.date])
-              }
-              value={time.openTime ? convertToHHMM(time.openTime) : ""}
-              placeholder="시작시간"
-            />
-            <span className="mx-2">~</span>
-            <input
-              className="no-calendar-indicator w-24 rounded-[12px] border px-[20px] py-[7px] text-[16px] font-bold"
-              aria-label="종료 시간"
-              type="time"
-              ref={setCloseTimeInputRef(time.date)}
-              onChange={(e) => {
-                if (e.target.value) {
-                  onTimeChange(time.date, "close", e.target.value);
+                value={
+                  time.openTime && time.openTime !== ""
+                    ? convertToHHMM(time.openTime)
+                    : ""
                 }
-              }}
-              onClick={() =>
-                handleInputClick(closeTimeInputRefs.current[time.date])
-              }
-              value={time.closeTime ? convertToHHMM(time.closeTime) : ""}
-              placeholder="종료시간"
-            />
+                placeholder="시작시간"
+              />
+              <span className="mx-2">~</span>
+              <input
+                className={`no-calendar-indicator w-32 rounded-[12px] border px-[15px] py-[7px] text-[16px] font-bold ${
+                  isMissingCloseTime ? "border-red-500" : ""
+                }`}
+                aria-label="종료 시간"
+                type="time"
+                ref={setCloseTimeInputRef(time.date)}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    onTimeChange(time.date, "close", e.target.value);
+                  }
+                }}
+                onClick={() =>
+                  handleInputClick(closeTimeInputRefs.current[time.date])
+                }
+                value={
+                  time.closeTime && time.closeTime !== ""
+                    ? convertToHHMM(time.closeTime)
+                    : ""
+                }
+                placeholder="종료시간"
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

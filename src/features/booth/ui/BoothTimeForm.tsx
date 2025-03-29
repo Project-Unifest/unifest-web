@@ -59,11 +59,11 @@ export function BoothTimeForm({
       const newSelectedDates = [...selectedDates, date].sort();
       setSelectedDates(newSelectedDates);
 
-      // 운영시간에 추가 (시작시간과 종료시간 모두 비워두기)
+      // 운영시간에 추가 (시작시간과 종료시간 모두 빈 문자열로 설정)
       const newDate = {
         date,
-        openTime: null,
-        closeTime: null,
+        openTime: "",
+        closeTime: "",
       };
 
       const newOperatingTimes = [...operatingTimes, newDate].sort((a, b) => {

@@ -1,7 +1,7 @@
 export interface OperatingTime {
   date: string; // 'YYYY-MM-DD' 형식
-  openTime: string | null;
-  closeTime: string | null;
+  openTime: string;
+  closeTime: string;
 }
 
 export const convertToHHMM = (time: string): string => {
@@ -34,10 +34,10 @@ export const convertToBoothScheduleList = (
   operatingTimes: OperatingTime[],
 ): { date: string; openTime: string; closeTime: string }[] => {
   return operatingTimes
-    .filter((time) => time.openTime && time.closeTime) // null이 아닌 값만 필터링
+    .filter((time) => time.openTime !== "" && time.closeTime !== "") // 빈 문자열이 아닌 값만 필터링
     .map((time) => ({
       date: time.date,
-      openTime: time.openTime as string,
-      closeTime: time.closeTime as string,
+      openTime: time.openTime,
+      closeTime: time.closeTime,
     }));
 };

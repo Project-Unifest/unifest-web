@@ -11,3 +11,12 @@
     border: 0;
   }
 }
+
+@layer base {
+  /* 시간 입력 필드에 대한 스타일 */
+  input[type="time"] {
+    min-width: 8rem; /* 최소 너비 설정 */
+    font-feature-settings: "tnum"; /* 등너비 숫자 표시 */
+    font-variant-numeric: tabular-nums; /* 등너비 숫자 표시 */
+  }
+}
