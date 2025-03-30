@@ -41,13 +41,6 @@ export function OperatingTimeInput({
       closeTimeInputRefs.current[date] = el;
     };
 
-  // 시간 검증 - 시작 시간이 종료 시간보다 늦은지 확인
-  const isInvalidTimeRange = (openTime: string, closeTime: string): boolean => {
-    if (!openTime || !closeTime || openTime === "" || closeTime === "")
-      return false;
-    return openTime >= closeTime;
-  };
-
   // 날짜 순서대로 정렬
   const sortedOperatingTimes = [...operatingTimes].sort((a, b) => {
     return new Date(a.date).getTime() - new Date(b.date).getTime();
@@ -58,15 +51,7 @@ export function OperatingTimeInput({
       {sortedOperatingTimes.map((time) => {
         const isMissingOpenTime = !time.openTime || time.openTime === "";
         const isMissingCloseTime = !time.closeTime || time.closeTime === "";
-        const isTimeRangeInvalid = isInvalidTimeRange(
-          time.openTime,
-          time.closeTime,
-        );
-        const hasError =
-          isMissingOpenTime || isMissingCloseTime || isTimeRangeInvalid;
-        const errorMessage =
-          errors[time.date] ||
-          (isTimeRangeInvalid ? "시작 시간은 종료 시간보다 빨라야 합니다" : "");
+        const errorMessage = errors[time.date] || "";
 
         return (
           <div key={time.date} className="space-y-1">
@@ -110,9 +95,7 @@ export function OperatingTimeInput({
                 <span className="mx-2">~</span>
                 <input
                   className={`no-calendar-indicator w-32 rounded-[12px] border px-[15px] py-[7px] text-[16px] font-bold ${
-                    isMissingCloseTime || isTimeRangeInvalid
-                      ? "border-red-500"
-                      : ""
+                    isMissingCloseTime ? "border-red-500" : ""
                   }`}
                   aria-label="종료 시간"
                   type="time"
@@ -135,9 +118,9 @@ export function OperatingTimeInput({
               </div>
             </div>
 
-            {isTimeRangeInvalid && (
+            {errorMessage && (
               <div className="text-right text-sm font-medium text-red-500">
-                시작 시간은 종료 시간보다 빨라야 합니다
+                {errorMessage}
               </div>
             )}
           </div>

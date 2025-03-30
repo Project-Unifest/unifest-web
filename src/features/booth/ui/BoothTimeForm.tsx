@@ -67,22 +67,6 @@ export function BoothTimeForm({
     }
   }, [errors, operatingTimes]);
 
-  // 시간 검증 로직
-  const validateTimes = (times: OperatingTime[]): boolean => {
-    let isValid = true;
-    const validationErrors: Record<string, string> = {};
-
-    times.forEach((time) => {
-      if (time.openTime && time.closeTime && time.openTime >= time.closeTime) {
-        isValid = false;
-        validationErrors[time.date] = "시작 시간은 종료 시간보다 빨라야 합니다";
-      }
-    });
-
-    setTimeErrors(validationErrors);
-    return isValid;
-  };
-
   const handleDateSelect = (date: string) => {
     // 이미 선택된 날짜인지 확인
     const isSelected = selectedDates.includes(date);
@@ -135,9 +119,6 @@ export function BoothTimeForm({
       }
       return time;
     });
-
-    // 유효성 검사 진행
-    validateTimes(updatedTimes);
 
     setOperatingTimes(updatedTimes);
     onOperatingTimesChange(updatedTimes);
