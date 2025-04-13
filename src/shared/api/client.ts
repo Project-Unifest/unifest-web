@@ -83,7 +83,7 @@ export const client = ky.create({
           const { refreshToken, setAccessToken } = useAuthStore.getState();
 
           if (!refreshToken) {
-            throw new HTTPError(response, request, options);
+            throw new UnauthorizedError(response, request, options);
           }
 
           try {
