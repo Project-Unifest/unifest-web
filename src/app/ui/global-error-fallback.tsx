@@ -31,16 +31,14 @@ export const GlobalErrorFallback = ({
   };
 
   useEffect(() => {
-    console.log(error);
-
     match(error)
       .with(P.instanceOf(UnauthorizedError), () => {
-        router.push("/sign-in?redirect=" + pathname);
-
-        // Fixme: 동기적으로 코드 작성시 NotFoundErrorBoundary에서 무한 오류 발생
-        setTimeout(() => {
+        if (pathname !== "/sign-in" && pathname !== "/sign-up") {
+          router.push("/sign-in?redirect=" + pathname);
+        }
+        if (pathname === "/sign-in") {
           resetErrorBoundary();
-        }, 500);
+        }
       })
       .with(P.instanceOf(NetworkError), () => {
         router.push("/sign-in");
