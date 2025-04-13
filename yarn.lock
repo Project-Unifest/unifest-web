@@ -6267,6 +6267,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-devtools@npm:5.72.2":
+  version: 5.72.2
+  resolution: "@tanstack/query-devtools@npm:5.72.2"
+  checksum: 10c0/5cd6d2349167cef383fab54fecce43a5a6695c893c1da9e46a09352b1bd8b13218825fffedb46f3eabfd189a3d5621f8467c0853c4b3653fd75fbea9f784cb81
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.72.2":
+  version: 5.72.2
+  resolution: "@tanstack/react-query-devtools@npm:5.72.2"
+  dependencies:
+    "@tanstack/query-devtools": "npm:5.72.2"
+  peerDependencies:
+    "@tanstack/react-query": ^5.72.2
+    react: ^18 || ^19
+  checksum: 10c0/0acd284884ed634b6b05cc8c5fded7c9fbf8e1a5071455e09064b7ad07dfb6423fce4939559bdb048037c577d346462bc8756ae97f88c7ac897345fd055f0f1d
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-query@npm:^5.69.0":
   version: 5.69.0
   resolution: "@tanstack/react-query@npm:5.69.0"
@@ -18632,6 +18651,7 @@ __metadata:
     "@storybook/test": "npm:^8.2.6"
     "@storybook/test-runner": "npm:^0.19.1"
     "@tanstack/react-query": "npm:^5.69.0"
+    "@tanstack/react-query-devtools": "npm:^5.72.2"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
