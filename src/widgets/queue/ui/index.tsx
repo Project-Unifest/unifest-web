@@ -15,9 +15,6 @@ import {
   useCallGroupMutation,
   useCompleteGroupMutation,
 } from "@/src/features/queue/api";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
 
 export default function Queue() {
   const [activatedTab, setActivatedTab] = useState<
@@ -25,8 +22,6 @@ export default function Queue() {
   >("active");
   const params = useParams<{ boothId: string }>()!;
   const boothId = parseInt(params.boothId);
-
-  const isAuthLoading = useRequireAuth(AuthType.MEMBER);
 
   const {
     data: groups,
@@ -38,7 +33,7 @@ export default function Queue() {
   const { mutateAsync: callGroupMutation } = useCallGroupMutation();
   const { mutateAsync: completeGroupMutation } = useCompleteGroupMutation();
 
-  if (isGroupsLoading || isAuthLoading || !groups) {
+  if (isGroupsLoading || !groups) {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
   }
 
