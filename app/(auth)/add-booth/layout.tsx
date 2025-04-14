@@ -1,9 +1,6 @@
 "use client";
 
 import { AnimatedPathSegment } from "@/src/shared/lib/types";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
 import RedDotIcon from "@/src/shared/ui/RedDotIcon";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { DotIcon } from "@radix-ui/react-icons";
@@ -15,7 +12,7 @@ export default function AddBoothLayout({
   children: React.ReactNode;
 }>) {
   // const [colorIds, setColorIds] = useState(["red0", "gray0", "gray1"]);
-  useRequireAuth(AuthType.MEMBER);
+
   const [parent] = useAutoAnimate();
   const pathname = usePathname()!;
   const colorIds =
