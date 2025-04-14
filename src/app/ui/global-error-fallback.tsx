@@ -15,35 +15,51 @@ import { FallbackProps } from "react-error-boundary";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+
+import { useRecoverFromError } from "@/src/app/model/useRecoverFromError";
 export const GlobalErrorFallback = ({
   error,
   resetErrorBoundary,
 }: FallbackProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { recoverFromError } = useRecoverFromError();
 
   const handleClick = () => {
     const resetOptions = (error as { resetOptions?: ResetOptions })
       .resetOptions || {
       shouldClearCache: true,
     };
-    resetErrorBoundary(resetOptions);
+    recoverFromError(resetOptions);
   };
 
   useEffect(() => {
+    const resetOptions = (error as { resetOptions?: ResetOptions })
+      .resetOptions || {
+      shouldClearCache: true,
+    };
     match(error)
       .with(P.instanceOf(UnauthorizedError), () => {
         if (pathname !== "/sign-in" && pathname !== "/sign-up") {
           router.push("/sign-in?redirect=" + pathname);
+        } else {
+          recoverFromError(resetOptions);
+          resetErrorBoundary();
         }
-        if (pathname === "/sign-in") {
+      })
+      .with(P.instanceOf(ForbiddenError), () => {
+        recoverFromError(resetOptions);
+        if (pathname !== "/sign-in" && pathname !== "/sign-up") {
+          router.push("/sign-in?redirect=" + pathname);
+        } else {
+          recoverFromError(resetOptions);
           resetErrorBoundary();
         }
       })
       .with(P.instanceOf(NetworkError), () => {
         router.push("/sign-in");
       });
-  }, [error, pathname, resetErrorBoundary, router]);
+  }, [error, pathname, recoverFromError, resetErrorBoundary, router]);
 
   const { icon, title, message, action } = match(error)
     .with(P.instanceOf(UnauthorizedError), () => ({
@@ -101,14 +117,7 @@ export const GlobalErrorFallback = ({
       message: error.message,
       action: {
         label: "확인",
-        onClick: () => {
-          router.push("/sign-in?redirect=" + pathname);
-
-          // Fixme: 동기적으로 코드 작성시 NotFoundErrorBoundary에서 무한 오류 발생
-          setTimeout(() => {
-            resetErrorBoundary();
-          }, 500);
-        },
+        onClick: handleClick,
       },
     }))
     .with(P.instanceOf(TimeoutError), () => ({
