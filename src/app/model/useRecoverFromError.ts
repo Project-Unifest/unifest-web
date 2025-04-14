@@ -12,8 +12,6 @@ export const useRecoverFromError = () => {
       const { shouldClearCache, shouldClearAuth, shouldClearNavigation } =
         resetOptions;
       if (shouldClearCache) queryClient.clear();
-      console.log("recoverFromError");
-      console.log(shouldClearAuth);
       if (shouldClearAuth) reset();
     },
     [queryClient, reset],
