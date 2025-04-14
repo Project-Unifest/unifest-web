@@ -18,7 +18,7 @@ import {
 } from "@/src/shared/ui/form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "../api/sign-in";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
+import { useAuthStore } from "@/src/shared/model/store/auth-store";
 
 export function SignIn() {
   const [parent] = useAutoAnimate();

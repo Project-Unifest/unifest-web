@@ -19,9 +19,6 @@ import { Button } from "@/src/shared/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/src/shared/ui/card";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
 import { BoothCategory } from "@/src/shared/lib/types";
 import { MenuItemForm } from "@/src/features/menu";
 import { useRouter } from "next/navigation";
@@ -88,7 +85,6 @@ export function Edit({ boothId }: { boothId: number }) {
   ]);
 
   const [menuItemParent] = useAutoAnimate();
-  useRequireAuth(AuthType.MEMBER);
 
   const router = useRouter();
 

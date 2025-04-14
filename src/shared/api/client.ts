@@ -5,7 +5,7 @@ import ky, {
   TimeoutError,
 } from "ky";
 import { API_URL, getAccessToken, HTTPHeaderKey } from "./config";
-import { useAuthStore } from "../model/provider/auth-store-provider";
+import { useAuthStore } from "../model/store/auth-store";
 import {
   BadRequestError,
   ConflictError,
@@ -80,7 +80,7 @@ export const client = ky.create({
     afterResponse: [
       async (request, options, response) => {
         if (response.status === 401) {
-          const { refreshToken, setAccessToken } = useAuthStore.getState();
+          const { refreshToken, refresh } = useAuthStore.getState();
 
           if (!refreshToken) {
             throw new UnauthorizedError(response, request, options);
@@ -88,7 +88,7 @@ export const client = ky.create({
 
           try {
             const newAccessToken = await refreshAccessToken(refreshToken);
-            setAccessToken(newAccessToken);
+            refresh(newAccessToken);
 
             request.headers.set("Authorization", `Bearer ${newAccessToken}`);
             return client(request);

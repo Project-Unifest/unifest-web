@@ -8,10 +8,6 @@ import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
 import { useMakeMegaphoneMutation } from "@/src/features/megaphone/api";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import { Button } from "@/src/shared/ui/button";
 import {
   Form,
@@ -35,9 +31,7 @@ const getBoothDetail = async (
 };
 
 export function Megaphone({ boothId }: { boothId: number }) {
-  const accessToken = useAuthStore((state) => state.accessToken);
   const [booth, setBooth] = useState<BoothDetailResponse>();
-  const isAuthLoading = useRequireAuth(AuthType.MEMBER);
   const { mutateAsync: makeMegaphone, isPending } = useMakeMegaphoneMutation();
 
   useEffect(() => {
@@ -47,10 +41,8 @@ export function Megaphone({ boothId }: { boothId: number }) {
         setBooth(data);
       }
     };
-    if (!isAuthLoading) {
-      getBoothListEffect();
-    }
-  }, [isAuthLoading, setBooth, boothId]);
+    getBoothListEffect();
+  }, [setBooth, boothId]);
 
   const form = useForm<{ msgBody: string }>({
     defaultValues: {
@@ -65,12 +57,6 @@ export function Megaphone({ boothId }: { boothId: number }) {
     await makeMegaphone({ boothId, msgBody: data.msgBody });
     router.push("/");
   };
-
-  if (isAuthLoading) {
-    return (
-      <div className="justify-content flex items-center"> 로딩중입니다.</div>
-    );
-  }
 
   if (!booth) {
     return (

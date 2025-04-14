@@ -1,11 +1,7 @@
 "use client";
-
-import { AnimatedPathSegment } from "@/src/shared/lib/types";
-import useRequireAuth from "@/src/shared/model/auth/useRequireAuth";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
+import { useAuthStore } from "@/src/shared/model/store/auth-store";
 import LogoutIcon from "@/src/shared/ui/LogoutIcon";
 import SpeakerIcon from "@/src/shared/ui/SpeakerIcon";
-import { Button } from "@/src/shared/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -62,10 +58,8 @@ export function Header() {
       ? "확성기"
       : "운영자모드";
 
-  const [accessToken, signOut] = useAuthStore((state) => [
-    state.accessToken,
-    state.signOut,
-  ]);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const reset = useAuthStore((state) => state.reset);
   const isLoggedIn = Boolean(accessToken);
 
   if (isHeaderless) {
@@ -114,7 +108,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => {
-              signOut();
+              reset();
               router.replace("/sign-in");
             }}
             className="absolute right-4"
