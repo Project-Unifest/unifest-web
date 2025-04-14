@@ -6,7 +6,7 @@ import path from "path";
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-require("dotenv").config({ path: path.resolve(__dirname, ".", ".env.local") });
+require("dotenv").config({ path: path.resolve(__dirname, ".", ".env") });
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -39,7 +39,7 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    { name: "setup", testMatch: /.*\.setup\.ts/ },
+    // { name: "setup", testMatch: /.*\.setup\.ts/ },
 
     {
       name: "chromium",
@@ -47,7 +47,7 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         storageState: "playwright/.auth/user.json", // use prepared auth state.
       },
-      dependencies: ["setup"],
+      // dependencies: ["setup"],
     },
 
     {
@@ -56,7 +56,7 @@ export default defineConfig({
         ...devices["Desktop Firefox"],
         storageState: "playwright/.auth/user.json", // use prepared auth state.
       },
-      dependencies: ["setup"],
+      // dependencies: ["setup"],
     },
 
     {
@@ -65,7 +65,7 @@ export default defineConfig({
         ...devices["Desktop Safari"],
         storageState: "playwright/.auth/user.json", // use prepared auth state.
       },
-      dependencies: ["setup"],
+      // dependencies: ["setup"],
     },
 
     /* Test against mobile viewports. */
