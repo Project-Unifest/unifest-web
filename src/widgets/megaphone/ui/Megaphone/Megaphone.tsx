@@ -1,20 +1,13 @@
 "use client";
 
 import { BoothItem } from "@/src/entities/booth";
-import {
-  BoothDetail,
-  getBoothDetail,
-} from "@/src/entities/booth/api/boothDetail";
+import { BoothDetailResponse } from "@/src/entities/booth/api/boothDetail";
+import { client } from "@/src/shared/api/client";
+import { ApiResponse } from "@/src/shared/api/types";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
 import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
-import { makeMegaphone } from "@/src/features/megaphone/api/megaphone";
-import { Booth } from "@/src/shared/lib/types";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
+import { useMakeMegaphoneMutation } from "@/src/features/megaphone/api";
 import { Button } from "@/src/shared/ui/button";
 import {
   Form,
@@ -28,10 +21,18 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
+// Define the getBoothDetail function as it doesn't seem to be exported from the imported file
+const getBoothDetail = async (
+  boothId: number,
+): Promise<ApiResponse<BoothDetailResponse>> => {
+  return client
+    .get(`api/booths/${boothId}`)
+    .json<ApiResponse<BoothDetailResponse>>();
+};
+
 export function Megaphone({ boothId }: { boothId: number }) {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const [booth, setBooth] = useState<BoothDetail>();
-  const isAuthLoading = useRequireAuth(AuthType.MEMBER);
+  const [booth, setBooth] = useState<BoothDetailResponse>();
+  const { mutateAsync: makeMegaphone, isPending } = useMakeMegaphoneMutation();
 
   useEffect(() => {
     const getBoothListEffect = async () => {
@@ -40,10 +41,8 @@ export function Megaphone({ boothId }: { boothId: number }) {
         setBooth(data);
       }
     };
-    if (!isAuthLoading) {
-      getBoothListEffect();
-    }
-  }, [isAuthLoading, setBooth]);
+    getBoothListEffect();
+  }, [setBooth, boothId]);
 
   const form = useForm<{ msgBody: string }>({
     defaultValues: {
@@ -51,20 +50,11 @@ export function Megaphone({ boothId }: { boothId: number }) {
     },
   });
   const router = useRouter();
-  const makeAuthMegaphone = useAuthFetch(makeMegaphone);
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
-    console.log(boothId);
-    await makeAuthMegaphone(boothId, data);
+  const onSubmit = async (data: { msgBody: string }) => {
+    await makeMegaphone({ boothId, msgBody: data.msgBody });
     router.push("/");
   };
-
-  if (isAuthLoading) {
-    return (
-      <div className="justify-content flex items-center"> 로딩중입니다.</div>
-    );
-  }
 
   if (!booth) {
     return (
@@ -110,8 +100,9 @@ export function Megaphone({ boothId }: { boothId: number }) {
           <Button
             className="mt-[16px] w-full flex-[2] rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
             type="submit"
+            disabled={isPending}
           >
-            발송하기
+            {isPending ? "발송 중..." : "발송하기"}
           </Button>
         </form>
       </Form>

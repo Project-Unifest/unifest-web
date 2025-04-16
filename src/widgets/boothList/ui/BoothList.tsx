@@ -1,54 +1,18 @@
 "use client";
 
 import { BoothItem } from "@/src/entities/booth";
-import { getBoothList } from "@/src/entities/booth/api/boothList";
 import { AddBoothButton, BoothSwitchButton } from "@/src/features/booth";
 import { DeleteButton } from "@/src/features/booth/ui/DeleteButton";
 import { EditButton } from "@/src/features/booth/ui/EditButton";
-import { BoothAvailabilitySwitchButton } from "@/src/features/booth/ui/BoothAvailabilitySwitchButton";
-import { Member } from "@/src/shared/lib/types";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
-import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
 import Link from "next/link";
-import { useEffect } from "react";
 import { Button } from "@/src/shared/ui/button";
 import ClockIcon from "@/src/shared/ui/ClockIcon";
 import PlusIcon from "@/src/shared/ui/PlusIcon";
+import { useGetMyProfile } from "@/src/entities/members/api";
 
-export function BoothList() {
-  const accessToken = useAuthStore((state) => state.accessToken);
-
-  const [booths, initializeBoothList] = useBoothListStore((state) => [
-    state.booths,
-    state.initialize,
-  ]);
-
-  const getAuthBooth = useAuthFetch(getBoothList);
-  const isAuthLoading = useRequireAuth(AuthType.MEMBER);
-
-  useEffect(() => {
-    const getBoothListEffect = async () => {
-      const data = await getAuthBooth();
-
-      if (data) {
-        const { booths: newBooths } = data as Member;
-        initializeBoothList(newBooths);
-      }
-    };
-    if (!isAuthLoading) {
-      getBoothListEffect();
-    }
-  }, [getAuthBooth, isAuthLoading, initializeBoothList]);
-
-  if (isAuthLoading) {
-    return (
-      <div className="justify-content flex items-center"> 로딩중입니다.</div>
-    );
-  }
+export default function BoothList() {
+  const { data: myProfile } = useGetMyProfile();
+  const booths = myProfile.booths;
 
   if (!booths.length) {
     return (

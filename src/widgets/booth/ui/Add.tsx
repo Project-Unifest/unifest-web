@@ -1,7 +1,6 @@
 "use client";
 
 import { EditImageBox } from "@/src/features/booth/ui/EditImageBox";
-import { CampusPosition } from "@/src/shared/model/store/booth-draft-store";
 import {
   Form,
   FormControl,
@@ -17,33 +16,17 @@ import { Input } from "@/src/shared/ui/input";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { z } from "zod";
 import { Button } from "@/src/shared/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/src/shared/ui/card";
-import { Label } from "@/src/shared/ui/label";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/src/shared/ui/card";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
-import { getBoothDetail } from "@/src/entities/booth/api/boothDetail";
-import { useEffect, useState } from "react";
-import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
 import { BoothCategory } from "@/src/shared/lib/types";
 import { MenuItemForm } from "@/src/features/menu";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
-import { editBooth } from "@/src/features/booth/api/booth";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
-import { deleteMenuItem } from "@/src/features/menu/model/menu";
-import { useBoothDetailsDraftStore } from "@/src/shared/model/provider/booth-details-draft-store-provider";
+import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-draft-store";
 import { BoothTimeForm } from "@/src/features/booth";
-import { addBooth } from "@/src/features/booth/api/addBooth";
+import { useCreateBooth } from "@/src/features/booth/api";
+import { addBooth } from "../../add-booth/model/add-booth";
 
 interface MenuItem {
   id: number;
@@ -97,9 +80,7 @@ export function Add({ boothId }: { boothId: number }) {
   ]);
 
   const [menuItemParent] = useAutoAnimate();
-  useRequireAuth(AuthType.MEMBER);
 
-  const addAuthBooth = useAuthFetch(addBooth);
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
     defaultValues: {
@@ -126,8 +107,19 @@ export function Add({ boothId }: { boothId: number }) {
 
   const router = useRouter();
 
+  const { mutateAsync: createBooth } = useCreateBooth({
+    onCreate: () => {
+      router.push("/");
+    },
+  });
+
   const onSubmit = async (data: any) => {
-    await addAuthBooth({ id: boothId, thumbnail, ...data, menus: menuList });
+    const { data: newBooth } = await addBooth({
+      id: boothId,
+      thumbnail,
+      ...data,
+      menus: menuList,
+    });
     router.push("/");
   };
 
@@ -328,7 +320,6 @@ export function Add({ boothId }: { boothId: number }) {
                 {...menuItem}
                 boothId={boothId}
                 menuStatus={menuItem.menuStatus}
-                add={addMenuItem}
                 remove={removeMemuItem}
                 edit={editMenuItem}
               />

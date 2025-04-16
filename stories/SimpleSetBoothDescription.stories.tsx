@@ -1,5 +1,5 @@
 import { BoothCategory } from "@/src/shared/lib/types";
-import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
+import useBoothDraftStore from "@/src/shared/model/store/booth-draft-store";
 import { OverviewSetBoothDescription } from "@/src/widgets/add-booth";
 import { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";

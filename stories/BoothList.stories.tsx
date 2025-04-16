@@ -1,5 +1,5 @@
 import { API_URL } from "@/src/shared/api/config";
-import { BoothList } from "@/src/widgets/boothList";
+import BoothList from "@/src/widgets/boothList/ui/BoothList";
 import { Meta, StoryObj } from "@storybook/react";
 import { HttpResponse, http } from "msw";
 
