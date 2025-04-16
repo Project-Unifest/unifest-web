@@ -113,7 +113,7 @@ const getBoothDetail = async (
   const { booths } = (
     await client.get(`api/members/my`).json<ApiResponse<MemberDetailResponse>>()
   ).data;
-  console.log(" booths", booths);
+
   const booth = booths.find((booth) => booth.id === boothId)!;
   return booth;
 

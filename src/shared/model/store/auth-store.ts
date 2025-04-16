@@ -59,9 +59,7 @@ export const useAuthStore = create<AuthStore>()(
         load: () => {
           const { accessToken, refreshToken } = get();
 
-          console.log({ accessToken, refreshToken });
           const hasTokens = !!accessToken && !!refreshToken;
-          console.log("load", hasTokens);
 
           set((state) => ({
             ...state,

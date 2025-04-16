@@ -8,6 +8,5 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log("AuthLayout");
   return <AuthGuardProvider>{children}</AuthGuardProvider>;
 }

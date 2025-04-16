@@ -37,9 +37,6 @@ export default function Queue() {
     return <>웨이팅 목록을 불러오는 중이에요.</>;
   }
 
-  console.log(groups);
-  console.log(isGroupsLoading);
-
   const activatedGroups = groups.filter(({ status }) => {
     if (activatedTab === "active") {
       return status === "RESERVED" || status === "CALLED";
