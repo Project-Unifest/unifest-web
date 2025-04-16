@@ -50,3 +50,6 @@ playwright/.auth
 .env.sentry-build-plugin
 
 .env
+
+# Cursor
+.cursor
