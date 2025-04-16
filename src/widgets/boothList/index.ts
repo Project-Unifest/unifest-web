@@ -1,1 +1,1 @@
-export { BoothList } from "./ui/BoothList";
+import BoothList from "./ui/BoothList";
