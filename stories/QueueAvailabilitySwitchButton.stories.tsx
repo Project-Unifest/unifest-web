@@ -14,6 +14,6 @@ export default meta;
 export const Default: Story = {
   args: {
     boothId: 77,
-    initialOpened: false,
+    initialEnabled: false,
   },
 };
