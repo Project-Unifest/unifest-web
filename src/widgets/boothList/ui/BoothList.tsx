@@ -10,7 +10,7 @@ import ClockIcon from "@/src/shared/ui/ClockIcon";
 import PlusIcon from "@/src/shared/ui/PlusIcon";
 import { useGetMyProfile } from "@/src/entities/members/api";
 
-export function BoothList() {
+export default function BoothList() {
   const { data: myProfile } = useGetMyProfile();
   const booths = myProfile.booths;
 
