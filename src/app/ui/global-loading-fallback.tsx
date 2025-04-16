@@ -10,7 +10,11 @@ import {
 } from "@/src/shared/ui/card";
 import { Separator } from "@/src/shared/ui/separator";
 
-function BoothItemSkeleton(isEnding: boolean) {
+interface BoothItemSkeletonProps {
+  isEnding: boolean;
+}
+
+function BoothItemSkeleton({ isEnding }: BoothItemSkeletonProps) {
   return (
     <>
       <Card className="m-5 border-none px-0 shadow-none">
