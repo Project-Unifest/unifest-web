@@ -1,6 +1,5 @@
 import { AuthState, useAuthStore } from "@/src/shared/model/store/auth-store";
 import { use, useEffect, useRef, useState } from "react";
-import { authReady, createAuthReady, wrapPromise } from "../lib/wrapPromise";
 
 export interface AuthQueryData {
   data: Omit<AuthState, "isLoading" | "isError">;
