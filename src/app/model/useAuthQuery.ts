@@ -1,28 +1,19 @@
 import { AuthState, useAuthStore } from "@/src/shared/model/store/auth-store";
+import { use, useEffect, useRef, useState } from "react";
 
 export interface AuthQueryData {
   data: Omit<AuthState, "isLoading" | "isError">;
-  isLoading: boolean;
   isError: boolean;
+  isLoading: boolean;
 }
 
 export default function useAuthQuery(): AuthQueryData {
-  const { isLoading, isError, ...state } = useAuthStore();
-
-  if (typeof window !== "undefined" && isLoading) {
-    throw new Promise<void>((resolve) => {
-      const unsubscribe = useAuthStore.subscribe((state) => {
-        if (!state.isLoading) {
-          unsubscribe();
-          resolve();
-        }
-      });
-    });
-  }
+  const { isLoading, isError, accessToken, refreshToken, isAuthenticated } =
+    useAuthStore();
 
   return {
-    data: { ...state },
-    isLoading,
+    data: { accessToken, refreshToken, isAuthenticated },
     isError,
+    isLoading,
   };
 }

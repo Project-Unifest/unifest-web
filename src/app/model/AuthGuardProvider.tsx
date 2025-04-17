@@ -3,6 +3,7 @@
 import React, { ReactNode, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useAuthQuery from "./useAuthQuery";
+import GlobalLoadingFallback from "../ui/global-loading-fallback";
 
 interface AuthGuardProviderProps {
   children: ReactNode;
@@ -11,7 +12,7 @@ interface AuthGuardProviderProps {
 export default function AuthGuardProvider({
   children,
 }: AuthGuardProviderProps) {
-  const { data } = useAuthQuery();
+  const { data, isLoading } = useAuthQuery();
   const { isAuthenticated } = data;
   const pathname = usePathname();
   const router = useRouter();
@@ -22,6 +23,10 @@ export default function AuthGuardProvider({
       router.push(`/sign-in?redirect=${encodeURIComponent(redirect)}`);
     }
   }, [isAuthenticated, pathname, router]);
+
+  if (isLoading) {
+    return <GlobalLoadingFallback />;
+  }
 
   return <>{children}</>;
 }
