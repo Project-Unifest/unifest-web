@@ -2,9 +2,10 @@ import { getMessage } from "@/src/shared/model/zod";
 import { z } from "zod";
 
 export enum University {
-  Konkuk = "건국대 서울캠",
-  Hankyung = "한경대학교",
+  Konkuk = "건국대학교",
   Transportation = "한국교통대학교",
+  Korea = "고려대학교",
+  SangMyung = "상명대학교",
 }
 
 export const signUpSchema = z

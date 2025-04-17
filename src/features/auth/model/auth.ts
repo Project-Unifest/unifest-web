@@ -27,10 +27,25 @@ export const signUp = async (
     schoolId: authDetails.schoolId,
     phoneNum: authDetails.contact,
   };
-
+  const id = () => {
+    switch (authDetails.university) {
+      case University.Konkuk:
+        return 1;
+      case University.Transportation:
+        return 3;
+      case University.Korea:
+        return 4;
+      case University.SangMyung:
+        return 5;
+      default:
+        console.log("aaaa");
+        return 0;
+    }
+  };
+  console.log(id());
   return publicClient
     .post("members", {
-      json: { ...body, schoolId: 2 }, // TODO change schoolId based on university
+      json: { ...body, schoolId: id() }, // TODO change schoolId based on university
     })
     .json<ApiResponse<void>>();
 };

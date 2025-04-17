@@ -4,7 +4,7 @@ import { Button } from "@/src/shared/ui/button";
 import { Input } from "@/src/shared/ui/input";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { signInSchema } from "../model/sign-in-schema";
 import { z } from "zod";
@@ -23,7 +23,6 @@ import { useAuthStore } from "@/src/shared/model/store/auth-store";
 export function SignIn() {
   const [parent] = useAutoAnimate();
   const setCredentials = useAuthStore((state) => state.setCredentials);
-
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -31,6 +30,7 @@ export function SignIn() {
       password: "",
     },
   });
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams!.get("redirect");
