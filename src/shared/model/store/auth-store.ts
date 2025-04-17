@@ -57,15 +57,18 @@ export const useAuthStore = create<AuthStore>()(
           set((state) => ({ ...state, isError: error })),
 
         load: () => {
+          if (typeof window === "undefined") return; // 서버에서는 실행하지 않음
+
           const { accessToken, refreshToken } = get();
-
+          console.log("load", accessToken, refreshToken);
           const hasTokens = !!accessToken && !!refreshToken;
-
+          console.log("hasTokens", hasTokens);
           set((state) => ({
             ...state,
             isLoading: false,
             isAuthenticated: hasTokens,
           }));
+          console.log("load success");
         },
       }),
       {
@@ -79,6 +82,7 @@ export const useAuthStore = create<AuthStore>()(
           if (error) {
             state?.setError(true);
           }
+          console.log("onRehydrateStorage", state);
           state?.load();
         },
       },

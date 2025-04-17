@@ -11,8 +11,10 @@ interface AuthGuardProviderProps {
 export default function AuthGuardProvider({
   children,
 }: AuthGuardProviderProps) {
+  console.log("AuthGuardProvider");
   const { data } = useAuthQuery();
   const { isAuthenticated } = data;
+  console.log("isAuthenticated", isAuthenticated);
   const pathname = usePathname();
   const router = useRouter();
 
