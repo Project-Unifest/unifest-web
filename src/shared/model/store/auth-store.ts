@@ -52,7 +52,6 @@ export const useAuthStore = create<AuthStore>()(
             ...defaultInitState,
             isLoading: false,
           })),
-
         setError: (error: boolean) =>
           set((state) => ({ ...state, isError: error })),
 
