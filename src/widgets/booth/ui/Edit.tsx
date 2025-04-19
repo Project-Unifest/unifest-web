@@ -26,12 +26,24 @@ import useBoothEditStore, {
   MenuItemState,
 } from "@/src/shared/model/store/booth-edit-store";
 import { BoothTimeForm } from "@/src/features/booth";
-import { useUpdateBooth } from "@/src/features/booth/api";
+import {
+  usePatchBoothSchedule,
+  useUpdateBooth,
+} from "@/src/features/booth/api";
 import {
   useCreateMenuItem,
   useDeleteMenuItem,
   useUpdateMenuItem,
 } from "@/src/features/menu/api";
+import { useEffect, useState } from "react";
+import {
+  MemberDetailResponse,
+  memberKeys,
+  useGetMyProfile,
+} from "@/src/entities/members/api";
+import { useQueryClient } from "@tanstack/react-query";
+import { bool } from "prop-types";
+import Spinner from "@/src/shared/ui/spinner";
 
 interface MenuItem {
   id: number;
@@ -40,7 +52,11 @@ interface MenuItem {
   imgUrl?: string;
   state: MenuItemState;
 }
-
+interface UnifestTime {
+  date: string;
+  openTime: string;
+  closeTime: string;
+}
 export function Edit({ boothId }: { boothId: number }) {
   const [
     name,
@@ -52,12 +68,12 @@ export function Edit({ boothId }: { boothId: number }) {
     latitude,
     longitude,
     thumbnail,
-    openTime,
-    closeTime,
+    scheduleList,
     editThumbnail,
-    editOpenTime,
-    editCloseTime,
-    resetBoothTime,
+    updateScheduleList,
+    addSchedule,
+    removeSchedule,
+    resetSchedules,
     menuList,
     addMenuItem,
     editMenuItem,
@@ -72,12 +88,12 @@ export function Edit({ boothId }: { boothId: number }) {
     state.latitude,
     state.longitude,
     state.thumbnail,
-    state.openTime,
-    state.closeTime,
+    state.scheduleList,
     state.editThumbnail,
-    state.editOpenTime,
-    state.editCloseTime,
-    state.resetBoothTime,
+    state.updateScheduleList,
+    state.addSchedule,
+    state.removeSchedule,
+    state.resetSchedules,
     state.menus,
     state.addMenuItem,
     state.editMenuItem,
@@ -98,47 +114,74 @@ export function Edit({ boothId }: { boothId: number }) {
       description,
       latitude,
       longitude,
-      openTime,
-      closeTime,
+      scheduleList,
     },
   });
-  const changeOpenTimeInForm = (openTime: string | null) => {
-    form.setValue("openTime", openTime);
-  };
-  const changeCloseTimeInForm = (closeTime: string | null) => {
-    form.setValue("closeTime", closeTime);
-  };
 
   const { reset } = form;
 
   const [parent] = useAutoAnimate();
 
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
-  const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId, {
-    onCreate: () => {
-      router.push("/");
-    },
-  });
+  const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
+  const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
+  const queryClient = useQueryClient();
+
+  const { data: myProfile } = useGetMyProfile();
 
   const onSubmit = async (data: any) => {
+    setIsSubmitting(true);
+    const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
+    const { scheduleList, ...rest } = data;
+    // Update booth first
     const { data: editedBooth } = await updateBooth({
       thumbnail,
-      ...data,
+      ...rest,
     });
-    menuList.forEach(async (menuItem) => {
-      const { data: res } = await updateMenuItem({
-        menuId: menuItem.id,
-        menuData: menuItem,
-      });
-      if (res === null) {
-        const { data: id } = await createMenuItem(menuItem);
-        id;
-      }
-    });
+
+    // Process all menu items sequentially with Promise.all
+    await Promise.all(
+      menuList.map(async (menuItem) => {
+        const { id: menuId, ...menuData } = menuItem;
+        const menu = booth?.menus.find((menu) => menu.id === menuId);
+
+        if (menu) {
+          // Update existing menu item
+          await updateMenuItem({
+            menuId,
+            menuData,
+          });
+        } else {
+          // Create new menu item
+          await createMenuItem(menuItem);
+        }
+      }),
+    );
+
+    // Update schedule after all menu operations are complete
+    await patchBoothSchedule({ scheduleList });
+
+    // Only navigate after all operations are complete
     router.push("/");
   };
 
+  // 디버깅을 위한 오류 상태 로깅
+  useEffect(() => {
+    if (form.formState.isSubmitting) {
+      console.log("Form errors:", form.formState.errors);
+    }
+  }, [form.formState.isSubmitting, form.formState.errors]);
+  if (isSubmitting) {
+    // TODO: prevent page from rerendering unexpectedly
+    return (
+      <div className="flex w-full flex-1 flex-col items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
   return (
     <>
       <EditImageBox thumbnail={thumbnail} editThumbnail={editThumbnail} />
@@ -315,14 +358,48 @@ export function Edit({ boothId }: { boothId: number }) {
           <Card className="mb-4">
             <CardHeader>
               <CardTitle>운영시간</CardTitle>
-              <BoothTimeForm
-                openTime={openTime}
-                closeTime={closeTime}
-                changeOpenTimeInForm={changeOpenTimeInForm}
-                changeCloseTimeInForm={changeCloseTimeInForm}
-                editOpenTime={editOpenTime}
-                editCloseTime={editCloseTime}
-                resetBoothTime={resetBoothTime}
+              <FormField
+                name="scheduleList"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormControl>
+                      <BoothTimeForm
+                        operatingTimes={scheduleList.map((schedule) => ({
+                          date: schedule.date,
+                          openTime: schedule.openTime,
+                          closeTime: schedule.closeTime,
+                        }))}
+                        onOperatingTimesChange={(times: UnifestTime[]) => {
+                          if (times.length > 0) {
+                            // 모든 일정 정보를 scheduleList에 저장 (시간이 설정되지 않은 것도 포함)
+                            const allOperatingTimes = times.map(
+                              (time: UnifestTime) => ({
+                                date: time.date,
+                                openTime: time.openTime || "",
+                                closeTime: time.closeTime || "",
+                              }),
+                            );
+
+                            updateScheduleList(allOperatingTimes);
+                            field.onChange(allOperatingTimes);
+                          } else {
+                            resetSchedules();
+                            field.onChange([]);
+                          }
+                        }}
+                        resetBoothTime={resetSchedules}
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>
+                    {form.formState.errors.scheduleList &&
+                      form.formState.errors.scheduleList.message && (
+                        <div className="mt-3 rounded-md bg-red-50 p-2 text-sm font-semibold text-red-500">
+                          {form.formState.errors.scheduleList.message}
+                        </div>
+                      )}
+                  </FormItem>
+                )}
               />
             </CardHeader>
           </Card>

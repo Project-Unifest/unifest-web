@@ -1,7 +1,6 @@
 "use client";
 
 import useBoothEditStore from "@/src/shared/model/store/booth-edit-store";
-import { useBoothDetailQuery } from "@/src/features/booth/api";
 import { Button } from "@/src/shared/ui/button";
 import PencilIcon from "@/src/shared/ui/PencilIcon";
 import Link from "next/link";
