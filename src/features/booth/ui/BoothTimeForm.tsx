@@ -40,7 +40,7 @@ export function BoothTimeForm({
       setSelectedDates([]);
       setShowOperatingTimes(false);
     }
-  }, []); // 의존성 배열을 비워서 마운트 시 한 번만 실행
+  }, [initialOperatingTimes]); // 의존성 배열을 비워서 마운트 시 한 번만 실행
 
   // 오류 상태 업데이트
   useEffect(() => {

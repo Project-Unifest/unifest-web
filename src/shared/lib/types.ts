@@ -30,6 +30,7 @@ export interface Booth {
   enabled?: boolean;
   scheduleList: BoothSchedule[];
   waitingEnabled?: boolean;
+  stampEnabled?: boolean;
 }
 
 export interface Member {
