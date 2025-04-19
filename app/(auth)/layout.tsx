@@ -1,6 +1,7 @@
 "use client";
 
 import AuthGuardProvider from "@/src/app/model/AuthGuardProvider";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function AuthLayout({

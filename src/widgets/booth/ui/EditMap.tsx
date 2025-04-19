@@ -14,6 +14,8 @@ import {
 } from "@vis.gl/react-google-maps";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useGetMyProfile } from "@/src/entities/members/api";
+import { useFestivalListQuery } from "@/src/features/festival/api";
 
 export function EditMap({ boothId }: Readonly<{ boothId: string }>) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
@@ -23,7 +25,10 @@ export function EditMap({ boothId }: Readonly<{ boothId: string }>) {
     state.editPosition,
   ]);
   const router = useRouter();
-
+  const { data: myProfile } = useGetMyProfile();
+  const festivals = useFestivalListQuery().data;
+  const schoolId = myProfile.schoolId;
+  const myFestival = festivals.find((value) => value.schoolId === schoolId);
   if (!apiKey) {
     return <div>문제가 발생했습니다. 다시 시도해주세요.</div>;
   }
@@ -41,8 +46,8 @@ export function EditMap({ boothId }: Readonly<{ boothId: string }>) {
       <Map
         className="h-screen w-full"
         defaultCenter={{
-          lat: CampusPosition.latitude,
-          lng: CampusPosition.longitude,
+          lat: myFestival?.latitude ?? CampusPosition.latitude,
+          lng: myFestival?.longitude ?? CampusPosition.longitude,
         }}
         defaultZoom={17}
         gestureHandling="cooperative"

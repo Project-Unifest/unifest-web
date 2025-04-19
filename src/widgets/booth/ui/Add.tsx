@@ -28,6 +28,8 @@ import { BoothTimeForm } from "@/src/features/booth";
 import { useCreateBooth } from "@/src/features/booth/api";
 import { addBooth } from "../../add-booth/model/add-booth";
 import { useEffect } from "react";
+import { useFestivalListQuery } from "@/src/features/festival/api";
+import { useGetMyProfile } from "@/src/entities/members/api";
 
 interface MenuItem {
   id: number;
@@ -106,11 +108,19 @@ export function Add({ boothId }: { boothId: number }) {
     },
   });
 
+  // TODO: abstract away myFestival
+  const { data: myProfile } = useGetMyProfile();
+  const festivals = useFestivalListQuery().data;
+  const schoolId = myProfile.schoolId;
+  const myFestival = festivals.find((value) => value.schoolId === schoolId)!;
+
   const onSubmit = async (data: any) => {
+    const { id: boothId, ...rest } = data;
+
     const { data: newBooth } = await addBooth({
-      id: boothId,
       thumbnail,
-      ...data,
+      festivalId: myFestival.festivalId,
+      ...rest,
       menus: menuList,
     });
     router.push("/");

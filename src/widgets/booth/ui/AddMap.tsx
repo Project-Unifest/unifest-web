@@ -1,5 +1,7 @@
 "use client";
 
+import { useGetMyProfile } from "@/src/entities/members/api";
+import { useFestivalListQuery } from "@/src/features/festival/api";
 import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-draft-store";
 import { CampusPosition } from "@/src/shared/model/store/booth-draft-store";
 import { Button } from "@/src/shared/ui/button";
@@ -17,6 +19,12 @@ import { useRouter } from "next/navigation";
 
 export function AddMap({ boothId }: { boothId: number }) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+  const { data: myProfile } = useGetMyProfile();
+  const festivals = useFestivalListQuery().data;
+  const schoolId = myProfile.schoolId;
+  const myFestival = festivals.find((value) => value.schoolId === schoolId);
+
   const [latitude, longitude, editPosition] = useBoothDetailsDraftStore(
     (state) => [state.latitude, state.longitude, state.editPosition],
   );
@@ -39,8 +47,8 @@ export function AddMap({ boothId }: { boothId: number }) {
       <Map
         className="h-screen w-full"
         defaultCenter={{
-          lat: CampusPosition.latitude,
-          lng: CampusPosition.longitude,
+          lat: myFestival?.latitude ?? CampusPosition.latitude,
+          lng: myFestival?.longitude ?? CampusPosition.longitude,
         }}
         defaultZoom={17}
         gestureHandling="cooperative"

@@ -7,10 +7,18 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 import { useCreateBooth } from "@/src/features/booth/api";
 import useBoothDraftStore from "@/src/shared/model/store/booth-draft-store";
+import { useGetMyProfile } from "@/src/entities/members/api";
+import { useFestivalListQuery } from "@/src/features/festival/api";
 
 export function SetDescription() {
   const [parent] = useAutoAnimate();
   const router = useRouter();
+
+  // TODO: abstract away myFestival
+  const { data: myProfile } = useGetMyProfile();
+  const festivals = useFestivalListQuery().data;
+  const schoolId = myProfile.schoolId;
+  const myFestival = festivals.find((value) => value.schoolId === schoolId)!;
 
   const { editDescription, name, category, description, latitude, longitude } =
     useBoothDraftStore((state) => ({
@@ -51,10 +59,10 @@ export function SetDescription() {
       thumbnail: "",
       longitude,
       latitude,
-      festivalId: 2,
+      festivalId: myFestival.festivalId,
       location: "위치 지정 필요",
       menus: [],
-      boothSchedules: [],
+      scheduleList: [],
     });
   };
 
@@ -68,10 +76,10 @@ export function SetDescription() {
       thumbnail: "",
       longitude,
       latitude,
-      festivalId: 2,
+      festivalId: myFestival.festivalId,
       location: "상세위치 지정 필요",
       menus: [],
-      boothSchedules: [],
+      scheduleList: [],
     });
   };
 

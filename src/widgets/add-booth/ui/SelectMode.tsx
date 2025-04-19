@@ -103,7 +103,7 @@ export function SelectMode() {
                 latitude: 0,
                 longitude: 0,
                 menus: [],
-                boothSchedules: [],
+                scheduleList: [],
               });
               router.push(`/add-booth/details/set-position/${id}`);
             }}
