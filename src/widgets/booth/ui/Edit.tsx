@@ -27,7 +27,6 @@ import useBoothEditStore, {
 } from "@/src/shared/model/store/booth-edit-store";
 import { BoothTimeForm } from "@/src/features/booth";
 import {
-  useBoothDetailQuery,
   usePatchBoothSchedule,
   useUpdateBooth,
 } from "@/src/features/booth/api";
@@ -36,7 +35,14 @@ import {
   useDeleteMenuItem,
   useUpdateMenuItem,
 } from "@/src/features/menu/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  MemberDetailResponse,
+  memberKeys,
+  useGetMyProfile,
+} from "@/src/entities/members/api";
+import { useQueryClient } from "@tanstack/react-query";
+import { bool } from "prop-types";
 
 interface MenuItem {
   id: number;
@@ -45,7 +51,11 @@ interface MenuItem {
   imgUrl?: string;
   state: MenuItemState;
 }
-
+interface UnifestTime {
+  date: string;
+  openTime: string;
+  closeTime: string;
+}
 export function Edit({ boothId }: { boothId: number }) {
   const [
     name,
@@ -111,13 +121,19 @@ export function Edit({ boothId }: { boothId: number }) {
 
   const [parent] = useAutoAnimate();
 
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
   const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
-  const { data: booth } = useBoothDetailQuery(boothId);
+  const queryClient = useQueryClient();
+
+  const { data: myProfile } = useGetMyProfile();
 
   const onSubmit = async (data: any) => {
+    setIsSubmitting(true);
+    const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
     const { scheduleList, ...rest } = data;
     // Update booth first
     const { data: editedBooth } = await updateBooth({
@@ -157,7 +173,9 @@ export function Edit({ boothId }: { boothId: number }) {
       console.log("Form errors:", form.formState.errors);
     }
   }, [form.formState.isSubmitting, form.formState.errors]);
-
+  if (isSubmitting) {
+    return <>진행 중...</>;
+  }
   return (
     <>
       <EditImageBox thumbnail={thumbnail} editThumbnail={editThumbnail} />
@@ -346,14 +364,16 @@ export function Edit({ boothId }: { boothId: number }) {
                           openTime: schedule.openTime,
                           closeTime: schedule.closeTime,
                         }))}
-                        onOperatingTimesChange={(times) => {
+                        onOperatingTimesChange={(times: UnifestTime[]) => {
                           if (times.length > 0) {
                             // 모든 일정 정보를 scheduleList에 저장 (시간이 설정되지 않은 것도 포함)
-                            const allOperatingTimes = times.map((time) => ({
-                              date: time.date,
-                              openTime: time.openTime || "",
-                              closeTime: time.closeTime || "",
-                            }));
+                            const allOperatingTimes = times.map(
+                              (time: UnifestTime) => ({
+                                date: time.date,
+                                openTime: time.openTime || "",
+                                closeTime: time.closeTime || "",
+                              }),
+                            );
 
                             updateScheduleList(allOperatingTimes);
                             field.onChange(allOperatingTimes);
