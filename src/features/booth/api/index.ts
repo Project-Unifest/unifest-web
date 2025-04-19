@@ -70,6 +70,10 @@ interface BoothScheduleCreateRequest {
   closeTime: LocalTime;
 }
 
+interface BoothSchedulePatchRequest {
+  scheduleList: BoothScheduleCreateRequest[];
+}
+
 export interface BoothCreateRequest {
   name: string;
   category: BoothCategoryKeys;
@@ -162,6 +166,17 @@ const toggleQueue = async (
     .json<ApiResponse<Booth>>();
 };
 
+const patchBoothSchedule = async (
+  boothId: number,
+  scheduleData: BoothSchedulePatchRequest,
+): Promise<ApiResponse<number>> => {
+  return client
+    .patch(`api/booths/${boothId}/schedule`, {
+      json: scheduleData,
+    })
+    .json<ApiResponse<number>>();
+};
+
 const uploadImage = async (image: File): Promise<{ imgUrl: string }> => {
   const formData = new FormData();
   formData.append("file", image);
@@ -251,6 +266,22 @@ export const useToggleQueue = (
       queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
       options.onToggle?.();
+    },
+  });
+};
+
+export const usePatchBoothSchedule = (
+  boothId: number,
+  options?: { onUpdate?: () => void },
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (scheduleData: BoothSchedulePatchRequest) =>
+      patchBoothSchedule(boothId, scheduleData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
+      options?.onUpdate?.();
     },
   });
 };
