@@ -45,7 +45,7 @@ export function SignUp() {
 
     try {
       const { data: signUpResult } = await signUp(data);
-
+      alert("회원가입에 성공했습니다.");
       router.push("/sign-in");
     } catch (e: any) {
       //TODO : Alert로 임시 처리, 나중에 수정

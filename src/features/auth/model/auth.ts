@@ -38,8 +38,7 @@ export const signUp = async (
       case University.SangMyung:
         return 5;
       default:
-        console.log("aaaa");
-        return 0;
+        throw new Error("올바르지 않은 요청입니다");
     }
   };
   console.log(id());
