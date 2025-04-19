@@ -43,6 +43,7 @@ import {
 } from "@/src/entities/members/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { bool } from "prop-types";
+import Spinner from "@/src/shared/ui/spinner";
 
 interface MenuItem {
   id: number;
@@ -174,8 +175,12 @@ export function Edit({ boothId }: { boothId: number }) {
     }
   }, [form.formState.isSubmitting, form.formState.errors]);
   if (isSubmitting) {
-    //TODO : Spinner 추가
-    return <>진행 중...</>;
+    // TODO: Spinner 추가
+    return (
+      <div className="flex w-full flex-1 flex-col items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
   return (
     <>
