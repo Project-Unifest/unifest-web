@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 export function GoogleMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
+  // TODO: abstract away myFestival
   const { data: myProfile } = useGetMyProfile();
   const festivals = useFestivalListQuery().data;
   const schoolId = myProfile.schoolId;
