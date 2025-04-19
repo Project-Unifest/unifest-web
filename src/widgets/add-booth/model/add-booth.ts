@@ -3,9 +3,9 @@ import { Booth } from "@/src/shared/lib/types";
 import { ApiResponse } from "@/src/shared/api/types";
 
 export const addBooth = async (
-  booth: Pick<
-    Booth,
-    "name" | "category" | "description" | "longitude" | "latitude"
+  booth: Omit<
+    Pick<Booth, "name" | "category" | "description" | "longitude" | "latitude">,
+    "id"
   >,
 ): Promise<ApiResponse<number>> => {
   return client
