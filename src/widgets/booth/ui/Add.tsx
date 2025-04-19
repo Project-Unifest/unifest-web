@@ -27,6 +27,7 @@ import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-dr
 import { BoothTimeForm } from "@/src/features/booth";
 import { useCreateBooth } from "@/src/features/booth/api";
 import { addBooth } from "../../add-booth/model/add-booth";
+import { useEffect } from "react";
 
 interface MenuItem {
   id: number;

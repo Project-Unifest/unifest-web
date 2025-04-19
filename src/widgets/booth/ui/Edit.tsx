@@ -26,12 +26,17 @@ import useBoothEditStore, {
   MenuItemState,
 } from "@/src/shared/model/store/booth-edit-store";
 import { BoothTimeForm } from "@/src/features/booth";
-import { useUpdateBooth } from "@/src/features/booth/api";
+import {
+  useBoothDetailQuery,
+  usePatchBoothSchedule,
+  useUpdateBooth,
+} from "@/src/features/booth/api";
 import {
   useCreateMenuItem,
   useDeleteMenuItem,
   useUpdateMenuItem,
 } from "@/src/features/menu/api";
+import { useEffect } from "react";
 
 interface MenuItem {
   id: number;
@@ -107,28 +112,42 @@ export function Edit({ boothId }: { boothId: number }) {
   const [parent] = useAutoAnimate();
 
   const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
-  const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId, {
-    onCreate: () => {
-      router.push("/");
-    },
-  });
+  const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
+  const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
+  const { data: booth } = useBoothDetailQuery(boothId);
 
   const onSubmit = async (data: any) => {
+    const { scheduleList, ...rest } = data;
+    // Update booth first
     const { data: editedBooth } = await updateBooth({
       thumbnail,
-      ...data,
+      ...rest,
     });
-    menuList.forEach(async (menuItem) => {
-      const { data: res } = await updateMenuItem({
-        menuId: menuItem.id,
-        menuData: menuItem,
-      });
-      if (res === null) {
-        const { data: id } = await createMenuItem(menuItem);
-        id;
-      }
-    });
+
+    // Process all menu items sequentially with Promise.all
+    await Promise.all(
+      menuList.map(async (menuItem) => {
+        const { id: menuId, ...menuData } = menuItem;
+        const menu = booth?.menus.find((menu) => menu.id === menuId);
+
+        if (menu) {
+          // Update existing menu item
+          await updateMenuItem({
+            menuId,
+            menuData,
+          });
+        } else {
+          // Create new menu item
+          await createMenuItem(menuItem);
+        }
+      }),
+    );
+
+    // Update schedule after all menu operations are complete
+    await patchBoothSchedule({ scheduleList });
+
+    // Only navigate after all operations are complete
     router.push("/");
   };
 
