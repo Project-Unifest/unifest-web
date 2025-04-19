@@ -175,7 +175,7 @@ export function Edit({ boothId }: { boothId: number }) {
     }
   }, [form.formState.isSubmitting, form.formState.errors]);
   if (isSubmitting) {
-    // TODO: Spinner 추가
+    // TODO: prevent page from rerendering unexpectedly
     return (
       <div className="flex w-full flex-1 flex-col items-center justify-center">
         <Spinner />
