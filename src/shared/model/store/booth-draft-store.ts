@@ -1,5 +1,10 @@
 import { devtools, persist } from "zustand/middleware";
-import { Booth, BoothCategory, BoothCategoryKeys } from "../../lib/types";
+import {
+  Booth,
+  BoothCategory,
+  BoothCategoryKeys,
+  BoothSchedule,
+} from "../../lib/types";
 import { create } from "zustand";
 
 export interface Position {
@@ -10,6 +15,10 @@ export interface Position {
 export type BoothDraftState = Booth;
 
 export type BoothDraftActions = {
+  updateScheduleList: (scheduleList: BoothSchedule[]) => void;
+  addSchedule: (schedule: BoothSchedule) => void;
+  removeSchedule: (date: string) => void;
+  resetSchedules: () => void;
   editName: (newName: string) => void;
   editCategory: (newCategory: BoothCategoryKeys) => void;
   editDescription: (newDescription: string) => void;
@@ -35,8 +44,7 @@ export const defaultInitState = {
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
   menus: [],
-  openTime: null,
-  closeTime: null,
+  scheduleList: [],
 } satisfies BoothDraftState;
 
 const useBoothDraftStore = create<BoothDraftStore>()(
@@ -54,6 +62,27 @@ const useBoothDraftStore = create<BoothDraftStore>()(
             ...state,
             latitude: newPosition.latitude,
             longitude: newPosition.longitude,
+          })),
+        updateScheduleList: (scheduleList) =>
+          set((state) => ({ ...state, scheduleList })),
+        addSchedule: (schedule) =>
+          set((state) => ({
+            ...state,
+            scheduleList: [...state.scheduleList, schedule].sort(
+              (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+            ),
+          })),
+        removeSchedule: (date) =>
+          set((state) => ({
+            ...state,
+            scheduleList: state.scheduleList.filter(
+              (schedule) => schedule.date !== date,
+            ),
+          })),
+        resetSchedules: () =>
+          set((state) => ({
+            ...state,
+            scheduleList: [],
           })),
         reset: () => set((state) => ({ ...state, ...defaultInitState })),
       }),

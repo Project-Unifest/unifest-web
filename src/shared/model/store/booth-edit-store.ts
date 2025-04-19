@@ -4,6 +4,7 @@ import {
   Booth,
   BoothCategory,
   BoothCategoryKeys,
+  BoothSchedule,
   Product,
 } from "../../lib/types";
 import { MenuStatus } from "@/src/features/menu/lib/types";
@@ -30,9 +31,10 @@ export type BoothDraftActions = {
   editDescription: (newDescription: string) => void;
   editPosition: (newPosition: Position) => void;
   editThumbnail: (url: string) => void;
-  editOpenTime: (openTime: string) => void;
-  editCloseTime: (closeTime: string) => void;
-  resetBoothTime: () => void;
+  updateScheduleList: (scheduleList: BoothSchedule[]) => void;
+  addSchedule: (schedule: BoothSchedule) => void;
+  removeSchedule: (date: string) => void;
+  resetSchedules: () => void;
   reset: () => void;
   addMenuItem: () => void;
   editMenuItem: (id: number, menuProp: Partial<Product>) => void;
@@ -56,8 +58,7 @@ export const defaultInitState = {
   location: "",
   latitude: CampusPosition.latitude,
   longitude: CampusPosition.longitude,
-  openTime: null,
-  closeTime: null,
+  scheduleList: [],
   menus: [],
 } satisfies Omit<BoothEditState, "id">;
 
@@ -78,13 +79,26 @@ const useBoothEditStore = create<BoothEditStore>()(
           longitude: newPosition.longitude,
         })),
       editThumbnail: (url) => set((state) => ({ ...state, thumbnail: url })),
-      editOpenTime: (openTime) => set((state) => ({ ...state, openTime })),
-      editCloseTime: (closeTime) => set((state) => ({ ...state, closeTime })),
-      resetBoothTime: () =>
+      updateScheduleList: (scheduleList) =>
+        set((state) => ({ ...state, scheduleList })),
+      addSchedule: (schedule) =>
         set((state) => ({
           ...state,
-          openTime: null,
-          closeTime: null,
+          scheduleList: [...state.scheduleList, schedule].sort(
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+          ),
+        })),
+      removeSchedule: (date) =>
+        set((state) => ({
+          ...state,
+          scheduleList: state.scheduleList.filter(
+            (schedule) => schedule.date !== date,
+          ),
+        })),
+      resetSchedules: () =>
+        set((state) => ({
+          ...state,
+          scheduleList: [],
         })),
       reset: () => set((state) => ({ ...state, ...defaultInitState })),
       addMenuItem: () =>

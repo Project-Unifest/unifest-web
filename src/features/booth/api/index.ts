@@ -11,7 +11,11 @@ import { Booth, BoothCategoryKeys } from "@/src/shared/lib/types";
 import { MenuStatus } from "../../menu/lib/types";
 import { BoothDetailResponse } from "@/src/entities/booth/api/boothDetail";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { MemberDetailResponse, memberKeys } from "@/src/entities/members/api";
+import {
+  MemberDetailResponse,
+  memberKeys,
+  useGetMyProfile,
+} from "@/src/entities/members/api";
 
 interface ProductForCreate {
   menuStatus?: MenuStatus;
@@ -70,6 +74,10 @@ interface BoothScheduleCreateRequest {
   closeTime: LocalTime;
 }
 
+interface BoothSchedulePatchRequest {
+  scheduleList: BoothScheduleCreateRequest[];
+}
+
 export interface BoothCreateRequest {
   name: string;
   category: BoothCategoryKeys;
@@ -100,29 +108,23 @@ interface BoothPatchRequest {
 }
 const FESTIVAL_ID = 2;
 
-const getBoothList = async (): Promise<Booth[]> => {
-  // FIXME: special endpoint for admin web
-  const response = await fetch(`${API_URL}/api/booths`);
-  const result = (await response.json()) as ApiResponse<Booth[]>;
-  return result.data;
-};
+// const getBoothList = async (): Promise<Booth[]> => {
+//   // FIXME: special endpoint for admin web
+//   const response = await fetch(`${API_URL}/api/booths`);
+//   const result = (await response.json()) as ApiResponse<Booth[]>;
+//   return result.data;
+// };
 
-const getBoothDetail = async (
-  boothId: number,
-): Promise<BoothDetailResponse> => {
-  const { booths } = (
-    await client.get(`api/members/my`).json<ApiResponse<MemberDetailResponse>>()
-  ).data;
+// const getBoothDetail = async (
+//   boothId: number,
+// ): Promise<BoothDetailResponse> => {
 
-  const booth = booths.find((booth) => booth.id === boothId)!;
-  return booth;
-
-  // FIXME: special endpoint for admin web
-  // const response = await client
-  //   .get(`api/booths/${boothId}`)
-  //   .json<ApiResponse<BoothDetailResponse>>();
-  // return response.data;
-};
+//   // FIXME: special endpoint for admin web
+//   // const response = await client
+//   //   .get(`api/booths/${boothId}`)
+//   //   .json<ApiResponse<BoothDetailResponse>>();
+//   // return response.data;
+// };
 
 const createBooth = async (boothData: BoothCreateRequest): Promise<number> => {
   boothData.festivalId = FESTIVAL_ID;
@@ -162,6 +164,17 @@ const toggleQueue = async (
     .json<ApiResponse<Booth>>();
 };
 
+const patchBoothSchedule = async (
+  boothId: number,
+  scheduleData: BoothSchedulePatchRequest,
+): Promise<ApiResponse<number>> => {
+  return client
+    .patch(`api/booths/${boothId}/schedule`, {
+      json: scheduleData,
+    })
+    .json<ApiResponse<number>>();
+};
+
 const uploadImage = async (image: File): Promise<{ imgUrl: string }> => {
   const formData = new FormData();
   formData.append("file", image);
@@ -178,21 +191,24 @@ export const boothKeys = createQueryKeys("booths", {
   detail: (params: { boothId: number }) => [params],
 });
 
-export const useBoothListQuery = () => {
-  return useSuspenseQuery({
-    // queryKey: boothKeys.list.queryKey,
-    queryKey: memberKeys.me.queryKey,
-    queryFn: getBoothList,
-  });
-};
+// export const useBoothListQuery = () => {
+//   return useSuspenseQuery({
+//     // queryKey: boothKeys.list.queryKey,
+//     queryKey: memberKeys.me.queryKey,
+//     queryFn: getBoothList,
+//   });
+// };
 
-export const useBoothDetailQuery = (boothId: number) => {
-  return useSuspenseQuery({
-    // queryKey: boothKeys.detail({ boothId }).queryKey,
-    queryKey: memberKeys.me.queryKey,
-    queryFn: () => getBoothDetail(boothId),
-  });
-};
+// export const useBoothDetailQuery = (boothId: number): BoothDetailResponse => {
+//   // return useSuspenseQuery({
+//   //   // queryKey: boothKeys.detail({ boothId }).queryKey,
+//   //   queryKey: memberKeys.me.queryKey,
+//   //   queryFn: () => getBoothDetail(boothId),
+//   // });
+
+//   const booth = data.booths.find((booth) => booth.id === boothId)!;
+//   return booth;
+// };
 
 export const useCreateBooth = (options?: { onCreate?: () => void }) => {
   const queryClient = useQueryClient();
@@ -251,6 +267,22 @@ export const useToggleQueue = (
       queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
       options.onToggle?.();
+    },
+  });
+};
+
+export const usePatchBoothSchedule = (
+  boothId: number,
+  options?: { onUpdate?: () => void },
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (scheduleData: BoothSchedulePatchRequest) =>
+      patchBoothSchedule(boothId, scheduleData),
+    onSuccess: () => {
+      // queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
+      options?.onUpdate?.();
     },
   });
 };

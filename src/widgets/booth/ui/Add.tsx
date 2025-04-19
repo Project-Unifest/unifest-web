@@ -27,6 +27,7 @@ import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-dr
 import { BoothTimeForm } from "@/src/features/booth";
 import { useCreateBooth } from "@/src/features/booth/api";
 import { addBooth } from "../../add-booth/model/add-booth";
+import { useEffect } from "react";
 
 interface MenuItem {
   id: number;
@@ -48,12 +49,12 @@ export function Add({ boothId }: { boothId: number }) {
     longitude,
     menuList,
     thumbnail,
-    openTime,
-    closeTime,
+    scheduleList,
     editThumbnail,
-    editOpenTime,
-    editCloseTime,
-    resetBoothTime,
+    updateScheduleList,
+    addSchedule,
+    removeSchedule,
+    resetSchedules,
     addMenuItem,
     editMenuItem,
     removeMemuItem,
@@ -68,12 +69,12 @@ export function Add({ boothId }: { boothId: number }) {
     state.longitude,
     state.menus,
     state.thumbnail,
-    state.openTime,
-    state.closeTime,
+    state.scheduleList,
     state.editThumbnail,
-    state.editOpenTime,
-    state.editCloseTime,
-    state.resetBoothTime,
+    state.updateScheduleList,
+    state.addSchedule,
+    state.removeSchedule,
+    state.resetSchedules,
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
@@ -91,17 +92,9 @@ export function Add({ boothId }: { boothId: number }) {
       description,
       latitude,
       longitude,
-      openTime,
-      closeTime,
+      scheduleList,
     },
   });
-
-  const changeOpenTimeInForm = (openTime: string | null) => {
-    form.setValue("openTime", openTime);
-  };
-  const changeCloseTimeInForm = (closeTime: string | null) => {
-    form.setValue("closeTime", closeTime);
-  };
 
   const [parent] = useAutoAnimate();
 
@@ -122,6 +115,13 @@ export function Add({ boothId }: { boothId: number }) {
     });
     router.push("/");
   };
+
+  // 디버깅을 위한 오류 상태 로깅
+  useEffect(() => {
+    if (form.formState.isSubmitting) {
+      console.log("Form errors:", form.formState.errors);
+    }
+  }, [form.formState.isSubmitting, form.formState.errors]);
 
   return (
     <>
@@ -299,14 +299,46 @@ export function Add({ boothId }: { boothId: number }) {
           <Card className="mb-4">
             <CardHeader>
               <CardTitle>운영시간</CardTitle>
-              <BoothTimeForm
-                openTime={openTime}
-                closeTime={closeTime}
-                changeOpenTimeInForm={changeOpenTimeInForm}
-                changeCloseTimeInForm={changeCloseTimeInForm}
-                editOpenTime={editOpenTime}
-                editCloseTime={editCloseTime}
-                resetBoothTime={resetBoothTime}
+              <FormField
+                name="scheduleList"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormControl>
+                      <BoothTimeForm
+                        operatingTimes={scheduleList.map((schedule) => ({
+                          date: schedule.date,
+                          openTime: schedule.openTime,
+                          closeTime: schedule.closeTime,
+                        }))}
+                        onOperatingTimesChange={(times) => {
+                          if (times.length > 0) {
+                            // 모든 일정 정보를 scheduleList에 저장 (시간이 설정되지 않은 것도 포함)
+                            const allOperatingTimes = times.map((time) => ({
+                              date: time.date,
+                              openTime: time.openTime || "",
+                              closeTime: time.closeTime || "",
+                            }));
+
+                            updateScheduleList(allOperatingTimes);
+                            field.onChange(allOperatingTimes);
+                          } else {
+                            resetSchedules();
+                            field.onChange([]);
+                          }
+                        }}
+                        resetBoothTime={resetSchedules}
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>
+                    {form.formState.errors.scheduleList &&
+                      form.formState.errors.scheduleList.message && (
+                        <div className="mt-3 rounded-md bg-red-50 p-2 text-sm font-semibold text-red-500">
+                          {form.formState.errors.scheduleList.message}
+                        </div>
+                      )}
+                  </FormItem>
+                )}
               />
             </CardHeader>
           </Card>
