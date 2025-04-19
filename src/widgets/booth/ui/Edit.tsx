@@ -174,6 +174,7 @@ export function Edit({ boothId }: { boothId: number }) {
     }
   }, [form.formState.isSubmitting, form.formState.errors]);
   if (isSubmitting) {
+    //TODO : Spinner 추가
     return <>진행 중...</>;
   }
   return (
