@@ -54,7 +54,7 @@ export function SetDescription() {
       festivalId: 2,
       location: "위치 지정 필요",
       menus: [],
-      boothSchedules: [],
+      scheduleList: [],
     });
   };
 
@@ -71,7 +71,7 @@ export function SetDescription() {
       festivalId: 2,
       location: "상세위치 지정 필요",
       menus: [],
-      boothSchedules: [],
+      scheduleList: [],
     });
   };
 

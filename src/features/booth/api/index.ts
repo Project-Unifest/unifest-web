@@ -90,7 +90,7 @@ export interface BoothCreateRequest {
   location: string;
   latitude: number;
   longitude: number;
-  boothSchedules: BoothScheduleCreateRequest[];
+  scheduleList: BoothScheduleCreateRequest[];
 }
 
 interface BoothPatchRequest {
