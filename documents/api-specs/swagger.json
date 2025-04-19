@@ -9,8 +9,18 @@
     },
     "version": "1.0"
   },
-  "servers": [{ "url": "/", "description": "Default Server URL" }],
-  "tags": [{ "name": "인증", "description": "로그인 관련 API" }],
+  "servers": [
+    {
+      "url": "/",
+      "description": "Default Server URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "인증",
+      "description": "로그인 관련 API"
+    }
+  ],
   "paths": {
     "/waiting": {
       "put": {
@@ -20,7 +30,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CancelWaitingRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/CancelWaitingRequest"
+              }
             }
           },
           "required": true
@@ -30,7 +42,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
               }
             }
           }
@@ -43,7 +57,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostWaitingRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostWaitingRequest"
+              }
             }
           },
           "required": true
@@ -53,7 +69,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
               }
             }
           }
@@ -70,7 +88,10 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -78,7 +99,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
               }
             }
           }
@@ -95,7 +118,10 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -103,7 +129,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
               }
             }
           }
@@ -120,7 +148,10 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -128,7 +159,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
               }
             }
           }
@@ -142,7 +175,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostFcmRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostFcmRequest"
+              }
             }
           },
           "required": true
@@ -152,7 +187,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseString" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
               }
             }
           }
@@ -169,7 +206,10 @@
             "name": "menu-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
@@ -187,12 +227,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/waiting/{boothId}/waitingEnabled": {
@@ -205,7 +251,10 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -213,7 +262,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseBoolean" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseBoolean"
+                }
               }
             }
           }
@@ -230,7 +281,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseString" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
               }
             }
           }
@@ -243,7 +296,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostTokenTestRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostTokenTestRequest"
+              }
             }
           },
           "required": true
@@ -253,7 +308,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseString" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
               }
             }
           }
@@ -270,7 +327,10 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -278,12 +338,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseString" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "post": {
         "tags": ["waiting-controller"],
@@ -294,7 +360,10 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -302,12 +371,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseString" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseString"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/waiting/pin/check": {
@@ -318,7 +393,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CheckPinRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/CheckPinRequest"
+              }
             }
           },
           "required": true
@@ -328,7 +405,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -360,7 +439,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostStarRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostStarRequest"
+              }
             }
           },
           "required": true
@@ -370,7 +451,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -387,7 +470,18 @@
             "name": "deviceId",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "festivalId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -410,7 +504,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/StampRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/StampRequest"
+              }
             }
           },
           "required": true
@@ -420,17 +516,19 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         }
       }
     },
-    "/stamps/booth": {
+    "/stamps/festival": {
       "post": {
         "tags": ["stamp-controller"],
-        "summary": "부스 스탬프 정보 생성",
+        "summary": "페스티벌 스탬프 정보 생성",
         "operationId": "createStampInfo",
         "requestBody": {
           "content": {
@@ -447,12 +545,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/school": {
@@ -462,7 +566,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostSchoolRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostSchoolRequest"
+              }
             }
           },
           "required": true
@@ -472,9 +578,43 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
+          }
+        }
+      }
+    },
+    "/reissue": {
+      "post": {
+        "tags": ["인증"],
+        "summary": "액세스토큰 재발급",
+        "operationId": "reissue",
+        "parameters": [
+          {
+            "name": "RefreshToken",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "만료된 리프레시 토큰입니다. (RefreshTokenExpiredException) [에러 코드: 2003]"
           }
         }
       }
@@ -507,7 +647,11 @@
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "post": {
         "tags": ["member-controller"],
@@ -516,7 +660,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/MemberSignUpRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/MemberSignUpRequest"
+              }
             }
           },
           "required": true
@@ -526,7 +672,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -541,7 +689,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/AddMegaphoneRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/AddMegaphoneRequest"
+              }
             }
           },
           "required": true
@@ -551,7 +701,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -567,18 +719,24 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
             }
           },
           "required": true
         },
         "responses": {
-          "401": { "description": "인증 실패" },
+          "401": {
+            "description": "인증 실패"
+          },
           "200": {
             "description": "성공",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TokenResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
               }
             }
           }
@@ -595,7 +753,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": { "type": "string", "format": "binary" }
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
                 }
               }
             },
@@ -603,7 +764,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": { "type": "string", "format": "binary" }
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
                 }
               }
             }
@@ -614,7 +778,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/FileResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFileResponse"
+                }
               }
             }
           }
@@ -631,7 +797,9 @@
             "name": "name",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -654,7 +822,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostFestivalRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostFestivalRequest"
+              }
             }
           },
           "required": true
@@ -664,7 +834,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -675,29 +847,57 @@
       "post": {
         "tags": ["interest-controller"],
         "summary": "관심 축제 등록",
+        "description": "사용자가 특정 축제에 대해 관심을 등록합니다. 관심 등록 시 해당 축제에 대한 푸시 알림 구독이 추가됩니다.",
         "operationId": "postInterest",
         "parameters": [
           {
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/InterestRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/InterestRequest"
+              }
             }
           },
           "required": true
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "관심 축제 등록에 성공했습니다.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "해당 축제가 존재하지 않습니다. (FestivalNotFoundException) [에러 코드: 4001]",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "이미 이 디바이스로 관심 등록한 축제입니다. (InterestAlreadyExistsException) [에러 코드: 4002]",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -706,29 +906,47 @@
       "delete": {
         "tags": ["interest-controller"],
         "summary": "관심 축제 해제",
+        "description": "사용자가 특정 축제에 대한 관심을 해제합니다. 해제 시 해당 축제에 대한 푸시 알림 구독이 취소됩니다.",
         "operationId": "deleteInterest",
         "parameters": [
           {
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/InterestRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/InterestRequest"
+              }
             }
           },
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "404": {
+            "description": "해당 디바이스의 해당 축제에 대한 관심이 존재하지 않습니다. (InterestNotFoundException) [에러 코드: 4003]",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "관심 축제 해제에 성공했습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
@@ -743,7 +961,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostEnrollRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostEnrollRequest"
+              }
             }
           },
           "required": true
@@ -753,7 +973,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -770,13 +992,18 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/MenuCreateRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/MenuCreateRequest"
+              }
             }
           },
           "required": true
@@ -786,12 +1013,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/likes": {
@@ -804,7 +1037,9 @@
             "name": "token",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -827,7 +1062,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PostLikesRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PostLikesRequest"
+              }
             }
           },
           "required": true
@@ -837,7 +1074,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -854,7 +1093,10 @@
             "name": "festivalId",
             "in": "query",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -877,7 +1119,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/BoothCreateRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/BoothCreateRequest"
+              }
             }
           },
           "required": true
@@ -887,12 +1131,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/admin/booth/{booth_id}": {
@@ -905,13 +1155,19 @@
             "name": "booth_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           },
           {
             "name": "new",
             "in": "query",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -919,12 +1175,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/stamps/{booth-id}/stampEnabled": {
@@ -937,13 +1199,18 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/StampEnabledRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/StampEnabledRequest"
+              }
             }
           },
           "required": true
@@ -953,12 +1220,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseBoolean" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseBoolean"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/members/{member-id}": {
@@ -971,7 +1244,10 @@
             "name": "member-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -986,7 +1262,11 @@
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "delete": {
         "tags": ["member-controller"],
@@ -997,7 +1277,10 @@
             "name": "member-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1005,12 +1288,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "patch": {
         "tags": ["member-controller"],
@@ -1021,7 +1310,10 @@
             "name": "member-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           },
           {
             "name": "role",
@@ -1038,12 +1330,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/members/my/password": {
@@ -1054,7 +1352,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/PasswordChangeRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/PasswordChangeRequest"
+              }
             }
           },
           "required": true
@@ -1064,12 +1364,91 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/festival/{festival-id}": {
+      "delete": {
+        "tags": ["festival-controller"],
+        "summary": "축제 삭제",
+        "operationId": "deleteBooth",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["festival-controller"],
+        "summary": "축제 수정",
+        "operationId": "modifyFestival",
+        "parameters": [
+          {
+            "name": "festival-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FestivalModifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/menus/{menu-id}": {
@@ -1082,7 +1461,10 @@
             "name": "menu-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1090,12 +1472,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "patch": {
         "tags": ["menu-controller"],
@@ -1106,13 +1494,18 @@
             "name": "menu-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/MenuPatchRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/MenuPatchRequest"
+              }
             }
           },
           "required": true
@@ -1122,12 +1515,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/booths/{booth-id}": {
@@ -1140,7 +1539,10 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1165,7 +1567,10 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1173,12 +1578,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "patch": {
         "tags": ["booth-controller"],
@@ -1189,13 +1600,18 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/BoothPatchRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/BoothPatchRequest"
+              }
             }
           },
           "required": true
@@ -1205,12 +1621,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/booths/{booth-id}/schedule": {
@@ -1223,7 +1645,10 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
@@ -1241,12 +1666,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/waiting/{boothId}/reserved": {
@@ -1259,7 +1690,10 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1286,7 +1720,10 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1294,7 +1731,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -1311,7 +1750,10 @@
             "name": "boothId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1338,7 +1780,9 @@
             "name": "deviceId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1365,7 +1809,10 @@
             "name": "starId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1373,7 +1820,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseStarInfo" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseStarInfo"
+                }
               }
             }
           }
@@ -1388,7 +1837,10 @@
             "name": "starId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1396,7 +1848,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
@@ -1413,7 +1867,9 @@
             "name": "name",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1440,7 +1896,10 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1449,7 +1908,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseListStampInfoResponse"
+                  "$ref": "#/components/schemas/ResponseListBoothResponse"
                 }
               }
             }
@@ -1457,20 +1916,23 @@
         }
       }
     },
-    "/reissue": {
+    "/stamps/festivals": {
       "get": {
-        "tags": ["인증"],
-        "summary": "액세스토큰 재발급",
-        "operationId": "reissue",
-        "parameters": [
-          {
-            "name": "RefreshToken",
-            "in": "header",
-            "required": true,
-            "schema": { "type": "string" }
+        "tags": ["stamp-controller"],
+        "summary": "Stamp 기능이 있는 festival 조회 (드롭다운용)",
+        "operationId": "getStampFestivals",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListStampEnabledFestivalResponse"
+                }
+              }
+            }
           }
-        ],
-        "responses": { "200": { "description": "OK" } }
+        }
       }
     },
     "/members/my": {
@@ -1490,7 +1952,11 @@
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "delete": {
         "tags": ["member-controller"],
@@ -1501,12 +1967,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/logout": {
@@ -1519,7 +1991,9 @@
             "name": "RefreshToken",
             "in": "header",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1527,7 +2001,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
@@ -1544,7 +2020,10 @@
             "name": "date",
             "in": "query",
             "required": true,
-            "schema": { "type": "string", "format": "date" }
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
           }
         ],
         "responses": {
@@ -1571,7 +2050,9 @@
             "name": "region",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1592,21 +2073,26 @@
       "get": {
         "tags": ["interest-controller"],
         "summary": "관심 축제 목록 조회",
+        "description": "사용자가 등록한 모든 관심 축제의 ID 목록을 조회합니다.",
         "operationId": "getInterestList",
         "parameters": [
           {
             "name": "deviceId",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "관심 축제 목록 조회에 성공했습니다.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseListLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseListLong"
+                }
               }
             }
           }
@@ -1661,7 +2147,10 @@
             "name": "festivalId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1688,7 +2177,10 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1696,7 +2188,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
@@ -1713,7 +2207,10 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1740,7 +2237,10 @@
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1755,7 +2255,11 @@
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/admin/booth/{booth-id}": {
@@ -1768,7 +2272,10 @@
             "name": "booth-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1783,7 +2290,11 @@
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/waiting/{waitingId}": {
@@ -1796,7 +2307,10 @@
             "name": "waitingId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1804,50 +2318,29 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseWaitingInfo" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWaitingInfo"
+                }
               }
             }
           }
         }
       }
     },
-    "/stamps/booth/{booth-id}": {
+    "/stamps/festival/{festival-id}": {
       "delete": {
         "tags": ["stamp-controller"],
-        "summary": "부스 스탬프 정보 삭제",
+        "summary": "페스티벌 스탬프 정보 삭제",
         "operationId": "deleteStampInfo",
-        "parameters": [
-          {
-            "name": "booth-id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseLong" }
-              }
-            }
-          }
-        },
-        "security": [{ "JWT": [] }]
-      }
-    },
-    "/festival/{festival-id}": {
-      "delete": {
-        "tags": ["festival-controller"],
-        "summary": "축제 삭제",
-        "operationId": "deleteBooth",
         "parameters": [
           {
             "name": "festival-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1855,12 +2348,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLong"
+                }
               }
             }
           }
         },
-        "security": [{ "JWT": [] }]
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/enroll/{enrollId}": {
@@ -1873,7 +2372,10 @@
             "name": "enrollId",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1881,7 +2383,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseVoid" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVoid"
+                }
               }
             }
           }
@@ -1892,51 +2396,102 @@
   "components": {
     "schemas": {
       "CancelWaitingRequest": {
+        "required": ["deviceId", "waitingId"],
         "type": "object",
         "properties": {
-          "waitingId": { "type": "integer", "format": "int64" },
-          "deviceId": { "type": "string" }
+          "waitingId": {
+            "type": "integer",
+            "description": "대기정보 Id",
+            "format": "int64"
+          },
+          "deviceId": {
+            "type": "string",
+            "description": "대기자 deviceId"
+          }
         }
       },
       "ResponseWaitingInfo": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "$ref": "#/components/schemas/WaitingInfo" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/WaitingInfo"
+          }
         }
       },
       "WaitingInfo": {
         "type": "object",
         "properties": {
-          "boothId": { "type": "integer", "format": "int64" },
-          "waitingId": { "type": "integer", "format": "int64" },
-          "partySize": { "type": "integer", "format": "int32" },
-          "tel": { "type": "string" },
-          "deviceId": { "type": "string" },
-          "createdAt": { "type": "string", "format": "date-time" },
-          "updatedAt": { "type": "string", "format": "date-time" },
-          "status": { "type": "string" },
-          "waitingOrder": { "type": "integer", "format": "int32" },
-          "boothName": { "type": "string" }
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "waitingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "partySize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tel": {
+            "type": "string"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "waitingOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothName": {
+            "type": "string"
+          }
         }
       },
       "PostFcmRequest": {
         "type": "object",
         "properties": {
-          "deviceId": { "type": "string" },
-          "fcmToken": { "type": "string" }
+          "deviceId": {
+            "type": "string"
+          },
+          "fcmToken": {
+            "type": "string"
+          }
         }
       },
       "ResponseString": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "type": "string" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          }
         }
       },
       "MenuStatusChangeRequest": {
+        "required": ["menuStatus"],
         "type": "object",
         "properties": {
           "menuStatus": {
@@ -1950,119 +2505,222 @@
       "ResponseVoid": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "type": "object" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
         }
       },
       "PostWaitingRequest": {
+        "required": [
+          "boothId",
+          "deviceId",
+          "fcmToken",
+          "partySize",
+          "pinNumber",
+          "tel"
+        ],
         "type": "object",
         "properties": {
-          "boothId": { "type": "integer", "format": "int64" },
-          "tel": { "type": "string" },
-          "deviceId": { "type": "string" },
-          "partySize": { "type": "integer", "format": "int32" },
-          "pinNumber": { "type": "string" },
-          "fcmToken": { "type": "string" }
+          "boothId": {
+            "type": "integer",
+            "description": "등록하고자 하는 Booth Id",
+            "format": "int64"
+          },
+          "tel": {
+            "type": "string",
+            "description": "전화번호"
+          },
+          "deviceId": {
+            "type": "string",
+            "description": "등록자 deviceId"
+          },
+          "partySize": {
+            "type": "integer",
+            "description": "대기 인원",
+            "format": "int32"
+          },
+          "pinNumber": {
+            "type": "string",
+            "description": "pinNumber"
+          },
+          "fcmToken": {
+            "type": "string",
+            "description": "fcmToken"
+          }
         }
       },
       "ResponseBoolean": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "type": "boolean" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "boolean"
+          }
         }
       },
       "PostTokenTestRequest": {
-        "type": "object",
-        "properties": { "fcmToken": { "type": "string" } }
-      },
-      "CheckPinRequest": {
+        "required": ["fcmToken"],
         "type": "object",
         "properties": {
-          "boothId": { "type": "integer", "format": "int64" },
-          "pinNumber": { "type": "string" }
+          "fcmToken": {
+            "type": "string",
+            "description": "fcmToken"
+          }
+        }
+      },
+      "CheckPinRequest": {
+        "required": ["boothId", "pinNumber"],
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "description": "확인하고자 하는 BoothId",
+            "format": "int64"
+          },
+          "pinNumber": {
+            "type": "string",
+            "description": "pinNumber"
+          }
         }
       },
       "ResponseLong": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "type": "integer", "format": "int64" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "integer",
+            "format": "int64"
+          }
         }
       },
       "PostStarRequest": {
+        "required": ["imgUrl", "name"],
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "imgUrl": { "type": "string" }
+          "name": {
+            "type": "string",
+            "description": "공연 출연자 이름"
+          },
+          "imgUrl": {
+            "type": "string",
+            "description": "공연 출연자 사진"
+          }
         }
       },
       "StampRequest": {
-        "required": ["boothId", "deviceId"],
+        "required": ["boothId", "deviceId", "festivalId"],
         "type": "object",
         "properties": {
-          "deviceId": { "type": "string" },
-          "boothId": { "type": "integer", "format": "int64" }
+          "deviceId": {
+            "type": "string",
+            "description": "stamp를 찍을 deviceId"
+          },
+          "boothId": {
+            "type": "integer",
+            "description": "stamp를 찍을 BoothId",
+            "format": "int64"
+          },
+          "festivalId": {
+            "type": "integer",
+            "description": "stamp를 찍을 FestivalId",
+            "format": "int64"
+          }
         }
       },
       "StampInfoCreateRequest": {
-        "required": ["boothId", "defaultImgUrl", "festivalId", "usedImgUrl"],
+        "required": ["defaultImgUrl", "festivalId", "usedImgUrl"],
         "type": "object",
         "properties": {
-          "boothId": { "type": "integer", "format": "int64" },
-          "festivalId": { "type": "integer", "format": "int64" },
-          "defaultImgUrl": { "type": "string" },
-          "usedImgUrl": { "type": "string" }
+          "festivalId": {
+            "type": "integer",
+            "description": "페스티벌 ID",
+            "format": "int64"
+          },
+          "defaultImgUrl": {
+            "type": "string",
+            "description": "stamp를 찍기 전 이미지"
+          },
+          "usedImgUrl": {
+            "type": "string",
+            "description": "stamp를 찍은 후 이미지"
+          }
         }
       },
       "PostSchoolRequest": {
+        "required": [
+          "address",
+          "latitude",
+          "longitude",
+          "name",
+          "region",
+          "thumbnail"
+        ],
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "region": { "type": "string" },
-          "address": { "type": "string" },
-          "latitude": { "type": "number", "format": "double" },
-          "longitude": { "type": "number", "format": "double" },
-          "thumbnail": { "type": "string" }
-        }
-      },
-      "MemberSignUpRequest": {
-        "required": ["email", "password", "phoneNum", "schoolId"],
-        "type": "object",
-        "properties": {
-          "email": { "type": "string" },
-          "password": { "type": "string" },
-          "schoolId": { "type": "integer", "format": "int64" },
-          "phoneNum": { "type": "string" }
-        }
-      },
-      "AddMegaphoneRequest": {
-        "type": "object",
-        "properties": {
-          "boothId": { "type": "integer", "format": "int64" },
-          "msgBody": { "type": "string" }
-        }
-      },
-      "LoginRequest": {
-        "required": ["email", "password"],
-        "type": "object",
-        "properties": {
-          "email": { "type": "string" },
-          "password": { "type": "string" }
+          "name": {
+            "type": "string",
+            "description": "현재 비밀번호"
+          },
+          "region": {
+            "type": "string",
+            "description": "지역"
+          },
+          "address": {
+            "type": "string",
+            "description": "주소"
+          },
+          "latitude": {
+            "type": "number",
+            "description": "위도",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "description": "경도",
+            "format": "double"
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "학교 썸네일"
+          }
         }
       },
       "ClassInfo": {
         "type": "object",
         "properties": {
-          "ignoreCase": { "type": "boolean" },
-          "names": { "type": "array", "items": { "type": "string" } },
-          "enum": { "type": "boolean" },
+          "ignoreCase": {
+            "type": "boolean"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "enum": {
+            "type": "boolean"
+          },
           "fieldInfos": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/FieldInfo" }
+            "items": {
+              "$ref": "#/components/schemas/FieldInfo"
+            }
           }
         }
       },
@@ -2072,66 +2730,120 @@
           "field": {
             "type": "object",
             "properties": {
-              "name": { "type": "string" },
-              "modifiers": { "type": "integer", "format": "int32" },
-              "synthetic": { "type": "boolean" },
+              "name": {
+                "type": "string"
+              },
+              "modifiers": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "synthetic": {
+                "type": "boolean"
+              },
               "declaredAnnotations": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
-              "accessible": { "type": "boolean", "deprecated": true },
+              "accessible": {
+                "type": "boolean",
+                "deprecated": true
+              },
               "genericType": {
                 "type": "object",
-                "properties": { "typeName": { "type": "string" } }
+                "properties": {
+                  "typeName": {
+                    "type": "string"
+                  }
+                }
               },
-              "enumConstant": { "type": "boolean" },
+              "enumConstant": {
+                "type": "boolean"
+              },
               "annotatedType": {
                 "type": "object",
                 "properties": {
                   "annotations": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
                   "declaredAnnotations": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
                   "type": {
                     "type": "object",
-                    "properties": { "typeName": { "type": "string" } }
+                    "properties": {
+                      "typeName": {
+                        "type": "string"
+                      }
+                    }
                   }
                 }
               },
-              "annotations": { "type": "array", "items": { "type": "object" } }
+              "annotations": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
             }
           },
-          "name": { "type": "string" },
-          "primitive": { "type": "boolean" },
+          "name": {
+            "type": "string"
+          },
+          "primitive": {
+            "type": "boolean"
+          },
           "genericType": {
             "type": "object",
-            "properties": { "typeName": { "type": "string" } }
+            "properties": {
+              "typeName": {
+                "type": "string"
+              }
+            }
           },
-          "final": { "type": "boolean" },
-          "classInfo": { "$ref": "#/components/schemas/ClassInfo" },
+          "final": {
+            "type": "boolean"
+          },
+          "classInfo": {
+            "$ref": "#/components/schemas/ClassInfo"
+          },
           "tersMethodForField": {
             "type": "array",
             "writeOnly": true,
             "items": {
               "type": "object",
               "properties": {
-                "name": { "type": "string" },
-                "modifiers": { "type": "integer", "format": "int32" },
+                "name": {
+                  "type": "string"
+                },
+                "modifiers": {
+                  "type": "integer",
+                  "format": "int32"
+                },
                 "typeParameters": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "name": { "type": "string" },
+                      "name": {
+                        "type": "string"
+                      },
                       "bounds": {
                         "type": "array",
                         "items": {
                           "type": "object",
-                          "properties": { "typeName": { "type": "string" } }
+                          "properties": {
+                            "typeName": {
+                              "type": "string"
+                            }
+                          }
                         }
                       },
                       "annotatedBounds": {
@@ -2141,78 +2853,135 @@
                           "properties": {
                             "annotations": {
                               "type": "array",
-                              "items": { "type": "object" }
+                              "items": {
+                                "type": "object"
+                              }
                             },
                             "declaredAnnotations": {
                               "type": "array",
-                              "items": { "type": "object" }
+                              "items": {
+                                "type": "object"
+                              }
                             },
                             "type": {
                               "type": "object",
-                              "properties": { "typeName": { "type": "string" } }
+                              "properties": {
+                                "typeName": {
+                                  "type": "string"
+                                }
+                              }
                             }
                           }
                         }
                       },
-                      "typeName": { "type": "string" },
+                      "typeName": {
+                        "type": "string"
+                      },
                       "annotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       },
                       "declaredAnnotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       }
                     }
                   }
                 },
-                "synthetic": { "type": "boolean" },
+                "synthetic": {
+                  "type": "boolean"
+                },
                 "declaredAnnotations": {
                   "type": "array",
-                  "items": { "type": "object" }
+                  "items": {
+                    "type": "object"
+                  }
                 },
-                "accessible": { "type": "boolean", "deprecated": true },
-                "varArgs": { "type": "boolean" },
-                "parameterCount": { "type": "integer", "format": "int32" },
+                "accessible": {
+                  "type": "boolean",
+                  "deprecated": true
+                },
+                "varArgs": {
+                  "type": "boolean"
+                },
+                "parameterCount": {
+                  "type": "integer",
+                  "format": "int32"
+                },
                 "parameterAnnotations": {
                   "type": "array",
-                  "items": { "type": "array", "items": { "type": "object" } }
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
                 },
                 "genericParameterTypes": {
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "properties": { "typeName": { "type": "string" } }
+                    "properties": {
+                      "typeName": {
+                        "type": "string"
+                      }
+                    }
                   }
                 },
                 "genericExceptionTypes": {
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "properties": { "typeName": { "type": "string" } }
+                    "properties": {
+                      "typeName": {
+                        "type": "string"
+                      }
+                    }
                   }
                 },
-                "default": { "type": "boolean" },
+                "default": {
+                  "type": "boolean"
+                },
                 "genericReturnType": {
                   "type": "object",
-                  "properties": { "typeName": { "type": "string" } }
+                  "properties": {
+                    "typeName": {
+                      "type": "string"
+                    }
+                  }
                 },
-                "bridge": { "type": "boolean" },
-                "defaultValue": { "type": "object" },
+                "bridge": {
+                  "type": "boolean"
+                },
+                "defaultValue": {
+                  "type": "object"
+                },
                 "annotatedReturnType": {
                   "type": "object",
                   "properties": {
                     "annotations": {
                       "type": "array",
-                      "items": { "type": "object" }
+                      "items": {
+                        "type": "object"
+                      }
                     },
                     "declaredAnnotations": {
                       "type": "array",
-                      "items": { "type": "object" }
+                      "items": {
+                        "type": "object"
+                      }
                     },
                     "type": {
                       "type": "object",
-                      "properties": { "typeName": { "type": "string" } }
+                      "properties": {
+                        "typeName": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 },
@@ -2223,15 +2992,23 @@
                     "properties": {
                       "annotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       },
                       "declaredAnnotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       },
                       "type": {
                         "type": "object",
-                        "properties": { "typeName": { "type": "string" } }
+                        "properties": {
+                          "typeName": {
+                            "type": "string"
+                          }
+                        }
                       }
                     }
                   }
@@ -2241,61 +3018,99 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "name": { "type": "string" },
-                      "modifiers": { "type": "integer", "format": "int32" },
-                      "synthetic": { "type": "boolean" },
+                      "name": {
+                        "type": "string"
+                      },
+                      "modifiers": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "synthetic": {
+                        "type": "boolean"
+                      },
                       "annotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       },
                       "declaredAnnotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       },
                       "annotatedType": {
                         "type": "object",
                         "properties": {
                           "annotations": {
                             "type": "array",
-                            "items": { "type": "object" }
+                            "items": {
+                              "type": "object"
+                            }
                           },
                           "declaredAnnotations": {
                             "type": "array",
-                            "items": { "type": "object" }
+                            "items": {
+                              "type": "object"
+                            }
                           },
                           "type": {
                             "type": "object",
-                            "properties": { "typeName": { "type": "string" } }
+                            "properties": {
+                              "typeName": {
+                                "type": "string"
+                              }
+                            }
                           }
                         }
                       },
                       "parameterizedType": {
                         "type": "object",
-                        "properties": { "typeName": { "type": "string" } }
+                        "properties": {
+                          "typeName": {
+                            "type": "string"
+                          }
+                        }
                       },
-                      "varArgs": { "type": "boolean" },
-                      "namePresent": { "type": "boolean" },
+                      "varArgs": {
+                        "type": "boolean"
+                      },
+                      "namePresent": {
+                        "type": "boolean"
+                      },
                       "declaringExecutable": {
                         "type": "object",
                         "properties": {
-                          "name": { "type": "string" },
-                          "modifiers": { "type": "integer", "format": "int32" },
+                          "name": {
+                            "type": "string"
+                          },
+                          "modifiers": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
                           "typeParameters": {
                             "type": "array",
                             "items": {
                               "type": "object",
                               "properties": {
-                                "name": { "type": "string" },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "bounds": {
                                   "type": "array",
                                   "items": {
                                     "type": "object",
                                     "properties": {
-                                      "typeName": { "type": "string" }
+                                      "typeName": {
+                                        "type": "string"
+                                      }
                                     }
                                   }
                                 },
-                                "genericDeclaration": { "type": "object" },
+                                "genericDeclaration": {
+                                  "type": "object"
+                                },
                                 "annotatedBounds": {
                                   "type": "array",
                                   "items": {
@@ -2303,39 +3118,57 @@
                                     "properties": {
                                       "annotations": {
                                         "type": "array",
-                                        "items": { "type": "object" }
+                                        "items": {
+                                          "type": "object"
+                                        }
                                       },
                                       "declaredAnnotations": {
                                         "type": "array",
-                                        "items": { "type": "object" }
+                                        "items": {
+                                          "type": "object"
+                                        }
                                       },
                                       "type": {
                                         "type": "object",
                                         "properties": {
-                                          "typeName": { "type": "string" }
+                                          "typeName": {
+                                            "type": "string"
+                                          }
                                         }
                                       }
                                     }
                                   }
                                 },
-                                "typeName": { "type": "string" },
+                                "typeName": {
+                                  "type": "string"
+                                },
                                 "annotations": {
                                   "type": "array",
-                                  "items": { "type": "object" }
+                                  "items": {
+                                    "type": "object"
+                                  }
                                 },
                                 "declaredAnnotations": {
                                   "type": "array",
-                                  "items": { "type": "object" }
+                                  "items": {
+                                    "type": "object"
+                                  }
                                 }
                               }
                             }
                           },
-                          "synthetic": { "type": "boolean" },
+                          "synthetic": {
+                            "type": "boolean"
+                          },
                           "declaredAnnotations": {
                             "type": "array",
-                            "items": { "type": "object" }
+                            "items": {
+                              "type": "object"
+                            }
                           },
-                          "varArgs": { "type": "boolean" },
+                          "varArgs": {
+                            "type": "boolean"
+                          },
                           "annotatedParameterTypes": {
                             "type": "array",
                             "items": {
@@ -2343,16 +3176,22 @@
                               "properties": {
                                 "annotations": {
                                   "type": "array",
-                                  "items": { "type": "object" }
+                                  "items": {
+                                    "type": "object"
+                                  }
                                 },
                                 "declaredAnnotations": {
                                   "type": "array",
-                                  "items": { "type": "object" }
+                                  "items": {
+                                    "type": "object"
+                                  }
                                 },
                                 "type": {
                                   "type": "object",
                                   "properties": {
-                                    "typeName": { "type": "string" }
+                                    "typeName": {
+                                      "type": "string"
+                                    }
                                   }
                                 }
                               }
@@ -2366,21 +3205,31 @@
                             "type": "array",
                             "items": {
                               "type": "array",
-                              "items": { "type": "object" }
+                              "items": {
+                                "type": "object"
+                              }
                             }
                           },
                           "genericParameterTypes": {
                             "type": "array",
                             "items": {
                               "type": "object",
-                              "properties": { "typeName": { "type": "string" } }
+                              "properties": {
+                                "typeName": {
+                                  "type": "string"
+                                }
+                              }
                             }
                           },
                           "genericExceptionTypes": {
                             "type": "array",
                             "items": {
                               "type": "object",
-                              "properties": { "typeName": { "type": "string" } }
+                              "properties": {
+                                "typeName": {
+                                  "type": "string"
+                                }
+                              }
                             }
                           },
                           "annotatedReturnType": {
@@ -2388,16 +3237,22 @@
                             "properties": {
                               "annotations": {
                                 "type": "array",
-                                "items": { "type": "object" }
+                                "items": {
+                                  "type": "object"
+                                }
                               },
                               "declaredAnnotations": {
                                 "type": "array",
-                                "items": { "type": "object" }
+                                "items": {
+                                  "type": "object"
+                                }
                               },
                               "type": {
                                 "type": "object",
                                 "properties": {
-                                  "typeName": { "type": "string" }
+                                  "typeName": {
+                                    "type": "string"
+                                  }
                                 }
                               }
                             }
@@ -2407,16 +3262,22 @@
                             "properties": {
                               "annotations": {
                                 "type": "array",
-                                "items": { "type": "object" }
+                                "items": {
+                                  "type": "object"
+                                }
                               },
                               "declaredAnnotations": {
                                 "type": "array",
-                                "items": { "type": "object" }
+                                "items": {
+                                  "type": "object"
+                                }
                               },
                               "type": {
                                 "type": "object",
                                 "properties": {
-                                  "typeName": { "type": "string" }
+                                  "typeName": {
+                                    "type": "string"
+                                  }
                                 }
                               }
                             }
@@ -2428,16 +3289,22 @@
                               "properties": {
                                 "annotations": {
                                   "type": "array",
-                                  "items": { "type": "object" }
+                                  "items": {
+                                    "type": "object"
+                                  }
                                 },
                                 "declaredAnnotations": {
                                   "type": "array",
-                                  "items": { "type": "object" }
+                                  "items": {
+                                    "type": "object"
+                                  }
                                 },
                                 "type": {
                                   "type": "object",
                                   "properties": {
-                                    "typeName": { "type": "string" }
+                                    "typeName": {
+                                      "type": "string"
+                                    }
                                   }
                                 }
                               }
@@ -2445,7 +3312,9 @@
                           },
                           "annotations": {
                             "type": "array",
-                            "items": { "type": "object" }
+                            "items": {
+                              "type": "object"
+                            }
                           },
                           "accessible": {
                             "type": "boolean",
@@ -2453,7 +3322,9 @@
                           }
                         }
                       },
-                      "implicit": { "type": "boolean" }
+                      "implicit": {
+                        "type": "boolean"
+                      }
                     }
                   }
                 },
@@ -2462,15 +3333,23 @@
                   "properties": {
                     "annotations": {
                       "type": "array",
-                      "items": { "type": "object" }
+                      "items": {
+                        "type": "object"
+                      }
                     },
                     "declaredAnnotations": {
                       "type": "array",
-                      "items": { "type": "object" }
+                      "items": {
+                        "type": "object"
+                      }
                     },
                     "type": {
                       "type": "object",
-                      "properties": { "typeName": { "type": "string" } }
+                      "properties": {
+                        "typeName": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 },
@@ -2481,88 +3360,260 @@
                     "properties": {
                       "annotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       },
                       "declaredAnnotations": {
                         "type": "array",
-                        "items": { "type": "object" }
+                        "items": {
+                          "type": "object"
+                        }
                       },
                       "type": {
                         "type": "object",
-                        "properties": { "typeName": { "type": "string" } }
+                        "properties": {
+                          "typeName": {
+                            "type": "string"
+                          }
+                        }
                       }
                     }
                   }
                 },
                 "annotations": {
                   "type": "array",
-                  "items": { "type": "object" }
+                  "items": {
+                    "type": "object"
+                  }
                 }
               }
             }
           }
         }
       },
-      "JsonFactory": { "type": "object" },
+      "JsonFactory": {
+        "type": "object"
+      },
       "TokenResponse": {
         "type": "object",
         "properties": {
-          "classInfo": { "$ref": "#/components/schemas/ClassInfo" },
-          "accessToken": { "type": "string" },
-          "tokenType": { "type": "string" },
-          "expiresInSeconds": { "type": "integer", "format": "int64" },
-          "refreshToken": { "type": "string" },
-          "scope": { "type": "string" },
-          "factory": { "$ref": "#/components/schemas/JsonFactory" },
+          "classInfo": {
+            "$ref": "#/components/schemas/ClassInfo"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "tokenType": {
+            "type": "string"
+          },
+          "expiresInSeconds": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "factory": {
+            "$ref": "#/components/schemas/JsonFactory"
+          },
           "unknownKeys": {
             "type": "object",
-            "additionalProperties": { "type": "object" }
+            "additionalProperties": {
+              "type": "object"
+            }
           },
-          "empty": { "type": "boolean" }
+          "empty": {
+            "type": "boolean"
+          }
         },
-        "additionalProperties": { "type": "object" }
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "MemberSignUpRequest": {
+        "required": ["email", "password", "phoneNum", "schoolId"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "비밀번호"
+          },
+          "schoolId": {
+            "type": "integer",
+            "description": "학교Id",
+            "format": "int64"
+          },
+          "phoneNum": {
+            "type": "string",
+            "description": "전화번호"
+          }
+        }
+      },
+      "AddMegaphoneRequest": {
+        "required": ["boothId", "msgBody"],
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "description": "부스 Id",
+            "format": "int64"
+          },
+          "msgBody": {
+            "type": "string",
+            "description": "전송할 메세지"
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
       },
       "FileResponse": {
         "type": "object",
         "properties": {
-          "imgUrl": { "type": "string" },
-          "imgName": { "type": "string" }
+          "imgUrl": {
+            "type": "string"
+          },
+          "imgName": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseFileResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/FileResponse"
+          }
         }
       },
       "PostFestivalRequest": {
+        "required": [
+          "beginDate",
+          "description",
+          "endDate",
+          "name",
+          "schoolId",
+          "thumbnail"
+        ],
         "type": "object",
         "properties": {
-          "schoolId": { "type": "integer", "format": "int64" },
-          "beginDate": { "type": "string", "format": "date" },
-          "endDate": { "type": "string", "format": "date" },
-          "name": { "type": "string" },
-          "description": { "type": "string" },
-          "thumbnail": { "type": "string" }
+          "schoolId": {
+            "type": "integer",
+            "description": "학교 Id",
+            "format": "int64"
+          },
+          "beginDate": {
+            "type": "string",
+            "description": "시작 날짜",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "종료 날짜",
+            "format": "date"
+          },
+          "name": {
+            "type": "string",
+            "description": "축제의 이름"
+          },
+          "description": {
+            "type": "string",
+            "description": "축제 설명"
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "축제 썸네일"
+          }
         }
       },
       "InterestRequest": {
-        "type": "object",
-        "properties": { "deviceId": { "type": "string" } }
-      },
-      "PostEnrollRequest": {
+        "required": ["deviceId"],
         "type": "object",
         "properties": {
-          "festivalId": { "type": "integer", "format": "int64" },
-          "starId": { "type": "integer", "format": "int64" },
-          "visitDate": { "type": "string", "format": "date" }
+          "deviceId": {
+            "type": "string",
+            "description": "deviceId"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "PostEnrollRequest": {
+        "required": ["festivalId", "starId", "visitDate"],
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "description": "페스티벌 Id",
+            "format": "int64"
+          },
+          "starId": {
+            "type": "integer",
+            "description": "공연 출연자 Id",
+            "format": "int64"
+          },
+          "visitDate": {
+            "type": "string",
+            "description": "공연 출연자 방문일",
+            "format": "date"
+          }
         }
       },
       "MenuCreateRequest": {
         "required": ["name", "price"],
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "price": { "type": "integer", "format": "int32" },
-          "imgUrl": { "type": "string" },
+          "name": {
+            "type": "string",
+            "description": "메뉴의 이름 (최대 20자)"
+          },
+          "price": {
+            "type": "integer",
+            "description": "부스의 경고문(최대 100자)",
+            "format": "int32"
+          },
+          "imgUrl": {
+            "type": "string",
+            "description": "이미지",
+            "nullable": true
+          },
           "menuStatus": {
             "type": "string",
             "description": "메뉴 재고 상태",
-            "example": "충분함 : ENOUGH(기본값), 50개 이하 : UNDER_50, 10개 이하 : UNDER_10, 품절 : SOLD_OUT",
+            "example": "충분함 : ENOUGH(기본값) / 50개 이하 : UNDER_50 / 10개 이하 : UNDER_10 / 품절 : SOLD_OUT",
             "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
           }
         }
@@ -2571,33 +3622,92 @@
         "required": ["boothId", "token"],
         "type": "object",
         "properties": {
-          "boothId": { "type": "integer", "format": "int64" },
-          "token": { "type": "string" }
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "token": {
+            "type": "string"
+          }
         }
       },
       "BoothCreateRequest": {
-        "required": ["category", "latitude", "location", "longitude", "name"],
+        "required": [
+          "category",
+          "festivalId",
+          "latitude",
+          "location",
+          "longitude",
+          "name"
+        ],
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
+          "name": {
+            "maximum": 50,
+            "minimum": 2,
+            "type": "string",
+            "description": "부스의 이름"
+          },
           "category": {
             "type": "string",
+            "description": "부스의 분류",
+            "example": "BAR / FOOD / EVENT / NORMAL / MEDICAL / TOILET",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": { "type": "string" },
-          "detail": { "type": "string" },
-          "thumbnail": { "type": "string" },
-          "warning": { "type": "string" },
-          "festivalId": { "type": "integer", "format": "int64" },
+          "description": {
+            "maximum": 200,
+            "type": "string",
+            "description": "부스의 간단한 설명",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "description": "부스의 설명",
+            "nullable": true
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "부스의 썸네일",
+            "nullable": true
+          },
+          "warning": {
+            "maximum": 100,
+            "type": "string",
+            "description": "부스의 경고문",
+            "nullable": true
+          },
+          "festivalId": {
+            "type": "integer",
+            "description": "부스의 페스티벌 아이디",
+            "format": "int64"
+          },
           "menus": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/MenuCreateRequest" }
+            "description": "부스의 메뉴",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/MenuCreateRequest"
+            }
           },
-          "location": { "type": "string" },
-          "latitude": { "type": "number", "format": "double" },
-          "longitude": { "type": "number", "format": "double" },
-          "boothSchedules": {
+          "location": {
+            "maximum": 40,
+            "type": "string",
+            "description": "위치 설명"
+          },
+          "latitude": {
+            "type": "number",
+            "description": "위도",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "description": "경도",
+            "format": "double"
+          },
+          "scheduleList": {
             "type": "array",
+            "description": "일정",
+            "nullable": true,
             "items": {
               "$ref": "#/components/schemas/BoothScheduleCreateRequest"
             }
@@ -2608,44 +3718,117 @@
         "required": ["closeTime", "date", "openTime"],
         "type": "object",
         "properties": {
-          "date": { "type": "string", "format": "date" },
-          "openTime": { "$ref": "#/components/schemas/LocalTime" },
-          "closeTime": { "$ref": "#/components/schemas/LocalTime" }
-        }
+          "date": {
+            "type": "string",
+            "description": "날짜",
+            "format": "date"
+          },
+          "openTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "closeTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          }
+        },
+        "description": "일정",
+        "nullable": true
       },
       "LocalTime": {
         "type": "object",
         "properties": {
-          "hour": { "type": "integer", "format": "int32" },
-          "minute": { "type": "integer", "format": "int32" },
-          "second": { "type": "integer", "format": "int32" },
-          "nano": { "type": "integer", "format": "int32" }
+          "hour": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "second": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nano": {
+            "type": "integer",
+            "format": "int32"
+          }
         },
+        "description": "폐점 시간",
         "example": "HH:mm:ss"
       },
       "StampEnabledRequest": {
         "required": ["stampEnabled"],
         "type": "object",
-        "properties": { "stampEnabled": { "type": "boolean" } }
+        "properties": {
+          "stampEnabled": {
+            "type": "boolean",
+            "description": "허용 여부"
+          }
+        }
       },
       "PasswordChangeRequest": {
         "required": ["currentPassword", "newPassword"],
         "type": "object",
         "properties": {
-          "currentPassword": { "type": "string" },
-          "newPassword": { "type": "string" }
+          "currentPassword": {
+            "type": "string",
+            "description": "현재 비밀번호"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "변경할 비밀번호"
+          }
+        }
+      },
+      "FestivalModifyRequest": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "축제의 이름"
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "beginDate": {
+            "type": "string",
+            "description": "시작 날짜",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "종료 날짜",
+            "format": "date"
+          }
         }
       },
       "MenuPatchRequest": {
         "required": ["name", "price"],
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "price": { "type": "integer", "format": "int32" },
-          "imgUrl": { "type": "string" },
+          "name": {
+            "maximum": 20,
+            "type": "string",
+            "description": "메뉴 이름"
+          },
+          "price": {
+            "type": "integer",
+            "description": "메뉴 가격",
+            "format": "int32"
+          },
+          "imgUrl": {
+            "type": "string",
+            "description": "메뉴 사진",
+            "nullable": true
+          },
           "menuStatus": {
             "type": "string",
             "description": "메뉴 재고 상태",
+            "nullable": true,
             "example": "충분함 : ENOUGH(기본값), 50개 이하 : UNDER_50, 10개 이하 : UNDER_10, 품절 : SOLD_OUT",
             "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
           }
@@ -2654,21 +3837,44 @@
       "BoothPatchRequest": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
+          "name": {
+            "type": "string"
+          },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": { "type": "string" },
-          "detail": { "type": "string" },
-          "thumbnail": { "type": "string" },
-          "warning": { "type": "string" },
-          "location": { "type": "string" },
-          "enabled": { "type": "boolean" },
-          "latitude": { "type": "number", "format": "double" },
-          "longitude": { "type": "number", "format": "double" },
-          "waitingEnabled": { "type": "boolean" }
-        }
+          "description": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "warning": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "waitingEnabled": {
+            "type": "boolean"
+          }
+        },
+        "description": "부스 수정 요청, 수정할 부분만 기입"
       },
       "BoothSchedulePatchRequest": {
         "type": "object",
@@ -2684,129 +3890,302 @@
       "ResponseListWaitingInfo": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/WaitingInfo" }
+            "items": {
+              "$ref": "#/components/schemas/WaitingInfo"
+            }
           }
         }
       },
       "ResponseListStarInfo": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/StarInfo" }
+            "items": {
+              "$ref": "#/components/schemas/StarInfo"
+            }
           }
         }
       },
       "StarInfo": {
         "type": "object",
         "properties": {
-          "starId": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "imgUrl": { "type": "string" }
+          "starId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "imgUrl": {
+            "type": "string"
+          }
         }
       },
       "ResponseStarInfo": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "$ref": "#/components/schemas/StarInfo" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/StarInfo"
+          }
         }
       },
       "ResponseListStampRecordResponse": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/StampRecordResponse" }
+            "items": {
+              "$ref": "#/components/schemas/StampRecordResponse"
+            }
           }
         }
       },
       "StampRecordResponse": {
         "type": "object",
         "properties": {
-          "stampRecordId": { "type": "integer", "format": "int64" },
-          "stampInfoId": { "type": "integer", "format": "int64" },
-          "deviceId": { "type": "string" }
-        }
-      },
-      "ResponseListStampInfoResponse": {
-        "type": "object",
-        "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/StampInfoResponse" }
+          "stampRecordId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceId": {
+            "type": "string"
           }
         }
       },
-      "StampInfoResponse": {
+      "BoothResponse": {
         "type": "object",
         "properties": {
-          "stampInfoId": { "type": "integer", "format": "int64" },
-          "festivalId": { "type": "integer", "format": "int64" },
-          "boothId": { "type": "integer", "format": "int64" },
-          "defaultImgUrl": { "type": "string" },
-          "usedImgUrl": { "type": "string" }
-        }
-      },
-      "BoothDetailResponse": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": { "type": "string" },
-          "thumbnail": { "type": "string" },
-          "warning": { "type": "string" },
-          "location": { "type": "string" },
-          "latitude": { "type": "number", "format": "double" },
-          "longitude": { "type": "number", "format": "double" },
-          "menus": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/MenuResponse" }
+          "description": {
+            "type": "string"
           },
-          "enabled": { "type": "boolean" },
-          "waitingEnabled": { "type": "boolean" },
+          "thumbnail": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "waitingEnabled": {
+            "type": "boolean"
+          },
           "scheduleList": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/BoothScheduleResponse" }
+            "items": {
+              "$ref": "#/components/schemas/BoothScheduleResponse"
+            }
           },
-          "stampEnabled": { "type": "boolean" }
+          "stampEnabled": {
+            "type": "boolean"
+          }
         }
       },
       "BoothScheduleResponse": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "date": { "type": "string", "format": "date" },
-          "openTime": { "$ref": "#/components/schemas/LocalTime" },
-          "closeTime": { "$ref": "#/components/schemas/LocalTime" }
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "openTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "closeTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          }
+        }
+      },
+      "ResponseListBoothResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothResponse"
+            }
+          }
+        }
+      },
+      "ResponseListStampEnabledFestivalResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StampEnabledFestivalResponse"
+            }
+          }
+        }
+      },
+      "StampEnabledFestivalResponse": {
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "defaultImgUrl": {
+            "type": "string"
+          },
+          "usedImgUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "BoothDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "warning": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "menus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuResponse"
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "waitingEnabled": {
+            "type": "boolean"
+          },
+          "scheduleList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothScheduleResponse"
+            }
+          },
+          "stampEnabled": {
+            "type": "boolean"
+          }
         }
       },
       "MemberDetailResponse": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "email": { "type": "string" },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
           "booths": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/BoothDetailResponse" }
+            "items": {
+              "$ref": "#/components/schemas/BoothDetailResponse"
+            }
           },
-          "schoolId": { "type": "integer", "format": "int64" },
-          "phoneNum": { "type": "string" },
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phoneNum": {
+            "type": "string"
+          },
           "memberRole": {
             "type": "string",
             "enum": ["DEV", "ADMIN", "PENDING", "VERIFIED", "DENIED"]
@@ -2816,10 +4195,20 @@
       "MenuResponse": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "price": { "type": "integer", "format": "int32" },
-          "imgUrl": { "type": "string" },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imgUrl": {
+            "type": "string"
+          },
           "menuStatus": {
             "type": "string",
             "enum": ["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]
@@ -2829,177 +4218,273 @@
       "ResponseListMemberDetailResponse": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/MemberDetailResponse" }
+            "items": {
+              "$ref": "#/components/schemas/MemberDetailResponse"
+            }
           }
         }
       },
       "ResponseMemberDetailResponse": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "$ref": "#/components/schemas/MemberDetailResponse" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/MemberDetailResponse"
+          }
         }
       },
       "FestivalSearchResponse": {
         "type": "object",
         "properties": {
-          "festivalId": { "type": "integer", "format": "int64" },
-          "schoolId": { "type": "integer", "format": "int64" },
-          "thumbnail": { "type": "string" },
-          "schoolName": { "type": "string" },
-          "region": { "type": "string" },
-          "festivalName": { "type": "string" },
-          "beginDate": { "type": "string", "format": "date" },
-          "endDate": { "type": "string", "format": "date" },
-          "latitude": { "type": "number", "format": "double" },
-          "longitude": { "type": "number", "format": "double" }
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "schoolName": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "festivalName": {
+            "type": "string"
+          },
+          "beginDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          }
         }
       },
       "ResponseListFestivalSearchResponse": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/FestivalSearchResponse" }
+            "items": {
+              "$ref": "#/components/schemas/FestivalSearchResponse"
+            }
           }
         }
       },
       "ResponseListTodayFestivalInfo": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/TodayFestivalInfo" }
+            "items": {
+              "$ref": "#/components/schemas/TodayFestivalInfo"
+            }
           }
         }
       },
       "TodayFestivalInfo": {
         "type": "object",
         "properties": {
-          "schoolId": { "type": "integer", "format": "int64" },
-          "schoolName": { "type": "string" },
-          "thumbnail": { "type": "string" },
-          "festivalId": { "type": "integer", "format": "int64" },
-          "festivalName": { "type": "string" },
-          "beginDate": { "type": "string", "format": "date" },
-          "endDate": { "type": "string", "format": "date" },
+          "schoolId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "schoolName": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "festivalName": {
+            "type": "string"
+          },
+          "beginDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
           "starList": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/StarInfo" }
+            "items": {
+              "$ref": "#/components/schemas/StarInfo"
+            }
           }
         }
       },
       "ResponseListLong": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "type": "integer", "format": "int64" }
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         }
       },
       "EnrollInfo": {
         "type": "object",
         "properties": {
-          "festivalId": { "type": "integer", "format": "int64" },
-          "starId": { "type": "integer", "format": "int64" },
-          "starName": { "type": "string" },
-          "imgUrl": { "type": "string" }
+          "festivalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "starId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "starName": {
+            "type": "string"
+          },
+          "imgUrl": {
+            "type": "string"
+          }
         }
       },
       "ResponseListEnrollInfo": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/EnrollInfo" }
+            "items": {
+              "$ref": "#/components/schemas/EnrollInfo"
+            }
           }
         }
       },
       "LikedBoothResponse": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
           "category": {
             "type": "string",
             "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
           },
-          "description": { "type": "string" },
-          "thumbnail": { "type": "string" },
-          "location": { "type": "string" },
-          "latitude": { "type": "number", "format": "double" },
-          "longitude": { "type": "number", "format": "double" },
-          "warning": { "type": "string" }
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "warning": {
+            "type": "string"
+          }
         }
       },
       "ResponseListLikedBoothResponse": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/LikedBoothResponse" }
-          }
-        }
-      },
-      "BoothResponse": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "category": {
-            "type": "string",
-            "enum": ["BAR", "FOOD", "EVENT", "NORMAL", "MEDICAL", "TOILET"]
+          "code": {
+            "type": "string"
           },
-          "description": { "type": "string" },
-          "thumbnail": { "type": "string" },
-          "location": { "type": "string" },
-          "latitude": { "type": "number", "format": "double" },
-          "longitude": { "type": "number", "format": "double" },
-          "enabled": { "type": "boolean" },
-          "waitingEnabled": { "type": "boolean" },
-          "openTime": { "$ref": "#/components/schemas/LocalTime" },
-          "closeTime": { "$ref": "#/components/schemas/LocalTime" },
-          "stampEnabled": { "type": "boolean" }
-        }
-      },
-      "ResponseListBoothResponse": {
-        "type": "object",
-        "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/BoothResponse" }
+            "items": {
+              "$ref": "#/components/schemas/LikedBoothResponse"
+            }
           }
         }
       },
       "ResponseBoothDetailResponse": {
         "type": "object",
         "properties": {
-          "code": { "type": "string" },
-          "message": { "type": "string" },
-          "data": { "$ref": "#/components/schemas/BoothDetailResponse" }
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BoothDetailResponse"
+          }
         }
       }
     },
     "securitySchemes": {
-      "JWT": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+      "JWT": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
   }
 }
