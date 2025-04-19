@@ -1,4 +1,3 @@
-import Page from "@/app/add-booth/set-category/page";
 import {
   queueUserCancelsHandler,
   queueUserCancelsBeforeAdminHandler,

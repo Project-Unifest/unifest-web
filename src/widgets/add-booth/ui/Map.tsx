@@ -1,6 +1,6 @@
 "use client";
 
-import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
+import useBoothDraftStore from "@/src/shared/model/store/booth-draft-store";
 import { CampusPosition } from "@/src/shared/model/store/booth-draft-store";
 import { Button } from "@/src/shared/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";

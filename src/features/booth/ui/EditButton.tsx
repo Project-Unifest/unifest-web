@@ -1,28 +1,29 @@
 "use client";
 
-import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
-import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
+import useBoothEditStore from "@/src/shared/model/store/booth-edit-store";
+import { useBoothDetailQuery } from "@/src/features/booth/api";
 import { Button } from "@/src/shared/ui/button";
 import PencilIcon from "@/src/shared/ui/PencilIcon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useReducer } from "react";
+import { useGetMyProfile } from "@/src/entities/members/api";
 
 interface EditButtonPropsType {
   boothId: number;
 }
 
 export function EditButton({ boothId }: EditButtonPropsType) {
+  const { data: profile } = useGetMyProfile();
+  const booth = profile?.booths.find((booth) => booth.id === boothId)!;
   const initialize = useBoothEditStore((state) => state.initialize);
-  const booths = useBoothListStore((state) => state.booths);
-
+  initialize(booth as any);
   const router = useRouter();
   return (
     <Button
       className="z-20 flex-1 rounded-xl border border-[#d2d2d2] bg-white text-[#2d2d2d] hover:bg-white"
       onClick={() => {
-        const selectedBooth = booths.filter((booth) => booth.id === boothId)[0];
-        initialize(selectedBooth);
+        initialize(booth as any);
         router.push(`/edit-booth/${boothId}/position`);
       }}
     >

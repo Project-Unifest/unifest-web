@@ -1,7 +1,7 @@
 "use client";
 
 import { BoothCategory } from "@/src/shared/lib/types";
-import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
+import useBoothDraftStore from "@/src/shared/model/store/booth-draft-store";
 import AlcoholIcon from "@/src/shared/ui/AlcoholIcon";
 import BuildingIcon from "@/src/shared/ui/BuildingIcon";
 import { Button } from "@/src/shared/ui/button";

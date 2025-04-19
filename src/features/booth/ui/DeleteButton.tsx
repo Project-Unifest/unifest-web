@@ -1,7 +1,5 @@
 "use client";
 
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
-import { useAuthStore } from "@/src/shared/model/provider/auth-store-provider";
 import { Button } from "@/src/shared/ui/button";
 import {
   Dialog,
@@ -15,24 +13,30 @@ import {
 } from "@/src/shared/ui/dialog";
 import TrashCanIcon from "@/src/shared/ui/TrashCanIcon";
 
-import React from "react";
-import { deleteBooth } from "../api/booth";
-import { useBoothListStore } from "@/src/shared/model/provider/booth-list-store-provider";
+import { useState } from "react";
+import { useDeleteBooth } from "../api";
+import useBoothListStore from "@/src/shared/model/store/booth-list-store";
 
 interface DeleteButtonPropsType {
   boothId: number;
 }
 
 export function DeleteButton({ boothId }: DeleteButtonPropsType) {
-  const deleteAuthBooth = useAuthFetch(deleteBooth);
+  const [isOpen, setIsOpen] = useState(false);
   const deleteBoothFromStore = useBoothListStore((state) => state.delete);
+  const { mutate: deleteBooth, isPending } = useDeleteBooth(boothId, {
+    onDelete: () => {
+      deleteBoothFromStore(boothId);
+      setIsOpen(false);
+    },
+  });
+
   const handleDelete = async () => {
-    const data = await deleteAuthBooth(boothId);
-    deleteBoothFromStore(boothId);
+    deleteBooth();
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button className="z-20 flex-1 rounded-xl border border-[#d2d2d2] bg-white text-pink hover:bg-white">
           <TrashCanIcon />
@@ -48,17 +52,18 @@ export function DeleteButton({ boothId }: DeleteButtonPropsType) {
         </DialogHeader>
         <DialogFooter className="gap-4 md:gap-0">
           <DialogClose asChild>
-            <Button type="button">뒤로가기</Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button
-              type="button"
-              className="bg-red-600 hover:bg-red-600"
-              onClick={handleDelete}
-            >
-              삭제하기
+            <Button type="button" disabled={isPending}>
+              뒤로가기
             </Button>
           </DialogClose>
+          <Button
+            type="button"
+            className="bg-red-600 hover:bg-red-600"
+            onClick={handleDelete}
+            disabled={isPending}
+          >
+            {isPending ? "삭제 중..." : "삭제하기"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

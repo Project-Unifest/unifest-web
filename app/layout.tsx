@@ -1,19 +1,14 @@
-import type { Metadata } from "next";
+"use client";
+
 import "./globals.css";
 import { Header } from "@/src/widgets/header";
 import { pretendard } from "@/src/shared/lib/fonts";
-import { BoothDraftStoreProvider } from "@/src/shared/model/provider/booth-draft-store-provider";
 import { MSWProvider } from "@/src/app/ui/MSWProvider";
-import { AuthStoreProvider } from "@/src/shared/model/provider/auth-store-provider";
-import { BoothListStoreProvider } from "@/src/shared/model/provider/booth-list-store-provider";
-import { BoothEditStoreProvider } from "@/src/shared/model/provider/booth-edit-store.provider";
-import { BoothDetailsDraftStoreProvider } from "@/src/shared/model/provider/booth-details-draft-store-provider";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
-export const metadata: Metadata = {
-  title: "Unifest",
-  description: "대학교 축제 정보를 확인할 수 있는 공간",
-};
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { QueryProvider } from "@/src/shared/model/provider/query-provider";
+import GlobalFallbackProvider from "@/src/app/ui/global-fallback-provider";
+import { HydrationGate } from "@/src/app/model/HydrationGate";
 
 export default function RootLayout({
   children,
@@ -24,22 +19,18 @@ export default function RootLayout({
     <html lang="kr" className={pretendard.className}>
       <body>
         <MSWProvider>
-          <AuthStoreProvider>
-            <BoothDetailsDraftStoreProvider>
-              <BoothEditStoreProvider>
-                <BoothDraftStoreProvider>
-                  <BoothListStoreProvider>
-                    <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
-                      <Header />
-                      <div className="flex flex-auto flex-col items-stretch justify-start px-5">
-                        {children}
-                      </div>
-                    </div>
-                  </BoothListStoreProvider>
-                </BoothDraftStoreProvider>
-              </BoothEditStoreProvider>
-            </BoothDetailsDraftStoreProvider>
-          </AuthStoreProvider>
+          <QueryProvider>
+            <GlobalFallbackProvider>
+              <HydrationGate>
+                <div className="mx-auto flex min-h-screen flex-col items-stretch justify-start sm:w-[640px]">
+                  <Header />
+                  <div className="flex flex-auto flex-col items-stretch justify-start px-5">
+                    {children}
+                  </div>
+                </div>
+              </HydrationGate>
+            </GlobalFallbackProvider>
+          </QueryProvider>
         </MSWProvider>
       </body>
       <GoogleAnalytics gaId="G-7WTXSFSS6M" />

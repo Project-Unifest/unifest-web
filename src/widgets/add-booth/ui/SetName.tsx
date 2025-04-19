@@ -1,6 +1,6 @@
 "use client";
 
-import { useBoothDraftStore } from "@/src/shared/model/provider/booth-draft-store-provider";
+import useBoothDraftStore from "@/src/shared/model/store/booth-draft-store";
 import { Button } from "@/src/shared/ui/button";
 import { Input } from "@/src/shared/ui/input";
 import { useAutoAnimate } from "@formkit/auto-animate/react";

@@ -1,7 +1,6 @@
 "use client";
 
 import { EditImageBox } from "@/src/features/booth/ui/EditImageBox";
-import { CampusPosition } from "@/src/shared/model/store/booth-draft-store";
 import {
   Form,
   FormControl,
@@ -17,35 +16,22 @@ import { Input } from "@/src/shared/ui/input";
 import { Textarea } from "@/src/shared/ui/textarea";
 import { z } from "zod";
 import { Button } from "@/src/shared/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/src/shared/ui/card";
-import { Label } from "@/src/shared/ui/label";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/src/shared/ui/card";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
-import { getBoothDetail } from "@/src/entities/booth/api/boothDetail";
-import { useEffect, useState } from "react";
-import { useBoothEditStore } from "@/src/shared/model/provider/booth-edit-store.provider";
-import useRequireAuth, {
-  AuthType,
-} from "@/src/shared/model/auth/useRequireAuth";
 import { BoothCategory } from "@/src/shared/lib/types";
 import { MenuItemForm } from "@/src/features/menu";
-import useAuthFetch from "@/src/shared/model/auth/useAuthFetchList";
-import { editBooth } from "@/src/features/booth/api/booth";
 import { useRouter } from "next/navigation";
-import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
+import useBoothEditStore, {
+  MenuItemState,
+} from "@/src/shared/model/store/booth-edit-store";
 import { BoothTimeForm } from "@/src/features/booth";
+import { useUpdateBooth } from "@/src/features/booth/api";
 import {
-  uploadMenuItem,
-  deleteMenuItem,
-  editMenu,
-} from "@/src/features/menu/model/menu";
+  useCreateMenuItem,
+  useDeleteMenuItem,
+  useUpdateMenuItem,
+} from "@/src/features/menu/api";
 
 interface MenuItem {
   id: number;
@@ -76,7 +62,6 @@ export function Edit({ boothId }: { boothId: number }) {
     addMenuItem,
     editMenuItem,
     removeMemuItem,
-    enabled,
   ] = useBoothEditStore((state) => [
     state.name,
     state.category,
@@ -97,16 +82,11 @@ export function Edit({ boothId }: { boothId: number }) {
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
-    state.enabled,
   ]);
 
   const [menuItemParent] = useAutoAnimate();
-  useRequireAuth(AuthType.MEMBER);
 
-  const editAuthBooth = useAuthFetch(editBooth);
-  const addAuthMenu = useAuthFetch(uploadMenuItem);
-  const editAuthMenu = useAuthFetch(editMenu);
-  const deleteAuthMenu = useAuthFetch(deleteMenuItem);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof boothEditSchema>>({
     resolver: zodResolver(boothEditSchema),
@@ -126,16 +106,27 @@ export function Edit({ boothId }: { boothId: number }) {
 
   const [parent] = useAutoAnimate();
 
-  const router = useRouter();
+  const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
+  const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId, {
+    onCreate: () => {
+      router.push("/");
+    },
+  });
+  const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
 
   const onSubmit = async (data: any) => {
-    await editAuthBooth({ id: boothId, thumbnail, enabled, ...data });
+    const { data: editedBooth } = await updateBooth({
+      thumbnail,
+      ...data,
+    });
     menuList.forEach(async (menuItem) => {
-      const res = await editAuthMenu(menuItem);
-      //이거 res가 왜 responseBody 처럼 오지 않는 걸까요
-      //TODO : 현재 로직은 이론상 메뉴의 수가 매우 많아지면 오작동함!!!!!! 이번 축제 때는 그러지 않겠지...만...?
+      const { data: res } = await updateMenuItem({
+        menuId: menuItem.id,
+        menuData: menuItem,
+      });
       if (res === null) {
-        await addAuthMenu(boothId, menuItem);
+        const { data: id } = await createMenuItem(menuItem);
+        id;
       }
     });
     router.push("/");
@@ -375,7 +366,6 @@ export function Edit({ boothId }: { boothId: number }) {
               <MenuItemForm
                 key={menuItem.id}
                 boothId={boothId}
-                add={addMenuItem}
                 remove={removeMemuItem}
                 edit={editMenuItem}
                 {...menuItem}
