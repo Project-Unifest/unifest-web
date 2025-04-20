@@ -121,7 +121,7 @@ export function Add({ boothId }: { boothId: number }) {
       thumbnail,
       festivalId: myFestival.festivalId,
       ...rest,
-      menus: menuList,
+      menus: menuList.map(({ id, ...rest }) => rest),
     });
     router.push("/");
   };
