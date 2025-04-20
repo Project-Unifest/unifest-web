@@ -156,7 +156,7 @@ export function Edit({ boothId }: { boothId: number }) {
           });
         } else {
           // Create new menu item
-          await createMenuItem(menuItem);
+          await createMenuItem(menuData);
         }
       }),
     );
