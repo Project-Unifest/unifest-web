@@ -47,49 +47,45 @@ export const defaultInitState = {
   scheduleList: [],
 } satisfies BoothDraftState;
 
+// TODO auto save draft
 const useBoothDraftStore = create<BoothDraftStore>()(
   devtools(
-    persist(
-      (set) => ({
-        ...defaultInitState,
-        editName: (newName) => set((state) => ({ ...state, name: newName })),
-        editCategory: (newCategory) =>
-          set((state) => ({ ...state, category: newCategory })),
-        editDescription: (newDescription) =>
-          set((state) => ({ ...state, description: newDescription })),
-        editPosition: (newPosition) =>
-          set((state) => ({
-            ...state,
-            latitude: newPosition.latitude,
-            longitude: newPosition.longitude,
-          })),
-        updateScheduleList: (scheduleList) =>
-          set((state) => ({ ...state, scheduleList })),
-        addSchedule: (schedule) =>
-          set((state) => ({
-            ...state,
-            scheduleList: [...state.scheduleList, schedule].sort(
-              (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-            ),
-          })),
-        removeSchedule: (date) =>
-          set((state) => ({
-            ...state,
-            scheduleList: state.scheduleList.filter(
-              (schedule) => schedule.date !== date,
-            ),
-          })),
-        resetSchedules: () =>
-          set((state) => ({
-            ...state,
-            scheduleList: [],
-          })),
-        reset: () => set((state) => ({ ...state, ...defaultInitState })),
-      }),
-      {
-        name: "booth-draft-store",
-      },
-    ),
+    (set) => ({
+      ...defaultInitState,
+      editName: (newName) => set((state) => ({ ...state, name: newName })),
+      editCategory: (newCategory) =>
+        set((state) => ({ ...state, category: newCategory })),
+      editDescription: (newDescription) =>
+        set((state) => ({ ...state, description: newDescription })),
+      editPosition: (newPosition) =>
+        set((state) => ({
+          ...state,
+          latitude: newPosition.latitude,
+          longitude: newPosition.longitude,
+        })),
+      updateScheduleList: (scheduleList) =>
+        set((state) => ({ ...state, scheduleList })),
+      addSchedule: (schedule) =>
+        set((state) => ({
+          ...state,
+          scheduleList: [...state.scheduleList, schedule].sort(
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+          ),
+        })),
+      removeSchedule: (date) =>
+        set((state) => ({
+          ...state,
+          scheduleList: state.scheduleList.filter(
+            (schedule) => schedule.date !== date,
+          ),
+        })),
+      resetSchedules: () =>
+        set((state) => ({
+          ...state,
+          scheduleList: [],
+        })),
+      reset: () => set((state) => ({ ...state, ...defaultInitState })),
+    }),
     { name: "booth-draft-store" },
   ),
 );
