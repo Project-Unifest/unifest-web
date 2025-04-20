@@ -1,6 +1,13 @@
 import { publicClient } from "./client";
+import { ApiResponse } from "./types";
 
-export const uploadImage = async (image: File): Promise<{ imgUrl: string }> => {
+export interface ImagesResponseDetail {
+  imgUrl: string;
+  imgName: string;
+}
+export const uploadImage = async (
+  image: File,
+): Promise<ApiResponse<ImagesResponseDetail>> => {
   const formData = new FormData();
   formData.append("file", image);
 
@@ -8,5 +15,5 @@ export const uploadImage = async (image: File): Promise<{ imgUrl: string }> => {
     .post("images", {
       body: formData,
     })
-    .json<{ imgUrl: string }>();
+    .json<ApiResponse<ImagesResponseDetail>>();
 };

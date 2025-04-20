@@ -45,8 +45,8 @@ export function MenuCard({
       alert("파일 사이즈가 너무 큽니다.");
       return;
     }
-    const { imgUrl } = (await uploadImage(file)) as { imgUrl: string };
-    edit(menuItemId, { imgUrl });
+    const imageData = (await uploadImage(file)).data;
+    edit(menuItemId, { imgUrl: imageData.imgUrl });
   };
 
   const { mutateAsync: deleteMenuItem } = useDeleteMenuItem({
@@ -54,7 +54,6 @@ export function MenuCard({
       remove(menuItemId);
     },
   });
-
   return (
     <CardContent className="flex items-center justify-center gap-3">
       {imgUrl ? (
