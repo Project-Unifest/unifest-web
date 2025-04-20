@@ -181,7 +181,7 @@ export function Add({ boothId }: { boothId: number }) {
                   <RadioGroup
                     onValueChange={field.onChange}
                     required
-                    className="flex w-full items-center justify-start gap-4"
+                    className="flex w-full items-center justify-start gap-4 pb-4"
                   >
                     <FormItem className="flex-auto">
                       <FormControl>
@@ -193,7 +193,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.BAR ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        체험
+                        주점
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex-auto">
@@ -206,7 +206,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.FOOD ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        푸드트럭
+                        먹거리
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex-auto">
@@ -219,7 +219,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.EVENT ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        교내
+                        이벤트
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex-auto">
@@ -232,7 +232,7 @@ export function Add({ boothId }: { boothId: number }) {
                       <FormLabel
                         className={`${field.value === BoothCategory.NORMAL ? "border-pink bg-[#FFF0F3] text-pink" : ""} flex h-8 w-full cursor-pointer items-center justify-center rounded-xl border`}
                       >
-                        교외
+                        일반
                       </FormLabel>
                     </FormItem>
                   </RadioGroup>

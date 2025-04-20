@@ -12,7 +12,7 @@ import FoodIcon from "@/src/shared/ui/FoodIcon";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/ui/radio-group";
 import SchoolIcon from "@/src/shared/ui/SchoolIcon";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { TextNoneIcon } from "@radix-ui/react-icons";
+import { DotIcon, TextNoneIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -48,13 +48,13 @@ export function SetCategory() {
             value={BoothCategory.BAR}
             id="bar"
           />
-          <ExperienceIcon
+          <AlcoholIcon
             className={`${category === BoothCategory.BAR ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div
             className={`text-base font-bold ${category === BoothCategory.BAR ? "text-pink" : "text-[#A7A7A7]"}`}
           >
-            체험
+            주점
           </div>
         </Label>
 
@@ -73,7 +73,7 @@ export function SetCategory() {
           <div
             className={`text-base font-bold ${category === BoothCategory.FOOD ? "text-pink" : "text-[#A7A7A7]"}`}
           >
-            푸드트럭
+            먹거리
           </div>
         </Label>
 
@@ -86,13 +86,13 @@ export function SetCategory() {
             value={BoothCategory.EVENT}
             id="event"
           />
-          <SchoolIcon
+          <EventIcon
             className={`${category === BoothCategory.EVENT ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div
             className={`text-base font-bold ${category === BoothCategory.EVENT ? "text-pink" : "text-[#b2b2b2]"}`}
           >
-            교내
+            이벤트
           </div>
         </Label>
 
@@ -105,13 +105,13 @@ export function SetCategory() {
             value={BoothCategory.NORMAL}
             id="more"
           />
-          <BuildingIcon
+          <CircleEllipsisIcon
             className={`${category === BoothCategory.NORMAL ? "text-pink" : "text-[#b2b2b2]"}`}
           />
           <div
             className={`text-base font-bold ${category === BoothCategory.NORMAL ? "text-pink" : "text-[#b2b2b2]"}`}
           >
-            교외
+            일반
           </div>
         </Label>
       </RadioGroup>
