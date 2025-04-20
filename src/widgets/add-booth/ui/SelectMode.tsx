@@ -10,12 +10,20 @@ import { BoothCategory } from "@/src/shared/lib/types";
 import { useRouter } from "next/navigation";
 import { useCreateBooth } from "@/src/features/booth/api";
 import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-draft-store";
+import { useGetMyProfile } from "@/src/entities/members/api";
+import { useFestivalListQuery } from "@/src/features/festival/api";
 
 export function SelectMode() {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [parent] = useAutoAnimate();
   const router = useRouter();
   const { mutateAsync: createBooth } = useCreateBooth();
+
+  //TODO myFestival 추상화? - comment by sukjoon
+  const { data: myProfile } = useGetMyProfile();
+  const festivals = useFestivalListQuery().data;
+  const schoolId = myProfile.schoolId;
+  const myFestival = festivals.find((value) => value.schoolId === schoolId)!;
 
   return (
     <>
@@ -86,6 +94,7 @@ export function SelectMode() {
         )}
 
         {/* FIXME skip making api call when the server updates APIs */}
+        {/* TODO : hard coding */}
         {selectedOption === "details" && (
           <Button
             className="w-full rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
@@ -98,7 +107,7 @@ export function SelectMode() {
                 thumbnail: "",
                 warning: "",
                 detail: "",
-                festivalId: 2,
+                festivalId: myFestival.festivalId,
                 location: "위치를 설정해주세요",
                 latitude: 0,
                 longitude: 0,

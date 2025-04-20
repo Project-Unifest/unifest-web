@@ -106,7 +106,6 @@ interface BoothPatchRequest {
   enabled?: boolean;
   waitingEnabled?: boolean;
 }
-const FESTIVAL_ID = 2;
 
 // const getBoothList = async (): Promise<Booth[]> => {
 //   // FIXME: special endpoint for admin web
@@ -127,8 +126,6 @@ const FESTIVAL_ID = 2;
 // };
 
 const createBooth = async (boothData: BoothCreateRequest): Promise<number> => {
-  boothData.festivalId = FESTIVAL_ID;
-
   return (
     await client
       .post("api/booths", {

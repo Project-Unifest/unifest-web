@@ -18,8 +18,9 @@ export function EditImageBox({ thumbnail, editThumbnail }: ImageBoxPropsType) {
     if (!file) {
       return;
     }
-    const { imgUrl } = await uploadImage(file);
-    editThumbnail(imgUrl);
+    const d = (await uploadImage(file)).data;
+    editThumbnail(d.imgUrl);
+    console.log(d.imgUrl);
   };
 
   return (
