@@ -284,7 +284,7 @@ export const usePatchBoothSchedule = (
     mutationFn: (scheduleData: BoothSchedulePatchRequest) =>
       patchBoothSchedule(boothId, scheduleData),
     onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       options?.onUpdate?.();
     },
   });
