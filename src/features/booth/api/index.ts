@@ -16,6 +16,8 @@ import {
   memberKeys,
   useGetMyProfile,
 } from "@/src/entities/members/api";
+import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-draft-store";
+import useBoothDraftStore from "@/src/shared/model/store/booth-draft-store";
 
 interface ProductForCreate {
   menuStatus?: MenuStatus;
@@ -209,10 +211,14 @@ export const boothKeys = createQueryKeys("booths", {
 
 export const useCreateBooth = (options?: { onCreate?: () => void }) => {
   const queryClient = useQueryClient();
+  const { reset: resetBoothDetailsDraft } = useBoothDetailsDraftStore();
+  const { reset: resetBoothDraft } = useBoothDraftStore();
 
   return useMutation({
     mutationFn: (booth: BoothCreateRequest) => createBooth(booth),
     onSuccess: () => {
+      resetBoothDetailsDraft();
+      resetBoothDraft();
       queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
       options?.onCreate?.();
