@@ -121,6 +121,7 @@ export function OperatingDaysCalendar({
       </Button>
       <div className="mb-4 flex items-center justify-between">
         <button
+          type="button"
           onClick={() =>
             onMonthChange(selectedMonth === 1 ? 12 : selectedMonth - 1)
           }
@@ -130,6 +131,7 @@ export function OperatingDaysCalendar({
         </button>
         <h2 className="text-lg font-bold">{selectedMonth}월</h2>
         <button
+          type="button"
           onClick={() =>
             onMonthChange(selectedMonth === 12 ? 1 : selectedMonth + 1)
           }
