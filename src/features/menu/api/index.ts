@@ -84,7 +84,6 @@ export const useCreateMenuItem = (
     mutationFn: (menuItem: MenuItemRequest) =>
       createMenuItem(boothId, menuItem),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       options?.onCreate?.();
       return queryClient.invalidateQueries({
         queryKey: memberKeys.me.queryKey,
