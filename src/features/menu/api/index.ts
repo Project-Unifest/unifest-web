@@ -84,6 +84,7 @@ export const useCreateMenuItem = (
     mutationFn: (menuItem: MenuItemRequest) =>
       createMenuItem(boothId, menuItem),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       options?.onCreate?.();
       return queryClient.invalidateQueries({
         queryKey: memberKeys.me.queryKey,
@@ -93,6 +94,7 @@ export const useCreateMenuItem = (
 };
 
 export const useUpdateMenuItem = (options?: { onUpdate?: () => void }) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
       menuId,
@@ -102,15 +104,18 @@ export const useUpdateMenuItem = (options?: { onUpdate?: () => void }) => {
       menuData: MenuPatchRequest;
     }) => updateMenuItem(menuId, menuData),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       options?.onUpdate?.();
     },
   });
 };
 
 export const useDeleteMenuItem = (options?: { onDelete?: () => void }) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (menuId: number) => deleteMenuItem(menuId),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       options?.onDelete?.();
     },
   });

@@ -128,7 +128,6 @@ export function Add({ boothId }: { boothId: number }) {
     const { data: editedBooth } = await updateBooth({
       thumbnail,
       ...rest,
-      // menus: menuList.map(({ id, ...rest }) => rest),
     });
     await patchBoothSchedule({ scheduleList });
 
