@@ -124,7 +124,6 @@ export function Add({ boothId }: { boothId: number }) {
 
   const onSubmit = async (data: any) => {
     const { id: boothId, scheduleList, ...rest } = data;
-    console.log({ ...rest });
     const { data: editedBooth } = await updateBooth({
       thumbnail,
       ...rest,
