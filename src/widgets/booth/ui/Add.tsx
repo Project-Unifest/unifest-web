@@ -128,16 +128,12 @@ export function Add({ boothId }: { boothId: number }) {
     const { data: editedBooth } = await updateBooth({
       thumbnail,
       ...rest,
-      // menus: menuList.map(({ id, ...rest }) => rest),
     });
     await patchBoothSchedule({ scheduleList });
     menuList.forEach(async (menuItem) => {
       const { id: menuId, ...menuData } = menuItem;
       await createMenuItem(menuData);
     });
-
-    // console.log(scheduleList);
-    // console.log(menuList);
 
     router.push("/");
   };
