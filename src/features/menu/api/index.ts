@@ -1,9 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/src/shared/api/client";
 import { ApiResponse } from "@/src/shared/api/types";
 import { MenuStatus } from "../lib/types";
 import { Product } from "@/src/shared/lib/types";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
+import { memberKeys } from "@/src/entities/members/api";
 
 export interface MenuStatusRequest {
   menuId: number;
@@ -77,16 +78,22 @@ export const useCreateMenuItem = (
   boothId: number,
   options?: { onCreate?: () => void },
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (menuItem: MenuItemRequest) =>
       createMenuItem(boothId, menuItem),
     onSuccess: () => {
       options?.onCreate?.();
+      return queryClient.invalidateQueries({
+        queryKey: memberKeys.me.queryKey,
+      });
     },
   });
 };
 
 export const useUpdateMenuItem = (options?: { onUpdate?: () => void }) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
       menuId,
@@ -96,15 +103,18 @@ export const useUpdateMenuItem = (options?: { onUpdate?: () => void }) => {
       menuData: MenuPatchRequest;
     }) => updateMenuItem(menuId, menuData),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       options?.onUpdate?.();
     },
   });
 };
 
 export const useDeleteMenuItem = (options?: { onDelete?: () => void }) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (menuId: number) => deleteMenuItem(menuId),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
       options?.onDelete?.();
     },
   });
