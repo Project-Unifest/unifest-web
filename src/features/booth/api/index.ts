@@ -220,7 +220,6 @@ export const useCreateBooth = (options?: { onCreate?: () => void }) => {
       resetBoothDetailsDraft();
       resetBoothDraft();
       queryClient.invalidateQueries({ queryKey: memberKeys.me.queryKey });
-      queryClient.invalidateQueries({ queryKey: boothKeys.list.queryKey });
       options?.onCreate?.();
     },
   });
