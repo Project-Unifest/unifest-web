@@ -138,7 +138,7 @@ export function Add({ boothId }: { boothId: number }) {
 
     // console.log(scheduleList);
     // console.log(menuList);
-    reset();
+
     router.push("/");
   };
 
