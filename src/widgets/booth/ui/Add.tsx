@@ -138,8 +138,6 @@ export function Add({ boothId }: { boothId: number }) {
         await createMenuItem(menuData);
       }),
     );
-    // console.log(scheduleList);
-    // console.log(menuList);
 
     router.push("/");
   };
