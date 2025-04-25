@@ -25,11 +25,15 @@ import { useParams, useRouter } from "next/navigation";
 import { MenuItemState } from "@/src/shared/model/store/booth-edit-store";
 import useBoothDetailsDraftStore from "@/src/shared/model/store/booth-details-draft-store";
 import { BoothTimeForm } from "@/src/features/booth";
-import { useCreateBooth } from "@/src/features/booth/api";
-import { addBooth } from "../../add-booth/model/add-booth";
+import {
+  useCreateBooth,
+  usePatchBoothSchedule,
+  useUpdateBooth,
+} from "@/src/features/booth/api";
 import { useEffect } from "react";
 import { useFestivalListQuery } from "@/src/features/festival/api";
 import { useGetMyProfile } from "@/src/entities/members/api";
+import { useCreateMenuItem, useUpdateMenuItem } from "@/src/features/menu/api";
 
 interface MenuItem {
   id: number;
@@ -60,6 +64,7 @@ export function Add({ boothId }: { boothId: number }) {
     addMenuItem,
     editMenuItem,
     removeMemuItem,
+    reset,
   ] = useBoothDetailsDraftStore((state) => [
     state.name,
     state.category,
@@ -80,8 +85,8 @@ export function Add({ boothId }: { boothId: number }) {
     state.addMenuItem,
     state.editMenuItem,
     state.removeMenuItem,
+    state.reset,
   ]);
-
   const [menuItemParent] = useAutoAnimate();
 
   const form = useForm<z.infer<typeof boothEditSchema>>({
@@ -101,12 +106,15 @@ export function Add({ boothId }: { boothId: number }) {
   const [parent] = useAutoAnimate();
 
   const router = useRouter();
+  const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
+  const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
+  const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
 
-  const { mutateAsync: createBooth } = useCreateBooth({
-    onCreate: () => {
-      router.push("/");
-    },
-  });
+  // const { mutateAsync: createBooth } = useCreateBooth({
+  //   onCreate: () => {
+  //     router.push("/");
+  //   },
+  // });
 
   // TODO: abstract away myFestival
   const { data: myProfile } = useGetMyProfile();
@@ -115,14 +123,22 @@ export function Add({ boothId }: { boothId: number }) {
   const myFestival = festivals.find((value) => value.schoolId === schoolId)!;
 
   const onSubmit = async (data: any) => {
-    const { id: boothId, ...rest } = data;
-
-    const { data: newBooth } = await addBooth({
+    const { id: boothId, scheduleList, ...rest } = data;
+    console.log({ ...rest });
+    const { data: editedBooth } = await updateBooth({
       thumbnail,
-      festivalId: myFestival.festivalId,
       ...rest,
-      menus: menuList.map(({ id, ...rest }) => rest),
+      // menus: menuList.map(({ id, ...rest }) => rest),
     });
+    await patchBoothSchedule({ scheduleList });
+    menuList.forEach(async (menuItem) => {
+      const { id: menuId, ...menuData } = menuItem;
+      await createMenuItem(menuData);
+    });
+
+    // console.log(scheduleList);
+    // console.log(menuList);
+    reset();
     router.push("/");
   };
 
