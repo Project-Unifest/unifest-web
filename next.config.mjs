@@ -1,4 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -11,6 +13,12 @@ const nextConfig = {
   },
 };
 
+// Setup Cloudflare development platform
+if (process.env.NODE_ENV === "development") {
+  await setupDevPlatform();
+}
+
+// Sentry configuration
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
