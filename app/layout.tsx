@@ -10,6 +10,8 @@ import { QueryProvider } from "@/src/shared/model/provider/query-provider";
 import GlobalFallbackProvider from "@/src/app/ui/global-fallback-provider";
 import { HydrationGate } from "@/src/app/model/HydrationGate";
 
+export const runtime = "edge";
+
 export default function RootLayout({
   children,
 }: Readonly<{
