@@ -2,6 +2,8 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:storybook/recommended",
-    "prettier"
-  ]
+    "prettier",
+    "plugin:eslint-plugin-next-on-pages/recommended"
+  ],
+  "plugins": ["eslint-plugin-next-on-pages"]
 }
