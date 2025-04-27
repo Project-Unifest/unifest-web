@@ -5,21 +5,20 @@ pages_build_output_dir = ".vercel/output/static"
 
 # Preview 환경 설정 (non-production branches)
 [env.preview.vars]
-IMAGE_SERVER_HOSTNAME = "unifest-prod-bucket.s3.ap-northeast-2.amazonaws.com",
-NEXT_PUBLIC_API_URL = "https://unifest.store",
-STORYBOOK_URL = "http://localhost:6006",
-PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1",
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSyDoGN7QvGfdISEXjZ_Q9QItThvnd0WxPlA",
-NEXT_PUBLIC_GOOGLE_MAPS_ID = "121606c3fffdba11",
+IMAGE_SERVER_HOSTNAME = "unifest-prod-bucket.s3.ap-northeast-2.amazonaws.com"
+NEXT_PUBLIC_API_URL = "https://unifest.store"
+STORYBOOK_URL = "http://localhost:6006"
+PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1"
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSyDoGN7QvGfdISEXjZ_Q9QItThvnd0WxPlA"
+NEXT_PUBLIC_GOOGLE_MAPS_ID = "121606c3fffdba11"
 BASE_URL = "$CF_PAGES_URL"
-
 
 # Production 환경 설정 (main branch)
 [env.production.vars]
-IMAGE_SERVER_HOSTNAME = "unifest-prod-bucket.s3.ap-northeast-2.amazonaws.com",
-NEXT_PUBLIC_API_URL = "https://unifest.store",
-STORYBOOK_URL = "http://localhost:6006",
-PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1",
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSyDoGN7QvGfdISEXjZ_Q9QItThvnd0WxPlA",
-NEXT_PUBLIC_GOOGLE_MAPS_ID = "121606c3fffdba11",
+IMAGE_SERVER_HOSTNAME = "unifest-prod-bucket.s3.ap-northeast-2.amazonaws.com"
+NEXT_PUBLIC_API_URL = "https://unifest.store"
+STORYBOOK_URL = "http://localhost:6006"
+PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1"
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSyDoGN7QvGfdISEXjZ_Q9QItThvnd0WxPlA"
+NEXT_PUBLIC_GOOGLE_MAPS_ID = "121606c3fffdba11"
 BASE_URL = "https://unifest.pages.dev"
