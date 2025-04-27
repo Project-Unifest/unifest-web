@@ -6,14 +6,8 @@ const nextConfig = {
   },
   experimental: { instrumentationHook: true },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: process.env.IMAGE_SERVER_HOSTNAME,
-        port: "",
-        pathname: "/**",
-      },
-    ],
+    loader: "custom",
+    loaderFile: "./imageLoader.ts",
   },
 };
 
