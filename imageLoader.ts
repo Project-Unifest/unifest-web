@@ -11,6 +11,10 @@ export default function cloudflareLoader({
   width: number;
   quality?: number;
 }) {
+  if (src.startsWith("http://") || src.startsWith("https://")) {
+    return src;
+  }
+
   if (process.env.NODE_ENV === "development") {
     return src;
   }
