@@ -99,7 +99,7 @@ export function Header() {
         {pathname.includes(BoothDetailPathSegment.booths) && (
           <Link
             href={`/megaphone/${getBoothId(pathname)}`}
-            className="absolute right-4"
+            className="absolute right-4 hidden"
           >
             <SpeakerIcon />
           </Link>
