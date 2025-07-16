@@ -1,7 +1,7 @@
 import { CardContent } from "@/src/shared/ui/card";
 import { Input } from "@/src/shared/ui/input";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 
 import { Label } from "@/src/shared/ui/label";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
@@ -24,6 +24,7 @@ interface MenuItemPropsType {
   menuStatus: MenuStatus;
   edit: (id: number, menuProp: Partial<Product>) => void;
   remove: (id: number) => void;
+  isOrigin: boolean;
 }
 
 export function MenuCard({
@@ -35,7 +36,9 @@ export function MenuCard({
   menuStatus,
   remove,
   edit,
+  isOrigin,
 }: MenuItemPropsType) {
+  //이번 플로우에서 생성한 메뉴 ID모음
   const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
     if (!file) {
@@ -84,7 +87,7 @@ export function MenuCard({
           <Button
             type="button"
             onClick={async () => {
-              if (menuItemId) {
+              if (menuItemId && isOrigin) {
                 await deleteMenuItem(menuItemId);
               }
               remove(menuItemId);
