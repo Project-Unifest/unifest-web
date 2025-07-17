@@ -31,6 +31,7 @@ export const GlobalErrorFallback = ({
       shouldClearCache: true,
     };
     recoverFromError(resetOptions);
+    resetErrorBoundary();
   };
 
   useEffect(() => {
@@ -147,7 +148,7 @@ export const GlobalErrorFallback = ({
       </div>
       <p className="text-sm opacity-70">{message}</p>
       <button
-        className="rounded-md bg-blue-500 px-4 py-3"
+        className="cursor-pointer rounded-md bg-blue-500 px-4 py-3 "
         onClick={action.onClick}
       >
         <span className="text-sm font-bold text-white">{action.label}</span>

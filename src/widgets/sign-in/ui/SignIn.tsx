@@ -19,6 +19,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "../api/sign-in";
 import { useAuthStore } from "@/src/shared/model/store/auth-store";
+import { HTTPError } from "ky";
 
 export function SignIn() {
   const [parent] = useAutoAnimate();
@@ -36,9 +37,26 @@ export function SignIn() {
   const redirect = searchParams!.get("redirect");
 
   const onSubmit = async (data: any) => {
-    const credentials = await signIn(data);
-    setCredentials(credentials);
-    router.push(redirect || "/");
+    try {
+      const credentials = await signIn(data);
+
+      setCredentials(credentials);
+      router.push(redirect || "/");
+    } catch (error) {
+      if (error instanceof HTTPError) {
+        const response = error.response;
+        let msg = "";
+        if (response.status === 401) {
+          msg = "아이디 또는 비밀번호가 잘못되었습니다.";
+        } else {
+          msg = "알 수 없는 문제가 발생하였습니다. 개발팀에 문의바랍니다.";
+        }
+        form.setError("password", {
+          type: "manual",
+          message: msg,
+        });
+      }
+    }
   };
 
   return (
