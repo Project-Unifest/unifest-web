@@ -14,7 +14,7 @@ import { RadioGroupItem } from "@/src/shared/ui/radio-group";
 import { MenuStatus } from "../lib/types";
 import { uploadImage } from "@/src/shared/api/image";
 import { useDeleteMenuItem } from "../api";
-
+//TODO : isOrigin boolean이 아닌 다른 방식으로 개선하기
 interface MenuItemPropsType {
   boothId: number;
   id: number;
