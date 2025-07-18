@@ -131,13 +131,12 @@ export function Edit({ boothId }: { boothId: number }) {
   const queryClient = useQueryClient();
 
   const { data: myProfile } = useGetMyProfile();
-  const [originMenus, setOriginMenus] = useState<number[]>();
-  useEffect(() => {
-    setOriginMenus(menuList.map((value) => value.id));
-  }, []);
+  const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
+  const originMenus = booth.menus.map((value) => value.id);
+
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
-    const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
+    // const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
     const { scheduleList, ...rest } = data;
     // Update booth first
     const { data: editedBooth } = await updateBooth({
