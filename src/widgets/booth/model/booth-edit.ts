@@ -18,9 +18,9 @@ const scheduleSchema = z.object({
 
 export const boothEditSchema = z.object({
   category: z.nativeEnum(BoothCategory, getMessage("올바른 선택지가 아닙니다")),
-  name: z.string().min(1, getMessage("제목을 입력해주세요")),
+  name: z.string().min(1, getMessage("제목을 입력해주세요")).max(50, getMessage("최대 50자까지 입력 가능합니다")),
   // thumbnail: z.string().url(),
-  warning: z.string(),
+  warning: z.string().max(100, getMessage("최대 100자까지 입력 가능합니다")),
   location: z.string(),
   description: z
     .string()
