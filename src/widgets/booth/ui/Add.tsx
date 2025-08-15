@@ -110,11 +110,7 @@ export function Add({ boothId }: { boothId: number }) {
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
 
-  const [originMenus, setOriginMenus] = useState<number[]>();
-
-  useEffect(() => {
-    setOriginMenus(menuList.map((value) => value.id));
-  }, []);
+  const originMenus:number[] = menuList.map((value) => value.id);
 
   // const { mutateAsync: createBooth } = useCreateBooth({
   //   onCreate: () => {
