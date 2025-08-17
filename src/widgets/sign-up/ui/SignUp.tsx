@@ -73,7 +73,10 @@ export function SignUp() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value={University.Korea}>
+                  <SelectItem value={University.Gacheon}>
+                      {University.Gacheon}
+                    </SelectItem>
+                    {/* <SelectItem value={University.Korea}>
                       {University.Korea}
                     </SelectItem>
                     <SelectItem value={University.SangMyung}>
@@ -84,7 +87,7 @@ export function SignUp() {
                     </SelectItem>
                     <SelectItem value={University.Konkuk}>
                       {University.Konkuk}
-                    </SelectItem>
+                    </SelectItem> */}
                   </SelectContent>
                 </Select>
                 <FormMessage />

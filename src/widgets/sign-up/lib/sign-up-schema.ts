@@ -6,6 +6,7 @@ export enum University {
   Transportation = "한국교통대학교",
   Korea = "고려대학교",
   SangMyung = "상명대학교",
+  Gacheon = "가천대학교"
 }
 
 export const signUpSchema = z

@@ -29,19 +29,27 @@ export const signUp = async (
   };
   const id = () => {
     switch (authDetails.university) {
-      case University.Konkuk:
-        return 1;
-      case University.Transportation:
-        return 3;
-      case University.Korea:
-        return 4;
-      case University.SangMyung:
-        return 5;
+      // case University.Konkuk:
+      //   return 1;
+        // case University.Transportation:
+      //   return 3;
+      // case University.Korea:
+      //   return 4;
+      // case University.SangMyung:
+      //   return 5;
+      case University.Gacheon:
+        const api_url = `${API_URL}`
+        if(api_url.includes('unifest')){
+          return 15;
+        }else{
+          return 1;
+        }
+
+
       default:
         throw new Error("올바르지 않은 요청입니다");
     }
   };
-  console.log(id());
   return publicClient
     .post("members", {
       json: { ...body, schoolId: id() }, // TODO change schoolId based on university
