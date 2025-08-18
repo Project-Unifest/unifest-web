@@ -14,6 +14,10 @@ export default function BoothList() {
   const { data: myProfile } = useGetMyProfile();
   const booths = myProfile.booths;
 
+  if(myProfile.memberRole !== "VERIFIED" && myProfile.memberRole !== "ADMIN"){
+    alert("권한이 승인되지 않은 계정입니다. 이용하시는데 제약이 \n있을 수 있으므로 총학생회 또는 개발팀에 문의바랍니다.")
+  }
+
   if (!booths.length) {
     return (
       <div className="flex flex-auto flex-col items-center justify-center">
