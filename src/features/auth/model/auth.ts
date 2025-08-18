@@ -38,8 +38,8 @@ export const signUp = async (
       // case University.SangMyung:
       //   return 5;
       case University.Gacheon:
-        const api_url = `${API_URL}`
-        if(api_url.includes('unifest')){
+        
+        if(process.env.NODE_ENV === 'production' ){
           return 15;
         }else{
           return 1;
