@@ -30,7 +30,7 @@ import {
   usePatchBoothSchedule,
   useUpdateBooth,
 } from "@/src/features/booth/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFestivalListQuery } from "@/src/features/festival/api";
 import { useGetMyProfile } from "@/src/entities/members/api";
 import { useCreateMenuItem, useUpdateMenuItem } from "@/src/features/menu/api";
@@ -109,6 +109,8 @@ export function Add({ boothId }: { boothId: number }) {
   const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
+
+  const originMenus:number[] = menuList.map((value) => value.id);
 
   // const { mutateAsync: createBooth } = useCreateBooth({
   //   onCreate: () => {
@@ -378,6 +380,7 @@ export function Add({ boothId }: { boothId: number }) {
                 menuStatus={menuItem.menuStatus}
                 remove={removeMemuItem}
                 edit={editMenuItem}
+                isOrigin={originMenus?.includes(menuItem.id) ?? false}
               />
             ))}
             <CardFooter>

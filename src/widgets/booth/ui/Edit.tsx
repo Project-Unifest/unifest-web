@@ -131,7 +131,10 @@ export function Edit({ boothId }: { boothId: number }) {
   const queryClient = useQueryClient();
 
   const { data: myProfile } = useGetMyProfile();
-
+  const [originMenus, setOriginMenus] = useState<number[]>();
+  useEffect(() => {
+    setOriginMenus(menuList.map((value) => value.id));
+  }, []);
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
     const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
@@ -413,6 +416,7 @@ export function Edit({ boothId }: { boothId: number }) {
                 boothId={boothId}
                 remove={removeMemuItem}
                 edit={editMenuItem}
+                isOrigin={originMenus?.includes(menuItem.id) ?? false}
                 {...menuItem}
               />
             ))}
