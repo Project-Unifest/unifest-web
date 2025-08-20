@@ -38,9 +38,9 @@ export const signUp = async (
       // case University.SangMyung:
       //   return 5;
       case University.Gacheon:
-        
+
         if(process.env.NODE_ENV === 'production' ){
-          return 15;
+          return 6;
         }else{
           return 1;
         }
