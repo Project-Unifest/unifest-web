@@ -19,14 +19,14 @@ export interface MenuStatusResponse {
 export interface MenuItemRequest {
   name: string;
   price: number;
-  imgUrl?: string;
+  imgUrl?: string | null;
   menuStatus: MenuStatus;
 }
 
 export interface MenuPatchRequest {
   name: string;
   price: number;
-  imgUrl?: string;
+  imgUrl?: string | null;
   menuStatus?: MenuStatus;
 }
 
