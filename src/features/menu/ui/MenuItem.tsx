@@ -1,137 +1,143 @@
 import { CardContent } from "@/src/shared/ui/card";
 import { Input } from "@/src/shared/ui/input";
-
-import { ChangeEvent, useEffect } from "react";
-
 import { Label } from "@/src/shared/ui/label";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { Button } from "@/src/shared/ui/button";
 import Image from "next/image";
 
-import { Product } from "@/src/shared/lib/types";
-import { RadioGroup } from "@radix-ui/react-radio-group";
+import { RadioGroup } from "@/src/shared/ui/radio-group";
 import { RadioGroupItem } from "@/src/shared/ui/radio-group";
 import { MenuStatus } from "../lib/types";
+import { Controller, UseFormRegister, Control, FieldErrors, useController } from "react-hook-form";
+import { FormMessage } from "@/src/shared/ui/form";
+
+import { Product } from "@/src/shared/lib/types";
 import { uploadImage } from "@/src/shared/api/image";
-import { useDeleteMenuItem } from "../api";
-//TODO : isOrigin boolean이 아닌 다른 방식으로 개선하기
-interface MenuItemPropsType {
-  boothId: number;
-  id: number;
-  name: string;
-  price: number;
-  imgUrl?: string;
-  menuStatus: MenuStatus;
-  edit: (id: number, menuProp: Partial<Product>) => void;
-  remove: (id: number) => void;
-  isOrigin: boolean;
+
+interface MenuCardProps {
+  index: number;
+  register: UseFormRegister<any>;   // 부모 useForm에서 내려줌
+  control: Control<any>;            // Controller 쓸 때 필요
+  errors?: FieldErrors<Product>;
+  onRemove: () => void;
+  imgUrl?: string | null;
 }
 
 export function MenuCard({
-  boothId,
-  id: menuItemId,
-  name,
-  price,
+  index,
+  register,
+  control,
+  errors,
+  onRemove,
   imgUrl,
-  menuStatus,
-  remove,
-  edit,
-  isOrigin,
-}: MenuItemPropsType) {
-  //이번 플로우에서 생성한 메뉴 ID모음
-  const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files![0];
-    if (!file) {
-      return;
-    }
-    if (file.size > 1000000) {
-      alert("파일 사이즈가 너무 큽니다.");
-      return;
-    }
-    const imageData = (await uploadImage(file)).data;
-    edit(menuItemId, { imgUrl: imageData.imgUrl });
-  };
+}: MenuCardProps) {
+  console.log(index, imgUrl);
 
-  const { mutateAsync: deleteMenuItem } = useDeleteMenuItem({
-    onDelete: () => {
-      remove(menuItemId);
-    },
+  const { field: imgField } = useController({
+   control,
+   name: `menuList.${index}.imgUrl`,  // string | null 로 유지
   });
+
+
   return (
-    <CardContent className="flex items-center justify-center gap-3">
-      {imgUrl ? (
-        <Image width={80} height={80} alt="menu-item-image" src={imgUrl} />
-      ) : (
-        <Label className="flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-[#D9D9D9]">
-          <div>
-            <PlusCircledIcon className="h-6 w-6 text-[#4b4b4b]" />
-            <span className="sr-only">메뉴 이미지 추가</span>
-          </div>
-          <Input
-            type="file"
-            className="sr-only"
-            id="menu-1"
-            accept="image/*"
-            onChange={handleChangeImage}
-          />
-        </Label>
-      )}
-      <div className="flex flex-auto flex-col items-center justify-center">
-        <div className="flex w-full items-center justify-center">
-          <Input
-            placeholder="메뉴 이름"
-            value={name}
-            onChange={(event) => edit(menuItemId, { name: event.target.value })}
-          />
-
-          <Button
-            type="button"
-            onClick={async () => {
-              if (menuItemId && isOrigin) {
-                await deleteMenuItem(menuItemId);
-              }
-              remove(menuItemId);
-            }}
+    <>
+      <CardContent className="flex items-center justify-center gap-3">
+        {imgField.value ? (
+          <Image width={80} height={80} alt="menu-item-image" src={imgField.value} />
+        ) : (
+          <Label
+            className="flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-[#D9D9D9]"
+            htmlFor={`menu-${index}-file`}
           >
-            삭제하기
-          </Button>
-        </div>
-        <div className="flex w-full items-center justify-center">
-          <Input
-            placeholder="가격"
-            type="number"
-            value={price}
-            onChange={(event) => {
-              edit(menuItemId, { price: Number(event.target.value) });
-            }}
-          />
-        </div>
-        <RadioGroup
-          value={menuStatus}
-          onValueChange={(value: MenuStatus) => {
-            edit(menuItemId, { menuStatus: value });
-          }}
-          className="flex w-full items-center justify-start space-x-3"
-        >
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value={MenuStatus.Enough} id="option-enough" />
-            <Label htmlFor="option-one">정상</Label>
-          </div>
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value={MenuStatus.Under50} id="option-under-50" />
-            <Label htmlFor="option-under-50">50개 이하</Label>
-          </div>
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value={MenuStatus.Under10} id="option-under-10" />
+            <div>
+              <PlusCircledIcon className="h-6 w-6 text-[#4b4b4b]" />
+              <span className="sr-only">메뉴 이미지 추가</span>
+            </div>
+            <Input
+              type="file"
+              className="sr-only"
+              id={`menu-${index}-file`}
+              accept="image/*"
+              onChange={async (e) => {
+                console.log(e.target.files);
+                const file = e.target.files?.[0];
+                if (file) {
+                  const { data } = await uploadImage(file);
+                  console.log(data);
+                  imgField.onChange(data.imgUrl);
+                }
+              }}
+            />
+          </Label>
+        )}
 
-            <Label htmlFor="option-under-10">10개 이하</Label>
+        <div className="flex flex-auto flex-col items-center justify-center">
+          <div className="flex w-full items-center justify-center gap-2">
+            {/* 이름 */}
+            <Input
+              placeholder="메뉴 이름"
+              {...register(`menuList.${index}.name`)}
+            />
+            <Button type="button" onClick={() => onRemove()}>
+              삭제하기
+            </Button>
           </div>
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value={MenuStatus.SoldOut} id="option-sold-out" />
-            <Label htmlFor="option-sold-out">품절</Label>
+          {errors?.name && (
+            <FormMessage className="text-red-500 text-center">
+              {errors.name.message}
+            </FormMessage>
+          )}
+
+          {/* 가격 */}
+          <div className="flex w-full items-center justify-center">
+            <Input
+              placeholder="가격"
+              type="number"
+              {...register(`menuList.${index}.price`, { valueAsNumber: true })}
+            />
           </div>
-        </RadioGroup>
-      </div>
-    </CardContent>
+          {errors?.price && (
+            <FormMessage className="text-red-500 text-center">
+              {errors.price.message}
+            </FormMessage>
+          )}
+
+          {/* 메뉴 상태 */}
+          <Controller
+            control={control}
+            name={`menuList.${index}.menuStatus`}
+            render={({ field }) => (
+              <RadioGroup
+                value={field.value}
+                onValueChange={field.onChange}
+                className="flex w-full items-center justify-start space-x-3"
+              >
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value={MenuStatus.Enough} id={`enough-${index}`} />
+                  <Label htmlFor={`enough-${index}`}>정상</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value={MenuStatus.Under50} id={`under50-${index}`} />
+                  <Label htmlFor={`under50-${index}`}>50개 이하</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value={MenuStatus.Under10} id={`under10-${index}`} />
+                  <Label htmlFor={`under10-${index}`}>10개 이하</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value={MenuStatus.SoldOut} id={`soldout-${index}`} />
+                  <Label htmlFor={`soldout-${index}`}>품절</Label>
+                </div>
+              </RadioGroup>
+            )}
+          />
+          {errors?.menuStatus && (
+            <FormMessage className="text-red-500 text-center">
+              {errors.menuStatus.message}
+            </FormMessage>
+          )}
+        </div>
+      </CardContent>
+    </>
   );
 }
