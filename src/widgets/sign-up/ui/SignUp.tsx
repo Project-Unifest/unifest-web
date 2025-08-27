@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/shared/ui/select";
-import { signUp } from "@/src/features/auth/model/auth";
+import { signUp, useSignUp } from "@/src/features/auth/model/auth";
 import { useRouter } from "next/navigation";
 import { HTTPError } from "ky";
 
@@ -38,7 +38,11 @@ export function SignUp() {
     },
   });
 
+  const { isSubmitting, isSubmitSuccessful } = form.formState;
+
   const router = useRouter();
+
+  const { mutateAsync: signUp } = useSignUp();
 
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -182,7 +186,7 @@ export function SignUp() {
               </FormItem>
             )}
           />
-          <Button type="submit">회원가입</Button>
+          <Button type="submit" disabled={isSubmitting || isSubmitSuccessful}>회원가입</Button>
         </form>
       </Form>
     </div>
