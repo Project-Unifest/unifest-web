@@ -136,7 +136,6 @@ export function Edit({ boothId }: { boothId: number }) {
   const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
 
   const { data: myProfile } = useGetMyProfile();
-  const [originMenus, setOriginMenus] = useState<number[]>();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
