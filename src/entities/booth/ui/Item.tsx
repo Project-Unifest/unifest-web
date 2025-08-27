@@ -34,15 +34,15 @@ export function Item({
   return (
     <Card data-testid={`booth-item-${name}`}>
       <div className="flex items-start justify-between">
-        <div className="flex flex-col items-start justify-start">
+        <div className="flex flex-col items-start justify-start min-w-0">
           <CardHeader>
             <CardTitle className="w-full flex-auto truncate">{name}</CardTitle>
             <CardDescription className="line-clamp-2 text-ellipsis">
               {description}
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <p>{location}</p>
+          <CardContent className="box-border w-full">
+            <p className="truncate">{location}</p>
           </CardContent>
         </div>
         <CardHeader className="flex flex-none flex-col items-end justify-start space-y-2">
