@@ -105,6 +105,8 @@ export function Edit({ boothId }: { boothId: number }) {
 
   const router = useRouter();
 
+  const { mutateAsync: deleteMenuItem, isPending } = useDeleteMenuItem();
+
   const form = useForm<z.infer<typeof boothEditSchema>>({
     mode: "onSubmit",
     resolver: zodResolver(boothEditSchema),
@@ -129,56 +131,51 @@ export function Edit({ boothId }: { boothId: number }) {
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
   const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
-  const queryClient = useQueryClient();
 
   const { data: myProfile } = useGetMyProfile();
-  const [originMenus, setOriginMenus] = useState<number[]>();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "menuList",
+    keyName: "fieldId",
   });
 
-  useEffect(() => {
-    setOriginMenus(menuList.map((value) => value.id));
-  }, []);
+  const handleFormSubmit = form.handleSubmit(
+    async (data: z.infer<typeof boothEditSchema>) => {
+      const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
+      const { scheduleList, menuList, ...rest } = data;
+      // Update booth first
+      const { data: editedBooth } = await updateBooth({
+        thumbnail,
+        ...rest,
+      });
 
-  const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
-    const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
-    const { scheduleList, menuList, ...rest } = data;
-    // Update booth first
-    const { data: editedBooth } = await updateBooth({
-      thumbnail,
-      ...rest,
-    });
+      // Process all menu items sequentially with Promise.all
+      await Promise.all(
+        menuList.map(async (menuItem) => {
+          const { id: menuId, isDraft: isDraft, ...menuData } = menuItem;
+          const menu = booth?.menus.find((menu) => menu.id === menuId);
 
-    // Process all menu items sequentially with Promise.all
-    await Promise.all(
-      menuList.map(async (menuItem) => {
-        const { id: menuId, ...menuData } = menuItem;
-        const menu = booth?.menus.find((menu) => menu.id === menuId);
+          if (menu) {
+            // Update existing menu item
+            await updateMenuItem({
+              menuId: menuId!,
+              menuData,
+            });
+          } else {
+            // Create new menu item
+            await createMenuItem(menuData);
+          }
+        }),
+      );
 
-        if (menu) {
-          // Update existing menu item
-          await updateMenuItem({
-            menuId,
-            menuData,
-          });
-        } else {
-          // Create new menu item
-          await createMenuItem(menuData);
-        }
-      }),
-    );
+      // Update schedule after all menu operations are complete
+      await patchBoothSchedule({ scheduleList });
 
-    // Update schedule after all menu operations are complete
-    await patchBoothSchedule({ scheduleList });
-
-    // Only navigate after all operations are complete
-    router.push("/");
-  });
-
-
+      // Only navigate after all operations are complete
+      router.push("/");
+    },
+  );
 
   return (
     <>
@@ -411,9 +408,16 @@ export function Edit({ boothId }: { boothId: number }) {
                 index={index}
                 register={form.register}
                 control={form.control}
-                onRemove={() => remove(index)}
+                onRemove={async () => {
+                  if (isPending) return;
+                  if (!menuItem.isDraft) {
+                    await deleteMenuItem(menuItem.id!);
+                  }
+                  remove(index);
+                  return;
+                }}
                 errors={form.formState.errors.menuList?.[index]}
-                // isOrigin={originMenus?.includes(menuItem.id) ?? false}
+                isDraft={menuItem.isDraft}
                 {...menuItem}
               />
             ))}
@@ -421,13 +425,15 @@ export function Edit({ boothId }: { boothId: number }) {
               <Button
                 type="button"
                 className="w-full"
-                onClick={() => append({
-                  id: menuList.length + 1,
-                  name: "",
-                  price: 0,
-                  menuStatus: MenuStatus.Enough,
-                  imgUrl: null,
-                })}
+                onClick={() =>
+                  append({
+                    name: "",
+                    price: 0,
+                    menuStatus: MenuStatus.Enough,
+                    imgUrl: null,
+                    isDraft: true,
+                  })
+                }
               >
                 메뉴 추가하기
               </Button>

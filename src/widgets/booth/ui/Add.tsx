@@ -111,8 +111,6 @@ export function Add({ boothId }: { boothId: number }) {
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
 
-  const originMenus:number[] = menuList.map((value) => value.id);
-
   // TODO: abstract away myFestival
   const { data: myProfile } = useGetMyProfile();
   const festivals = useFestivalListQuery().data;
@@ -145,6 +143,7 @@ export function Add({ boothId }: { boothId: number }) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "menuList",
+    keyName: "fieldId",
   });
 
   return (
