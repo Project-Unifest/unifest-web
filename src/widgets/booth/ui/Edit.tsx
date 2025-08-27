@@ -129,7 +129,6 @@ export function Edit({ boothId }: { boothId: number }) {
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
   const { mutateAsync: patchBoothSchedule } = usePatchBoothSchedule(boothId);
-  const queryClient = useQueryClient();
 
   const { data: myProfile } = useGetMyProfile();
   const [originMenus, setOriginMenus] = useState<number[]>();
