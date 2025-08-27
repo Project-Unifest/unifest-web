@@ -9,13 +9,32 @@ import { Button } from "@/src/shared/ui/button";
 import ClockIcon from "@/src/shared/ui/ClockIcon";
 import PlusIcon from "@/src/shared/ui/PlusIcon";
 import { useGetMyProfile } from "@/src/entities/members/api";
+import GlobalLoadingFallback from "@/src/app/ui/global-loading-fallback";
 
 export default function BoothList() {
-  const { data: myProfile } = useGetMyProfile();
+  // const { data: myProfile } = useGetMyProfile();
+  const { data: myProfile, isLoading, isFetching } = useGetMyProfile();
+
+  // 데이터가 로딩 중이거나 백그라운드에서 다시 가져오는 중일 때
+  // 스피너를 보여줍니다.
+  if (isLoading || isFetching) {
+    return <GlobalLoadingFallback />;
+  }
+
+  // myProfile 데이터가 존재하지 않거나,
+  // 권한이 없는 경우를 처리합니다.
+  if (!myProfile) {
+    // 적절한 에러 또는 로딩 상태 처리
+    // TODO : thorw error?
+    return <div>데이터를 불러오는 데 실패했습니다.</div>;
+  }
+
   const booths = myProfile.booths;
 
-  if(myProfile.memberRole !== "VERIFIED" && myProfile.memberRole !== "ADMIN"){
-    alert("권한이 승인되지 않은 계정입니다. 이용하시는데 제약이 \n있을 수 있으므로 총학생회 또는 개발팀에 문의바랍니다.")
+  if (myProfile.memberRole !== "VERIFIED" && myProfile.memberRole !== "ADMIN") {
+    alert(
+      "권한이 승인되지 않은 계정입니다. 이용하시는데 제약이 \n있을 수 있으므로 총학생회 또는 개발팀에 문의바랍니다.",
+    );
   }
 
   if (!booths.length) {
