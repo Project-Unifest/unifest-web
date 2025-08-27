@@ -2,6 +2,7 @@ import { publicClient } from "@/src/shared/api/client";
 import { API_URL, HTTPHeaderKey } from "@/src/shared/api/config";
 import { University } from "@/src/widgets/sign-up/lib/sign-up-schema";
 import { ApiResponse } from "@/src/shared/api/types";
+import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
 interface AuthDetails {
   email: string;
@@ -56,6 +57,14 @@ export const signUp = async (
     })
     .json<ApiResponse<void>>();
 };
+
+export const useSignUp = (options?: UseMutationOptions<ApiResponse<void>, Error, AuthDetails>) => {
+  return useMutation({
+    mutationFn: signUp,
+    ...options
+  });
+}
+
 
 export const restoreAccessToken = async (refreshToken: string) => {
   const response = await fetch(`${API_URL}/reissue`, {
