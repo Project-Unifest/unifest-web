@@ -31,8 +31,6 @@ export function MenuCard({
   onRemove,
   imgUrl,
 }: MenuCardProps) {
-  console.log(index, imgUrl);
-
   const { field: imgField } = useController({
    control,
    name: `menuList.${index}.imgUrl`,  // string | null 로 유지
@@ -59,11 +57,9 @@ export function MenuCard({
               id={`menu-${index}-file`}
               accept="image/*"
               onChange={async (e) => {
-                console.log(e.target.files);
                 const file = e.target.files?.[0];
                 if (file) {
                   const { data } = await uploadImage(file);
-                  console.log(data);
                   imgField.onChange(data.imgUrl);
                 }
               }}

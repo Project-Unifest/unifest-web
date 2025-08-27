@@ -126,7 +126,6 @@ export function Add({ boothId }: { boothId: number }) {
   const myFestival = festivals.find((value) => value.schoolId === schoolId)!;
 
   const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
-    console.log(data);
     const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
     const { scheduleList, menuList, ...rest } = data;
     // Update booth first

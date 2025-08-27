@@ -146,7 +146,6 @@ export function Edit({ boothId }: { boothId: number }) {
   }, []);
 
   const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
-    console.log(data);
     setIsSubmitting(true);
     const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
     const { scheduleList, menuList, ...rest } = data;
