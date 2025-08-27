@@ -21,6 +21,7 @@ interface MenuCardProps {
   errors?: FieldErrors<Product>;
   onRemove: () => void;
   imgUrl?: string | null;
+  isDraft?: boolean;
 }
 
 export function MenuCard({
@@ -30,6 +31,7 @@ export function MenuCard({
   errors,
   onRemove,
   imgUrl,
+  isDraft,
 }: MenuCardProps) {
   const { field: imgField } = useController({
    control,

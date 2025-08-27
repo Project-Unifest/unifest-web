@@ -100,10 +100,15 @@ export function Edit({ boothId }: { boothId: number }) {
     state.editMenuItem,
     state.removeMenuItem,
   ]);
+  console.log(menuList);
 
   const [menuItemParent] = useAutoAnimate();
 
   const router = useRouter();
+
+  const { mutateAsync: deleteMenuItem, isPending } = useDeleteMenuItem();
+
+  console.log("menuList from store",menuList);
 
   const form = useForm<z.infer<typeof boothEditSchema>>({
     mode: "onSubmit",
@@ -136,11 +141,9 @@ export function Edit({ boothId }: { boothId: number }) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "menuList",
+    keyName: "fieldId",
   });
 
-  useEffect(() => {
-    setOriginMenus(menuList.map((value) => value.id));
-  }, []);
 
   const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
     const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
@@ -410,9 +413,17 @@ export function Edit({ boothId }: { boothId: number }) {
                 index={index}
                 register={form.register}
                 control={form.control}
-                onRemove={() => remove(index)}
+                onRemove={async () => {
+                  console.log("menuItem", menuItem)
+                  if (isPending) return;
+                  if (!menuItem.isDraft) {
+                    await deleteMenuItem(menuItem.id!);
+                  }
+                  remove(index);
+                  return;
+                }}
                 errors={form.formState.errors.menuList?.[index]}
-                // isOrigin={originMenus?.includes(menuItem.id) ?? false}
+                isDraft={menuItem.isDraft}
                 {...menuItem}
               />
             ))}
@@ -421,11 +432,11 @@ export function Edit({ boothId }: { boothId: number }) {
                 type="button"
                 className="w-full"
                 onClick={() => append({
-                  id: menuList.length + 1,
                   name: "",
                   price: 0,
                   menuStatus: MenuStatus.Enough,
                   imgUrl: null,
+                  isDraft: true,
                 })}
               >
                 메뉴 추가하기

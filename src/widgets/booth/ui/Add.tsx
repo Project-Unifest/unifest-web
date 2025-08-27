@@ -145,6 +145,7 @@ export function Add({ boothId }: { boothId: number }) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "menuList",
+    keyName: "fieldId",
   });
 
   return (
