@@ -163,7 +163,7 @@ export function Edit({ boothId }: { boothId: number }) {
         if (menu) {
           // Update existing menu item
           await updateMenuItem({
-            menuId,
+            menuId: menuId!,
             menuData,
           });
         } else {
