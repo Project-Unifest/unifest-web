@@ -100,15 +100,12 @@ export function Edit({ boothId }: { boothId: number }) {
     state.editMenuItem,
     state.removeMenuItem,
   ]);
-  console.log(menuList);
 
   const [menuItemParent] = useAutoAnimate();
 
   const router = useRouter();
 
   const { mutateAsync: deleteMenuItem, isPending } = useDeleteMenuItem();
-
-  console.log("menuList from store",menuList);
 
   const form = useForm<z.infer<typeof boothEditSchema>>({
     mode: "onSubmit",
@@ -413,7 +410,6 @@ export function Edit({ boothId }: { boothId: number }) {
                 register={form.register}
                 control={form.control}
                 onRemove={async () => {
-                  console.log("menuItem", menuItem)
                   if (isPending) return;
                   if (!menuItem.isDraft) {
                     await deleteMenuItem(menuItem.id!);
