@@ -113,12 +113,6 @@ export function Add({ boothId }: { boothId: number }) {
 
   const originMenus:number[] = menuList.map((value) => value.id);
 
-  // const { mutateAsync: createBooth } = useCreateBooth({
-  //   onCreate: () => {
-  //     router.push("/");
-  //   },
-  // });
-
   // TODO: abstract away myFestival
   const { data: myProfile } = useGetMyProfile();
   const festivals = useFestivalListQuery().data;
