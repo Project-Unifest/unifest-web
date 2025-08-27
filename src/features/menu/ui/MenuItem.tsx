@@ -67,7 +67,7 @@ export function MenuCard({
           </Label>
         )}
 
-        <div className="flex flex-auto flex-col items-center justify-center">
+        <div className="flex flex-auto flex-col items-start justify-center">
           <div className="flex w-full items-center justify-center gap-2">
             {/* 이름 */}
             <Input
@@ -79,7 +79,7 @@ export function MenuCard({
             </Button>
           </div>
           {errors?.name && (
-            <FormMessage className="text-red-500 text-center">
+            <FormMessage className="text-red-500 text-left pl-3">
               {errors.name.message}
             </FormMessage>
           )}
@@ -93,7 +93,7 @@ export function MenuCard({
             />
           </div>
           {errors?.price && (
-            <FormMessage className="text-red-500 text-center">
+            <FormMessage className="text-red-500 text-left">
               {errors.price.message}
             </FormMessage>
           )}
