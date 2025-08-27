@@ -140,43 +140,42 @@ export function Edit({ boothId }: { boothId: number }) {
     keyName: "fieldId",
   });
 
+  const handleFormSubmit = form.handleSubmit(
+    async (data: z.infer<typeof boothEditSchema>) => {
+      const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
+      const { scheduleList, menuList, ...rest } = data;
+      // Update booth first
+      const { data: editedBooth } = await updateBooth({
+        thumbnail,
+        ...rest,
+      });
 
-  const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
-    const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
-    const { scheduleList, menuList, ...rest } = data;
-    // Update booth first
-    const { data: editedBooth } = await updateBooth({
-      thumbnail,
-      ...rest,
-    });
+      // Process all menu items sequentially with Promise.all
+      await Promise.all(
+        menuList.map(async (menuItem) => {
+          const { id: menuId, isDraft: isDraft, ...menuData } = menuItem;
+          const menu = booth?.menus.find((menu) => menu.id === menuId);
 
-    // Process all menu items sequentially with Promise.all
-    await Promise.all(
-      menuList.map(async (menuItem) => {
-        const { id: menuId, ...menuData } = menuItem;
-        const menu = booth?.menus.find((menu) => menu.id === menuId);
+          if (menu) {
+            // Update existing menu item
+            await updateMenuItem({
+              menuId: menuId!,
+              menuData,
+            });
+          } else {
+            // Create new menu item
+            await createMenuItem(menuData);
+          }
+        }),
+      );
 
-        if (menu) {
-          // Update existing menu item
-          await updateMenuItem({
-            menuId: menuId!,
-            menuData,
-          });
-        } else {
-          // Create new menu item
-          await createMenuItem(menuData);
-        }
-      }),
-    );
+      // Update schedule after all menu operations are complete
+      await patchBoothSchedule({ scheduleList });
 
-    // Update schedule after all menu operations are complete
-    await patchBoothSchedule({ scheduleList });
-
-    // Only navigate after all operations are complete
-    router.push("/");
-  });
-
-
+      // Only navigate after all operations are complete
+      router.push("/");
+    },
+  );
 
   return (
     <>
@@ -426,13 +425,15 @@ export function Edit({ boothId }: { boothId: number }) {
               <Button
                 type="button"
                 className="w-full"
-                onClick={() => append({
-                  name: "",
-                  price: 0,
-                  menuStatus: MenuStatus.Enough,
-                  imgUrl: null,
-                  isDraft: true,
-                })}
+                onClick={() =>
+                  append({
+                    name: "",
+                    price: 0,
+                    menuStatus: MenuStatus.Enough,
+                    imgUrl: null,
+                    isDraft: true,
+                  })
+                }
               >
                 메뉴 추가하기
               </Button>
