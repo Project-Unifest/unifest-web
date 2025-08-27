@@ -153,13 +153,6 @@ export function Add({ boothId }: { boothId: number }) {
     name: "menuList",
   });
 
-  // 디버깅을 위한 오류 상태 로깅
-  useEffect(() => {
-    if (form.formState.isSubmitting) {
-      console.log("Form errors:", form.formState.errors);
-    }
-  }, [form.formState.isSubmitting, form.formState.errors]);
-
   return (
     <>
       <EditImageBox thumbnail={thumbnail} editThumbnail={editThumbnail} />
