@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/shared/ui/form";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { boothEditSchema } from "../model/booth-edit";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/src/shared/ui/input";
@@ -34,6 +34,7 @@ import { useEffect, useState } from "react";
 import { useFestivalListQuery } from "@/src/features/festival/api";
 import { useGetMyProfile } from "@/src/entities/members/api";
 import { useCreateMenuItem, useUpdateMenuItem } from "@/src/features/menu/api";
+import { MenuStatus } from "@/src/features/menu/lib/types";
 
 interface MenuItem {
   id: number;
@@ -112,48 +113,45 @@ export function Add({ boothId }: { boothId: number }) {
 
   const originMenus:number[] = menuList.map((value) => value.id);
 
-  // const { mutateAsync: createBooth } = useCreateBooth({
-  //   onCreate: () => {
-  //     router.push("/");
-  //   },
-  // });
-
   // TODO: abstract away myFestival
   const { data: myProfile } = useGetMyProfile();
   const festivals = useFestivalListQuery().data;
   const schoolId = myProfile.schoolId;
   const myFestival = festivals.find((value) => value.schoolId === schoolId)!;
 
-  const onSubmit = async (data: any) => {
-    const { id: boothId, scheduleList, ...rest } = data;
+  const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
+    const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
+    const { scheduleList, menuList, ...rest } = data;
+    // Update booth first
     const { data: editedBooth } = await updateBooth({
       thumbnail,
       ...rest,
     });
-    await patchBoothSchedule({ scheduleList });
 
+    // Process all menu items sequentially with Promise.all
     await Promise.all(
       menuList.map(async (menuItem) => {
         const { id: menuId, ...menuData } = menuItem;
+        const menu = booth?.menus.find((menu) => menu.id === menuId);
         await createMenuItem(menuData);
       }),
     );
 
-    router.push("/");
-  };
+    await patchBoothSchedule({ scheduleList });
 
-  // 디버깅을 위한 오류 상태 로깅
-  useEffect(() => {
-    if (form.formState.isSubmitting) {
-      console.log("Form errors:", form.formState.errors);
-    }
-  }, [form.formState.isSubmitting, form.formState.errors]);
+    router.push("/");
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "menuList",
+  });
 
   return (
     <>
       <EditImageBox thumbnail={thumbnail} editThumbnail={editThumbnail} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={handleFormSubmit}>
           {/* <FormField
             name="thumbnail"
             control={form.control}
@@ -372,22 +370,28 @@ export function Add({ boothId }: { boothId: number }) {
             <CardHeader>
               <CardTitle>메뉴</CardTitle>
             </CardHeader>
-            {menuList.map((menuItem) => (
+            {fields.map((menuItem, index) => (
               <MenuItemForm
                 key={menuItem.id}
+                index={index}
+                register={form.register}
+                control={form.control}
+                onRemove={() => remove(index)}
+                errors={form.formState.errors.menuList?.[index]}
                 {...menuItem}
-                boothId={boothId}
-                menuStatus={menuItem.menuStatus}
-                remove={removeMemuItem}
-                edit={editMenuItem}
-                isOrigin={originMenus?.includes(menuItem.id) ?? false}
               />
             ))}
             <CardFooter>
               <Button
                 type="button"
                 className="w-full"
-                onClick={() => addMenuItem()}
+                onClick={() => append({
+                  id: 0,
+                  name: "",
+                  price: 0,
+                  menuStatus: MenuStatus.Enough,
+                  imgUrl: null,
+                })}
               >
                 메뉴 추가하기
               </Button>

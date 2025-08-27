@@ -1,14 +1,13 @@
 import { MenuStatus } from "@/src/features/menu/lib/types";
 import { z } from "zod";
-
-const menuStatusSchema = z.enum(["ENOUGH", "UNDER_50", "UNDER_10"]);
+import { getMessage } from "../../model/zod";
 
 export const ProductSchema = z.object({
-  menuStatus: menuStatusSchema,
   id: z.number(),
-  name: z.string(),
+  menuStatus: z.enum(["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]),
+  name: z.string().min(1, getMessage("제목을 입력해주세요")).max(20, getMessage("최대 20자까지 입력 가능합니다")).trim(),
   price: z.number(),
-  imgUrl: z.string().optional(),
+  imgUrl: z.string().optional().nullable(),
 });
 
 export type Product = z.infer<typeof ProductSchema>;

@@ -72,8 +72,8 @@ interface BoothScheduleResponse {
 
 interface BoothScheduleCreateRequest {
   date: string;
-  openTime: LocalTime;
-  closeTime: LocalTime;
+  openTime: string;
+  closeTime: string;
 }
 
 interface BoothSchedulePatchRequest {

@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/shared/ui/form";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { boothEditSchema } from "../model/booth-edit";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/src/shared/ui/input";
@@ -44,6 +44,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { bool } from "prop-types";
 import Spinner from "@/src/shared/ui/spinner";
+import { MenuStatus } from "@/src/features/menu/lib/types";
 
 interface MenuItem {
   id: number;
@@ -105,6 +106,7 @@ export function Edit({ boothId }: { boothId: number }) {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof boothEditSchema>>({
+    mode: "onSubmit",
     resolver: zodResolver(boothEditSchema),
     defaultValues: {
       name,
@@ -115,14 +117,13 @@ export function Edit({ boothId }: { boothId: number }) {
       latitude,
       longitude,
       scheduleList,
+      menuList,
     },
   });
 
   const { reset } = form;
 
   const [parent] = useAutoAnimate();
-
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
@@ -132,13 +133,19 @@ export function Edit({ boothId }: { boothId: number }) {
 
   const { data: myProfile } = useGetMyProfile();
   const [originMenus, setOriginMenus] = useState<number[]>();
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "menuList",
+  });
+
   useEffect(() => {
     setOriginMenus(menuList.map((value) => value.id));
   }, []);
-  const onSubmit = async (data: any) => {
-    setIsSubmitting(true);
+
+  const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
     const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
-    const { scheduleList, ...rest } = data;
+    const { scheduleList, menuList, ...rest } = data;
     // Update booth first
     const { data: editedBooth } = await updateBooth({
       thumbnail,
@@ -169,27 +176,15 @@ export function Edit({ boothId }: { boothId: number }) {
 
     // Only navigate after all operations are complete
     router.push("/");
-  };
+  });
 
-  // 디버깅을 위한 오류 상태 로깅
-  useEffect(() => {
-    if (form.formState.isSubmitting) {
-      console.log("Form errors:", form.formState.errors);
-    }
-  }, [form.formState.isSubmitting, form.formState.errors]);
-  if (isSubmitting) {
-    // TODO: prevent page from rerendering unexpectedly
-    return (
-      <div className="flex w-full flex-1 flex-col items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
+
+
   return (
     <>
       <EditImageBox thumbnail={thumbnail} editThumbnail={editThumbnail} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={handleFormSubmit}>
           {/* <FormField
             name="thumbnail"
             control={form.control}
@@ -410,13 +405,15 @@ export function Edit({ boothId }: { boothId: number }) {
             <CardHeader>
               <CardTitle>메뉴</CardTitle>
             </CardHeader>
-            {menuList.map((menuItem) => (
+            {fields.map((menuItem, index) => (
               <MenuItemForm
                 key={menuItem.id}
-                boothId={boothId}
-                remove={removeMemuItem}
-                edit={editMenuItem}
-                isOrigin={originMenus?.includes(menuItem.id) ?? false}
+                index={index}
+                register={form.register}
+                control={form.control}
+                onRemove={() => remove(index)}
+                errors={form.formState.errors.menuList?.[index]}
+                // isOrigin={originMenus?.includes(menuItem.id) ?? false}
                 {...menuItem}
               />
             ))}
@@ -424,7 +421,13 @@ export function Edit({ boothId }: { boothId: number }) {
               <Button
                 type="button"
                 className="w-full"
-                onClick={() => addMenuItem()}
+                onClick={() => append({
+                  id: menuList.length + 1,
+                  name: "",
+                  price: 0,
+                  menuStatus: MenuStatus.Enough,
+                  imgUrl: null,
+                })}
               >
                 메뉴 추가하기
               </Button>
