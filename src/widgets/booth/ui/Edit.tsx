@@ -125,8 +125,6 @@ export function Edit({ boothId }: { boothId: number }) {
 
   const [parent] = useAutoAnimate();
 
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
   const { mutateAsync: updateBooth } = useUpdateBooth(boothId);
   const { mutateAsync: createMenuItem } = useCreateMenuItem(boothId);
   const { mutateAsync: updateMenuItem } = useUpdateMenuItem();
@@ -146,7 +144,6 @@ export function Edit({ boothId }: { boothId: number }) {
   }, []);
 
   const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
-    setIsSubmitting(true);
     const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
     const { scheduleList, menuList, ...rest } = data;
     // Update booth first
@@ -183,20 +180,6 @@ export function Edit({ boothId }: { boothId: number }) {
 
 
 
-  // 디버깅을 위한 오류 상태 로깅
-  useEffect(() => {
-    if (form.formState.isSubmitting) {
-      console.log("Form errors:", form.formState.errors);
-    }
-  }, [form.formState.isSubmitting, form.formState.errors]);
-  if (isSubmitting) {
-    // TODO: prevent page from rerendering unexpectedly
-    return (
-      <div className="flex w-full flex-1 flex-col items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
   return (
     <>
       <EditImageBox thumbnail={thumbnail} editThumbnail={editThumbnail} />
