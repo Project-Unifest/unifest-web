@@ -123,7 +123,7 @@ export function Edit({ boothId }: { boothId: number }) {
     },
   });
 
-  const { reset } = form;
+  const { reset, formState: { isSubmitting, isSubmitSuccessful } } = form;
 
   const [parent] = useAutoAnimate();
 
@@ -462,6 +462,7 @@ export function Edit({ boothId }: { boothId: number }) {
             <Button
               className="w-full flex-[2] rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
               type="submit"
+              disabled={isSubmitting || isSubmitSuccessful}
             >
               등록하기
             </Button>
