@@ -117,28 +117,36 @@ export function Add({ boothId }: { boothId: number }) {
   const schoolId = myProfile.schoolId;
   const myFestival = festivals.find((value) => value.schoolId === schoolId)!;
 
-  const handleFormSubmit = form.handleSubmit(async (data: z.infer<typeof boothEditSchema>) => {
-    const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
-    const { scheduleList, menuList, ...rest } = data;
-    // Update booth first
-    const { data: editedBooth } = await updateBooth({
-      thumbnail,
-      ...rest,
-    });
+  const handleFormSubmit = form.handleSubmit(
+    async (data: z.infer<typeof boothEditSchema>) => {
+      const booth = myProfile.booths.find((booth) => booth.id === boothId)!;
+      const { scheduleList, menuList, ...rest } = data;
+      // Update booth first
+      const { data: editedBooth } = await updateBooth({
+        thumbnail,
+        ...rest,
+      });
 
-    // Process all menu items sequentially with Promise.all
-    await Promise.all(
-      menuList.map(async (menuItem) => {
+      //순서 보장 로직
+      for (const menuItem of menuList) {
         const { id: menuId, ...menuData } = menuItem;
         const menu = booth?.menus.find((menu) => menu.id === menuId);
         await createMenuItem(menuData);
-      }),
-    );
+      }
+      // Process all menu items sequentially with Promise.all
+      // await Promise.all(
+      //   menuList.map(async (menuItem) => {
+      //     const { id: menuId, ...menuData } = menuItem;
+      //     const menu = booth?.menus.find((menu) => menu.id === menuId);
+      //     await createMenuItem(menuData);
+      //   }),
+      // );
 
-    await patchBoothSchedule({ scheduleList });
+      await patchBoothSchedule({ scheduleList });
 
-    router.push("/");
-  });
+      router.push("/");
+    },
+  );
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -307,12 +315,12 @@ export function Add({ boothId }: { boothId: number }) {
                     placeholder="내용을 입력해주세요"
                     {...field}
                     className="resize-none"
-                    maxLength={100}
+                    maxLength={500}
                   />
                 </FormControl>
                 <div className="mt-2 flex items-start justify-end">
                   <div className="text-[10px] font-medium text-gray">
-                    {form.getValues("description").length}/100자
+                    {form.getValues("description").length}/500자
                   </div>
                 </div>
                 <FormMessage />
@@ -384,13 +392,15 @@ export function Add({ boothId }: { boothId: number }) {
               <Button
                 type="button"
                 className="w-full"
-                onClick={() => append({
-                  id: 0,
-                  name: "",
-                  price: 0,
-                  menuStatus: MenuStatus.Enough,
-                  imgUrl: null,
-                })}
+                onClick={() =>
+                  append({
+                    id: 0,
+                    name: "",
+                    price: 0,
+                    menuStatus: MenuStatus.Enough,
+                    imgUrl: null,
+                  })
+                }
               >
                 메뉴 추가하기
               </Button>

@@ -5,7 +5,11 @@ import { getMessage } from "../../model/zod";
 export const ProductSchema = z.object({
   id: z.number().optional(),
   menuStatus: z.enum(["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]),
-  name: z.string().min(1, getMessage("제목을 입력해주세요")).max(20, getMessage("최대 20자까지 입력 가능합니다")).trim(),
+  name: z
+    .string()
+    .min(1, getMessage("제목을 입력해주세요"))
+    .max(50, getMessage("최대 50자까지 입력 가능합니다"))
+    .trim(),
   price: z.number(),
   imgUrl: z.string().optional().nullable(),
   isDraft: z.boolean().optional(),
