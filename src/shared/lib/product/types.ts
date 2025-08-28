@@ -2,7 +2,7 @@ import { MenuStatus } from "@/src/features/menu/lib/types";
 import { z } from "zod";
 import { getMessage } from "../../model/zod";
 
-export const ProductSchema = z.object({
+export const MenuItemSchema = z.object({
   id: z.number().optional(),
   menuStatus: z.enum(["ENOUGH", "UNDER_50", "UNDER_10", "SOLD_OUT"]),
   name: z
@@ -15,4 +15,4 @@ export const ProductSchema = z.object({
   isDraft: z.boolean().optional(),
 });
 
-export type Product = z.infer<typeof ProductSchema>;
+export type MenuItem = z.infer<typeof MenuItemSchema>;

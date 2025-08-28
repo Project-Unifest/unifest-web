@@ -1,4 +1,4 @@
-import { ProductSchema } from "@/src/shared/lib/product/types";
+import { MenuItemSchema } from "@/src/shared/lib/product/types";
 import { BoothCategory } from "@/src/shared/lib/types";
 import { getMessage } from "@/src/shared/model/zod";
 import { z } from "zod";
@@ -45,5 +45,5 @@ export const boothEditSchema = z.object({
       message: "모든 운영일의 시작 시간과 종료 시간을 입력해주세요",
     },
   ),
-  menuList: z.array(ProductSchema),
+  menuList: z.array(MenuItemSchema),
 });
