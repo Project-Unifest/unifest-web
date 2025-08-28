@@ -150,24 +150,40 @@ export function Edit({ boothId }: { boothId: number }) {
         ...rest,
       });
 
-      // Process all menu items sequentially with Promise.all
-      await Promise.all(
-        menuList.map(async (menuItem) => {
-          const { id: menuId, isDraft: isDraft, ...menuData } = menuItem;
-          const menu = booth?.menus.find((menu) => menu.id === menuId);
+      //순서 보장 로직
+      for (const menuItem of menuList) {
+        const { id: menuId, isDraft: isDraft, ...menuData } = menuItem;
+        const menu = booth?.menus.find((menu) => menu.id === menuId);
 
-          if (menu) {
-            // Update existing menu item
-            await updateMenuItem({
-              menuId: menuId!,
-              menuData,
-            });
-          } else {
-            // Create new menu item
-            await createMenuItem(menuData);
-          }
-        }),
-      );
+        if (menu) {
+          // Update existing menu item
+          await updateMenuItem({
+            menuId: menuId!,
+            menuData,
+          });
+        } else {
+          // Create new menu item
+          await createMenuItem(menuData);
+        }
+      }
+      // Process all menu items sequentially with Promise.all
+      // await Promise.all(
+      //   menuList.map(async (menuItem) => {
+      //     const { id: menuId, isDraft: isDraft, ...menuData } = menuItem;
+      //     const menu = booth?.menus.find((menu) => menu.id === menuId);
+
+      //     if (menu) {
+      //       // Update existing menu item
+      //       await updateMenuItem({
+      //         menuId: menuId!,
+      //         menuData,
+      //       });
+      //     } else {
+      //       // Create new menu item
+      //       await createMenuItem(menuData);
+      //     }
+      //   }),
+      // );
 
       // Update schedule after all menu operations are complete
       await patchBoothSchedule({ scheduleList });
@@ -338,12 +354,12 @@ export function Edit({ boothId }: { boothId: number }) {
                     placeholder="내용을 입력해주세요"
                     {...field}
                     className="resize-none"
-                    maxLength={100}
+                    maxLength={500}
                   />
                 </FormControl>
                 <div className="mt-2 flex items-start justify-end">
                   <div className="text-[10px] font-medium text-gray">
-                    {form.getValues("description").length}/100자
+                    {form.getValues("description").length}/500자
                   </div>
                 </div>
                 <FormMessage />
