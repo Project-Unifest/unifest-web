@@ -49,7 +49,7 @@ export function GoogleMap() {
     <APIProvider apiKey={apiKey}>
       <Map
         className="h-screen w-full"
-        center={{
+        defaultCenter={{
           lat: myFestival?.latitude ?? CampusPosition.latitude,
           lng: myFestival?.longitude ?? CampusPosition.longitude,
         }}
