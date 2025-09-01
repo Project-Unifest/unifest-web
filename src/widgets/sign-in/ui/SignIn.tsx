@@ -56,7 +56,6 @@ export function SignIn() {
                     <FormControl>
                       <Input
                         placeholder="아이디를 입력해주세요"
-                        type="email"
                         {...field}
                         className="outline-none focus:border-pink"
                       />
