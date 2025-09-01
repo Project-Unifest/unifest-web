@@ -6,7 +6,7 @@ export enum University {
   Transportation = "한국교통대학교",
   Korea = "고려대학교",
   SangMyung = "상명대학교",
-  Gacheon = "가천대학교"
+  Gacheon = "가천대학교",
 }
 
 export const signUpSchema = z
@@ -14,7 +14,7 @@ export const signUpSchema = z
     university: z.nativeEnum(University, {
       errorMap: () => getMessage("학교를 선택해주세요"),
     }),
-    email: z.string().email(getMessage("올바른 이메일이 아닙니다")),
+    email: z.string(),
     password: z
       .string()
       .min(8, getMessage("비밀번호는 8자 이상이 되어야 합니다"))
