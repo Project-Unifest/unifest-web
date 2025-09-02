@@ -154,6 +154,8 @@ export function Add({ boothId }: { boothId: number }) {
     keyName: "fieldId",
   });
 
+  const { formState: { isSubmitting, isSubmitSuccessful } } = form;
+
   return (
     <>
       <EditImageBox thumbnail={thumbnail} editThumbnail={editThumbnail} />
@@ -412,6 +414,7 @@ export function Add({ boothId }: { boothId: number }) {
           >
             <Button
               className="w-full flex-[2] rounded-[10px] bg-pink py-3 text-white hover:bg-pink"
+              disabled={isSubmitting || isSubmitSuccessful}
               type="submit"
             >
               등록하기
