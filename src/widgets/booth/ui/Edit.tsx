@@ -45,14 +45,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { bool } from "prop-types";
 import Spinner from "@/src/shared/ui/spinner";
 import { MenuStatus } from "@/src/features/menu/lib/types";
-
-interface MenuItem {
-  id: number;
-  name: string;
-  price: number;
-  imgUrl?: string;
-  state: MenuItemState;
-}
+import { sequence } from "@/src/shared/lib/promise";
+import { MenuItem } from "@/src/shared/lib/product/types";
 interface UnifestTime {
   date: string;
   openTime: string;
@@ -150,41 +144,20 @@ export function Edit({ boothId }: { boothId: number }) {
         ...rest,
       });
 
-      //순서 보장 로직
-      for (const menuItem of menuList) {
-        const { id: menuId, isDraft: isDraft, ...menuData } = menuItem;
+      // Process all menu items sequentially with Promise.all
+      await sequence<MenuItem, void>(menuList, async (menuItem) => {
+        const { id: menuId, isDraft, ...menuData } = menuItem;
         const menu = booth?.menus.find((menu) => menu.id === menuId);
 
         if (menu) {
-          // Update existing menu item
           await updateMenuItem({
             menuId: menuId!,
             menuData,
           });
         } else {
-          // Create new menu item
           await createMenuItem(menuData);
         }
-      }
-      // Process all menu items sequentially with Promise.all
-      // await Promise.all(
-      //   menuList.map(async (menuItem) => {
-      //     const { id: menuId, isDraft: isDraft, ...menuData } = menuItem;
-      //     const menu = booth?.menus.find((menu) => menu.id === menuId);
-
-      //     if (menu) {
-      //       // Update existing menu item
-      //       await updateMenuItem({
-      //         menuId: menuId!,
-      //         menuData,
-      //       });
-      //     } else {
-      //       // Create new menu item
-      //       await createMenuItem(menuData);
-      //     }
-      //   }),
-      // );
-
+      });
       // Update schedule after all menu operations are complete
       await patchBoothSchedule({ scheduleList });
 
@@ -354,12 +327,12 @@ export function Edit({ boothId }: { boothId: number }) {
                     placeholder="내용을 입력해주세요"
                     {...field}
                     className="resize-none"
-                    maxLength={500}
+                    maxLength={100}
                   />
                 </FormControl>
                 <div className="mt-2 flex items-start justify-end">
                   <div className="text-[10px] font-medium text-gray">
-                    {form.getValues("description").length}/500자
+                    {form.getValues("description").length}/100자
                   </div>
                 </div>
                 <FormMessage />
