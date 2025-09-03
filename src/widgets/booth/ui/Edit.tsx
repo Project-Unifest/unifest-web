@@ -327,12 +327,12 @@ export function Edit({ boothId }: { boothId: number }) {
                     placeholder="내용을 입력해주세요"
                     {...field}
                     className="resize-none"
-                    maxLength={100}
+                    maxLength={500}
                   />
                 </FormControl>
                 <div className="mt-2 flex items-start justify-end">
                   <div className="text-[10px] font-medium text-gray">
-                    {form.getValues("description").length}/100자
+                    {form.getValues("description").length}/500자
                   </div>
                 </div>
                 <FormMessage />
