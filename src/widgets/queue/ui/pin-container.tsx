@@ -17,8 +17,10 @@ export default function PINContainer({ boothId }: PINContainerPropsType) {
     useReissuePINMutation(boothId);
 
   const handleRefresh = async () => {
-    await reissuePIN();
-    regetPIN();
+    if (confirm("핀번호를 새로고침하시겠습니까?")) {
+      await reissuePIN();
+      regetPIN();
+    }
   };
 
   return (
