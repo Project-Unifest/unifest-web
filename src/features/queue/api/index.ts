@@ -52,7 +52,7 @@ export const useQueueGroupsQuery = (
   return useQuery({
     queryKey: queueKeys.list(boothId).queryKey,
     queryFn: () => getGroups(boothId),
-    refetchInterval: 5000,
+    refetchInterval: 60000,
   });
 };
 
