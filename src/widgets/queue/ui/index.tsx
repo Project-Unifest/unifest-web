@@ -8,7 +8,7 @@ import GroupItem from "@/src/entities/queue/ui/GroupItem";
 import { useParams } from "next/navigation";
 import { StatusCode } from "@/src/shared/api/config";
 import EnterButton from "@/src/features/queue/ui/EnterButton";
-import { formatDateString } from "../lib/formatDateString";
+import { convertToKoreaDate } from "../lib/date";
 import {
   useQueueGroupsQuery,
   useCancelGroupMutation,
@@ -115,13 +115,13 @@ export default function Queue() {
           (activatedTab === "canceled" && (
             <div className="flex space-x-2 text-sm">
               <div>취소/부재</div>
-              <div className="font-bold">{formatDateString(updatedAt)}</div>
+              <div className="font-bold">{convertToKoreaDate(updatedAt)}</div>
             </div>
           )) ||
           (activatedTab === "completed" && (
             <div className="flex space-x-2 text-sm">
               <div>입장 시각</div>
-              <div className="font-bold">{formatDateString(updatedAt)}</div>
+              <div className="font-bold">{convertToKoreaDate(updatedAt)}</div>
             </div>
           ))
         }
