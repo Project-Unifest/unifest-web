@@ -2,6 +2,9 @@ import ky, {
   HTTPError,
   KyInstance,
   Options as KyOptions,
+  KyRequest,
+  KyResponse,
+  NormalizedOptions,
   TimeoutError,
 } from "ky";
 import { API_URL, getAccessToken, HTTPHeaderKey } from "./config";
@@ -27,6 +30,7 @@ const defaultConfig: KyOptions = {
     methods: ["get", "put", "post", "delete", "patch"],
     statusCodes: [408, 413, 429, 500, 502, 503, 504],
   },
+  throwHttpErrors: false,
 };
 
 export const publicClient = ky.create({
@@ -47,11 +51,7 @@ const refreshClient = ky.create({
   retry: 0,
 });
 
-const handleHttpError = async ({
-  request,
-  response,
-  options,
-}: HTTPError): Promise<HTTPError> => {
+const handleHttpError = async (request: KyRequest, options: NormalizedOptions, response: KyResponse): Promise<HTTPError> => {
   throw match(response.status)
     .with(401, () => new UnauthorizedError(response, request, options))
     .with(403, () => new ForbiddenError(response, request, options))
@@ -88,6 +88,9 @@ export const client = ky.create({
     ],
     afterResponse: [
       async (request, options, response) => {
+        await handleHttpError(request, options, response);
+      },
+      async (request, options, response) => {
         if (response.status === 401) {
           const { refreshToken, refresh } = useAuthStore.getState();
 
@@ -107,6 +110,5 @@ export const client = ky.create({
         }
       },
     ],
-    beforeError: [handleHttpError],
   },
 });
