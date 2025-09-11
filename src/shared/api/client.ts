@@ -55,7 +55,6 @@ const handleHttpError = async ({
   throw match(response.status)
     .with(401, () => new UnauthorizedError(response, request, options))
     .with(403, () => new ForbiddenError(response, request, options))
-    .with(404, () => new NotFoundError(response, request, options))
     .with(409, () => new ConflictError(response, request, options))
     .with(400, () => new BadRequestError(response, request, options))
     .with(422, () => new ValidationError(response, request, options))
