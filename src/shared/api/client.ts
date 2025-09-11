@@ -58,8 +58,7 @@ const handleHttpError = async ({
     .with(409, () => new ConflictError(response, request, options))
     .with(400, () => new BadRequestError(response, request, options))
     .with(422, () => new ValidationError(response, request, options))
-    .with(503, () => new ServiceUnavailableError(response, request, options))
-    .otherwise(() => new ServerError(response, request, options));
+    .with(503, () => new ServiceUnavailableError(response, request, options));
 };
 
 const refreshAccessToken = async (refreshToken: string): Promise<string> => {
